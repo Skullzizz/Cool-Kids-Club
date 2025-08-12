@@ -1,61 +1,49 @@
 using System.Collections;
+using System.Net;
 using UnityEngine;
-
+using UnityEngine.UIElements;
 
 public class SummonableStructureController : MonoBehaviour
 {
     [SerializeField] GameObject wallPrefab;
+    [SerializeField] bool isWallRunning;
     [SerializeField] float wallSegmentLength = 2f;
     [SerializeField] float fadeTime = 3f;
     [SerializeField] float spawnCoolDown = .5f;
     [SerializeField] float expandTime = 2f;
-    [SerializeField] Transform player;
-    [SerializeField] float groundCheckDist = 1f;
 
     public float lastSpawn;
-    public bool isWallRunning;
+
+    public Transform player;
+    public Transform cameraTransform;
+    public int wallCount;
     public Transform currWall;
-    public bool expanding;
-    public int numWallsTouching = 0;
-    
+    public bool expanding = false;
+
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Grounded() && numWallsTouching == 0)
-        {
-            StopWallRun();
-        }
-        if (isWallRunning && Time.time - lastSpawn >= spawnCoolDown&&!expanding)
+        if (isWallRunning && Time.time - lastSpawn >= spawnCoolDown &&!expanding)
         {
             SpawnWall();
             lastSpawn = Time.time;
         }
     }
 
-    void StopWallRun()
-    {
-        isWallRunning = false;
-        currWall = null;
-        expanding = false;
-    }
-
-    bool Grounded()
-    {
-        return Physics.Raycast(player.position, Vector3.down, groundCheckDist);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("RunnableWall"))
         {
-            numWallsTouching++;
-
-            if (currWall == null || other.transform != currWall)
-            {
-                currWall = other.transform;
-                isWallRunning = true;
-            }
+            wallCount++;
+            currWall = other.transform;
+            isWallRunning = true;
         }
     }
 
@@ -63,10 +51,9 @@ public class SummonableStructureController : MonoBehaviour
     {
         if (other.CompareTag("RunnableWall"))
         {
-            numWallsTouching--;
-            if (numWallsTouching <= 0)
+            if (wallCount <= 0)
             {
-                numWallsTouching = 0;
+                wallCount = 0;
                 isWallRunning = false;
                 currWall = null;
             }
@@ -76,15 +63,14 @@ public class SummonableStructureController : MonoBehaviour
     void SpawnWall()
     {
         if (currWall == null) return;
-
-        Vector3 playerPosDot = player.position - currWall.position;
-        float dotProduct = Vector3.Dot(currWall.right, player.forward);
+        Vector3 playerPosDot = player.position-currWall.position;
+        float dotProduct = Vector3.Dot(currWall.right, playerPosDot);
 
         Vector3 spawnPosition;
         Quaternion spawnRotation = currWall.rotation;
-        float segmentLength = wallSegmentLength > 0 ? wallSegmentLength : currWall.localScale.x;
+        wallSegmentLength = currWall.localScale.x;
 
-        if (dotProduct >= 0)
+        if (dotProduct>= 0)
         {
             spawnPosition = currWall.position + currWall.right * wallSegmentLength;
         }
@@ -94,19 +80,37 @@ public class SummonableStructureController : MonoBehaviour
         }
 
         GameObject wall = Instantiate(wallPrefab, spawnPosition, spawnRotation);
+        currWall = wall.transform;
 
-        StartCoroutine(ExpandFade(wall, dotProduct >= 0 ? currWall.right : -currWall.right, wallSegmentLength));
+        StartCoroutine(ExpandWall(wall, dotProduct >= 0 ? currWall.right : -currWall.right));
     }
-
-    IEnumerator ExpandFade(GameObject wall, Vector3 dir, float segLength)
+    IEnumerator FadeDestroy(GameObject wall)
     {
-        expanding = true;
+        Renderer rend = wall.GetComponent<Renderer>();
+
+        Material material = rend.material;
+        Color origColor = material.color;
+
+        float timeFade = 0f;
+        while(timeFade < fadeTime)
+        {
+            float alphaColor = Mathf.Lerp(1f,0f,timeFade/fadeTime);
+            material.color = new Color(origColor.r,origColor.g, origColor.b, alphaColor);
+            timeFade+=Time.deltaTime;
+            yield return null;
+        }
+        wallCount--;
+        Destroy(wall);
+    }
+    IEnumerator ExpandWall(GameObject wall,Vector3 directon)
+    {
         float timeToExpand = 0f;
 
         Vector3 endPos = wall.transform.position;
-        Vector3 startingPos = endPos - dir * segLength;
+        Vector3 startingPos = endPos - directon * wallSegmentLength;
         wall.transform.position = startingPos;
 
+        expanding = true;
         while (timeToExpand < expandTime)
         {
             wall.transform.position = Vector3.Lerp(startingPos, endPos, timeToExpand / expandTime);
@@ -114,19 +118,6 @@ public class SummonableStructureController : MonoBehaviour
             yield return null;
         }
         expanding = false;
-        Renderer rend = wall.GetComponent<Renderer>();
-
-        Material material = rend.material;
-        Color origColor = material.color;
-
-        float timeFade = 0f;
-        while (timeFade < fadeTime)
-        {
-            float alphaColor = Mathf.Lerp(1f, 0f, timeFade / fadeTime);
-            material.color = new Color(origColor.r, origColor.g, origColor.b, alphaColor);
-            timeFade += Time.deltaTime;
-            yield return null;
-        }
-        Destroy(wall);
+        StartCoroutine(FadeDestroy(wall));
     }
 }
