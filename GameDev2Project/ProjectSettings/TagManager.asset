@@ -3,12 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - RunnableWall
+  - throwable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - throwable
   - Water
   - UI
   - 

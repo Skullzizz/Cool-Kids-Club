@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class throwPhysics : MonoBehaviour
 {
-    Transform throwingPosition;
+    [SerializeField] Transform throwingPosition;
     [SerializeField] int pickUpDis;
     [SerializeField] int throwForce;
     [SerializeField] int pickUpForce;
@@ -50,7 +50,7 @@ public class throwPhysics : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, pickUpDis))
         {
-            if (hit.collider.gameObject.CompareTag("Throwable"))
+            if (hit.collider.gameObject.CompareTag("throwable"))
             {
                 throwable = hit.collider.gameObject;
                 throwableRb = throwable.GetComponent<Rigidbody>();
