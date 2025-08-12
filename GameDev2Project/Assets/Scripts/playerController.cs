@@ -9,20 +9,22 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] LayerMask ignorelayer;
 
     [SerializeField] CharacterController controller;
+    [SerializeField] wallrunController wallrunController;
 
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpSpeed;
     [SerializeField] int jumpMax;
-    [SerializeField] int gravity;
+    [SerializeField] public float gravity;
+    
 
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
 
     Vector3 moveDir;
-    Vector3 playerVel;
+    public Vector3 playerVel;
 
     int jumpCount;
     int HPOrig;
