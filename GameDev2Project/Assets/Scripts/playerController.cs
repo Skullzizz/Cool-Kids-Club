@@ -138,7 +138,8 @@ public class playerController : MonoBehaviour, IDamage
 
     public void updatePlayerUI()
     {
-        gamemanager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+        gamemanager.instance.playerHPBar.GetComponent<UISmoothFillBar>().SetFill((float)HP / HPOrig);
+
     }
 
     IEnumerator flashDamageScreen()
