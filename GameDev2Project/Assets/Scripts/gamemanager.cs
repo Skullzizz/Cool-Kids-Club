@@ -13,6 +13,8 @@ public class gamemanager : MonoBehaviour
 
     [SerializeField] TMP_Text gameGoalCountText;
 
+    [SerializeField] private PauseDimmer pauseDimmer;
+
     public Image playerHPBar;
     public GameObject PlayerDamageScreen;
 
@@ -59,6 +61,7 @@ public class gamemanager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        pauseDimmer.ShowDim();
     }
 
     public void stateUnpause()
@@ -67,6 +70,7 @@ public class gamemanager : MonoBehaviour
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        pauseDimmer.HideDim();
         menuActive.SetActive(false);
         menuActive = null;
     }
