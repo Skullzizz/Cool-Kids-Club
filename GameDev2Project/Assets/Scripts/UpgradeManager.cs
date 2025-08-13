@@ -3,29 +3,21 @@ using UnityEngine;
 
 public class UpgradeManager : MonoBehaviour
 {
+    public static UpgradeManager instance;
+
     public playerController playerScript;
+    public float soulsNeeded;
 
     private void Awake()
     {
-        playerScript= GameObject.FindWithTag("Player").GetComponent<playerController>();
+        soulsNeeded = 3;
+        instance = this;
+        playerScript = GameObject.FindWithTag("Player").GetComponent<playerController>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            UpgradeHealth(10);
-        }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            UpgradeJumpCount(1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            UpgradeSpeed(3);
-        }
+        
     }
 
     public void UpgradeHealth(int health)

@@ -140,7 +140,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     void shoot()
     {
         shootTimer = 0;
-        Instantiate(bullet, shootPos.position, transform.rotation);
+
+        Quaternion rot = Quaternion.LookRotation(playerDir);
+
+        Instantiate(bullet, shootPos.position, rot);
     }
 
     public void takeDamage(int amount)
@@ -152,6 +155,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         if (HP <= 0)
         {
+            gamemanager.instance.updateEnemyDeaths(1);
             gamemanager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }

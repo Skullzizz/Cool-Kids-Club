@@ -10,6 +10,7 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuUpgrade;
 
     [SerializeField] TMP_Text gameGoalCountText;
 
@@ -26,6 +27,9 @@ public class gamemanager : MonoBehaviour
     float timeScaleOrig;
 
     int gameGoalCount;
+
+    int enemiesKilled;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -86,6 +90,20 @@ public class gamemanager : MonoBehaviour
             // You Won!
             statePause();
             menuActive = menuWin;
+            menuActive.SetActive(true);
+        }
+    }
+
+    public void updateEnemyDeaths(int amt)
+    {
+        enemiesKilled += amt;
+
+        if(enemiesKilled >= UpgradeManager.instance.soulsNeeded)
+        {
+            //Show Upgrades
+            UpgradeManager.instance.soulsNeeded = Mathf.CeilToInt((float)(UpgradeManager.instance.soulsNeeded * 1.5));
+            statePause();
+            menuActive = menuUpgrade;
             menuActive.SetActive(true);
         }
     }
