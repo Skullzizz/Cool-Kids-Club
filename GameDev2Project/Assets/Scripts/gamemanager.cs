@@ -91,6 +91,7 @@ public class gamemanager : MonoBehaviour
             statePause();
             menuActive = menuWin;
             menuActive.SetActive(true);
+            pauseDimmer.ShowDim();
         }
     }
 
@@ -113,5 +114,6 @@ public class gamemanager : MonoBehaviour
         statePause();
         menuActive = menuLose;
         menuActive.SetActive(true);
+        pauseDimmer.ShowDim();
     }
 }

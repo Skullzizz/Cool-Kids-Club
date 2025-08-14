@@ -5,32 +5,44 @@ using System.Collections;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] Image barFill;
-    [SerializeField] int maxHP = 50; int hp;
+    
 
+    public Transform healthBar;
+    public Vector3 offset = new Vector3(0,2f,0);
+
+    [SerializeField] private EnemyAI enemyAI;
+
+    private int maxHP = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
-        hp = maxHP;
+        if (!enemyAI) enemyAI = GetComponent<EnemyAI>();
+        //maxHP = enemyAI.HP;
         UpdateBar();
     }
 
+    void LateUpdate()
+    {
+        if (healthBar != null)
+        {
+
+            healthBar.position = transform.position + offset;
+            healthBar.LookAt(Camera.main.transform);
+        }
+    }
     public void SetHP(int current, int max)
     {
         maxHP = Mathf.Max(1, max);
-        hp = Mathf.Clamp(current, 0 , maxHP);
+        
         UpdateBar();
     }
 
-    public void ApplyDamage(int amount)
-    {
-        hp = Mathf.Max(0, hp - amount);
-        UpdateBar() ;
-    }
+    
     void UpdateBar()
     {
         if (!barFill) return;
-        float ratio = (float)hp / maxHP;
-        barFill.fillAmount = Mathf.Clamp01(ratio);
+        //float ratio = (float)enemyAI.HP / maxHP;
+        //barFill.fillAmount = Mathf.Clamp01(ratio);
     }
 }
