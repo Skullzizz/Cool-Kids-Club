@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3106963666343131793}
   - component: {fileID: 7796257847099214689}
   - component: {fileID: 8917303732437054564}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ MonoBehaviour:
   rb: {fileID: 7796257847099214689}
   damageAmount: 1
   damageRate: 0
-  speed: 100
+  speed: 50
   destroyTime: 3
 --- !u!135 &3106963666343131793
 SphereCollider:
