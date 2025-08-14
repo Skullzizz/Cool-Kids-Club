@@ -101,7 +101,7 @@ MonoBehaviour:
   roamDistance: 15
   roamPauseTime: 3
   bullet: {fileID: 8670774205982178191, guid: efd99f98435b7954483a9301185e1148, type: 3}
-  shootRate: 0.75
+  shootRate: 0.5
   shootPos: {fileID: 1627724320997217575}
 --- !u!195 &1498161445681157350
 NavMeshAgent:
