@@ -101,6 +101,7 @@ public class gamemanager : MonoBehaviour
 
         if(enemiesKilled >= UpgradeManager.instance.soulsNeeded)
         {
+            enemiesKilled = 0;
             //Show Upgrades
             UpgradeManager.instance.soulsNeeded = Mathf.CeilToInt((float)(UpgradeManager.instance.soulsNeeded * 1.5));
             statePause();
