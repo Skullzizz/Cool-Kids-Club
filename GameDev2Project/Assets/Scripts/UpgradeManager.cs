@@ -20,17 +20,17 @@ public class UpgradeManager : MonoBehaviour
 
     public void UpgradeHealth(int health)
     {
-        gamemanager.instance.playerScript.Health = health;
+        gamemanager.instance.playerScript.UpdateStats(playerController.PlayerStats.Health, health);
     }
 
     public void UpgradeSpeed(int speed) 
     {
-        gamemanager.instance.playerScript.Speed = speed;
+        gamemanager.instance.playerScript.UpdateStats(playerController.PlayerStats.Speed, speed);
     }
 
     public void UpgradeJumpCount(int jumpCount)
     {
-        gamemanager.instance.playerScript.JumpMax = jumpCount;
+        gamemanager.instance.playerScript.UpdateStats(playerController.PlayerStats.JumpMax, jumpCount);
     }
-
+    
 }
