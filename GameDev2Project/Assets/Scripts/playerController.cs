@@ -148,4 +148,40 @@ public class playerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         gamemanager.instance.PlayerDamageScreen.SetActive(false);
     }
+
+    public int Health
+    {
+        get
+            {
+                return HP;
+            }
+        set
+            { 
+                HP += value;
+            }
+    }
+
+    public int Speed
+    {
+        get
+        {
+            return speed;
+        }
+        set
+        {
+            speed += value;
+        }
+    }
+    public int JumpMax
+    {
+        get
+        {
+            return jumpMax;
+        }
+        set
+        {
+            jumpMax += value;
+        }
+    }
+
 }
