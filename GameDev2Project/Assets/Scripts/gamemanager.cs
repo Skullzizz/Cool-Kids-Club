@@ -17,6 +17,7 @@ public class gamemanager : MonoBehaviour
     [SerializeField] private PauseDimmer pauseDimmer;
 
     public Image playerHPBar;
+    public Image playerXPBar;
     public GameObject PlayerDamageScreen;
 
     public GameObject player;
@@ -28,7 +29,7 @@ public class gamemanager : MonoBehaviour
 
     int gameGoalCount;
 
-    int enemiesKilled;
+    public int enemiesKilled = 0;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -98,6 +99,8 @@ public class gamemanager : MonoBehaviour
     public void updateEnemyDeaths(int amt)
     {
         enemiesKilled += amt;
+
+        playerScript.updatePlayerUI();
 
         if(enemiesKilled >= UpgradeManager.instance.soulsNeeded)
         {
