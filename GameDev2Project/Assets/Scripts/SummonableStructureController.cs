@@ -17,7 +17,7 @@ public class SummonableStructureController : MonoBehaviour
     public Transform currWall;
     public bool expanding;
     public int numWallsTouching = 0;
-    
+
 
     // Update is called once per frame
     void Update()
@@ -26,7 +26,7 @@ public class SummonableStructureController : MonoBehaviour
         {
             StopWallRun();
         }
-        if (isWallRunning && Time.time - lastSpawn >= spawnCoolDown&&!expanding)
+        if (isWallRunning && Time.time - lastSpawn >= spawnCoolDown && !expanding)
         {
             SpawnWall();
             lastSpawn = Time.time;
@@ -86,16 +86,16 @@ public class SummonableStructureController : MonoBehaviour
 
         if (dotProduct >= 0)
         {
-            spawnPosition = currWall.position + currWall.right * wallSegmentLength;
+            spawnPosition = currWall.position + currWall.right * segmentLength;
         }
         else
         {
-            spawnPosition = currWall.position - currWall.right * wallSegmentLength;
+            spawnPosition = currWall.position - currWall.right * segmentLength;
         }
 
         GameObject wall = Instantiate(wallPrefab, spawnPosition, spawnRotation);
 
-        StartCoroutine(ExpandFade(wall, dotProduct >= 0 ? currWall.right : -currWall.right, wallSegmentLength));
+        StartCoroutine(ExpandFade(wall, dotProduct >= 0 ? currWall.right : -currWall.right, segmentLength));
     }
 
     IEnumerator ExpandFade(GameObject wall, Vector3 dir, float segLength)
