@@ -31,6 +31,14 @@ public class playerController : MonoBehaviour, IDamage
 
     float shootTimer;
 
+
+    public enum PlayerStats
+    {
+        Health,
+        Speed,
+        JumpMax
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -139,6 +147,7 @@ public class playerController : MonoBehaviour, IDamage
     public void updatePlayerUI()
     {
         gamemanager.instance.playerHPBar.GetComponent<UISmoothFillBar>().SetFill((float)HP / HPOrig);
+        gamemanager.instance.playerXPBar.GetComponent<UISmoothFillBar>().SetFill(gamemanager.instance.enemiesKilled/ UpgradeManager.instance.soulsNeeded);
 
     }
 
@@ -148,4 +157,61 @@ public class playerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         gamemanager.instance.PlayerDamageScreen.SetActive(false);
     }
+
+    public int Health
+    {
+        get
+            {
+                return HP;
+            }
+        set
+            { 
+                HP += value;
+            }
+    }
+
+    public int Speed
+    {
+        get
+        {
+            return speed;
+        }
+        set
+        {
+            speed += value;
+        }
+    }
+    public int JumpMax
+    {
+        get
+        {
+            return jumpMax;
+        }
+        set
+        {
+            jumpMax += value;
+        }
+    }
+
+    public void UpdateStats(PlayerStats stat, int amt)
+    {
+        switch (stat)
+        {
+            case PlayerStats.Health:
+                HP += amt;
+                updatePlayerUI();
+                break;
+                
+            case PlayerStats.Speed:
+                speed += amt;
+                updatePlayerUI();
+                break;
+
+            case PlayerStats.JumpMax:
+                jumpMax += amt;
+                updatePlayerUI();
+                break;
+        }
+    }
+
 }
