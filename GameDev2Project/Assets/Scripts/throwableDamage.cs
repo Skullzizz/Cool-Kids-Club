@@ -21,7 +21,7 @@ public class throwableDamage : MonoBehaviour
     {
         if (throwableHP <= 0)
         {
-            explode = true;
+            
         }
     }
 }
