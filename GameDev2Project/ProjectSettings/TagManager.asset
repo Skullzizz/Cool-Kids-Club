@@ -13,10 +13,12 @@ TagManager:
   - throwable
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+
+  - Enemy
+  - Enemy Bullet
+  - Player Projectile
+  - IgnorePathing
+
   - 
   - 
   - 

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4903557523860850379}
   - component: {fileID: 8075918143841736608}
+  - component: {fileID: 9011332293168727660}
   - component: {fileID: 2666879416117374726}
   - component: {fileID: 7738361454935595237}
   - component: {fileID: 5869777212548756593}
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 941424058941952304}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.21429, y: 2.24, z: 1.17}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -54,7 +55,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   controller: {fileID: 7738361454935595237}
-  wallrunController: {fileID: 0}
+  wallrunController: {fileID: 2666879416117374726}
   HP: 20
   speed: 15
   sprintMod: 3
@@ -65,6 +66,30 @@ MonoBehaviour:
   shootRate: 1
   shootDist: 30
   playerVel: {x: 0, y: 0, z: 0}
+--- !u!114 &9011332293168727660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941424058941952304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621ebcfa914e2b34cafe1cab0138b0bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallPrefab: {fileID: 3147036634760687807, guid: 70f9574e8a384194b9f432a1b19fb665, type: 3}
+  wallSegmentLength: 20
+  fadeTime: 3
+  spawnCoolDown: 0.5
+  expandTime: 1.5
+  player: {fileID: 4903557523860850379}
+  groundCheckDist: 1
+  lastSpawn: 0
+  isWallRunning: 0
+  currWall: {fileID: 0}
+  expanding: 0
+  numWallsTouching: 0
 --- !u!114 &2666879416117374726
 MonoBehaviour:
   m_ObjectHideFlags: 0
