@@ -5,6 +5,7 @@ public class throwPhysics : MonoBehaviour
     [SerializeField] Transform throwingPosition;
     [SerializeField] int pickUpDis;
     [SerializeField] int throwForce;
+    [SerializeField] int HP;
 
     GameObject throwable;
     Rigidbody throwableRb;
