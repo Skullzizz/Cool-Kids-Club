@@ -10,14 +10,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - throwable
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - Enemy Bullet
+  - Player Projectile
+  - IgnorePathing
+  - throwable
   - 
   - 
   - 

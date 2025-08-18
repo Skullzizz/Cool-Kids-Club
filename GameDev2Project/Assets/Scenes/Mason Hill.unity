@@ -774,7 +774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 682948898}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Grab Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -942,7 +942,7 @@ GameObject:
   - component: {fileID: 1381100788}
   - component: {fileID: 1381100787}
   - component: {fileID: 1381100790}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Bus
   m_TagString: throwable
   m_Icon: {fileID: 0}
@@ -1305,7 +1305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2116396896}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Grab Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1389,7 +1389,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 168bfb1d9eaf1f54eb8745e7c67e63f7, type: 2}
     - target: {fileID: 7654000364218826206, guid: 38515df285e904c4ba9bdb6681cf4657, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7654000364218826206, guid: 38515df285e904c4ba9bdb6681cf4657, type: 3}
       propertyPath: m_ProvidesContacts
@@ -1401,7 +1401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8403797011833018018, guid: 38515df285e904c4ba9bdb6681cf4657, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8403797011833018018, guid: 38515df285e904c4ba9bdb6681cf4657, type: 3}
       propertyPath: m_TagString
