@@ -18,6 +18,9 @@ public class throwableDamage : MonoBehaviour
 
     void onImpact()
     {
+        if (explode == true)
+        {
 
+        }
     }
 }
