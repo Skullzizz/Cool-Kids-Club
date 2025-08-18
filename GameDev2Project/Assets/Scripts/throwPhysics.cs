@@ -5,7 +5,6 @@ public class throwPhysics : MonoBehaviour
     [SerializeField] Transform throwingPosition;
     [SerializeField] int pickUpDis;
     [SerializeField] int throwForce;
-    [SerializeField] int pickUpForce;
 
     GameObject throwable;
     Rigidbody throwableRb;
@@ -57,8 +56,6 @@ public class throwPhysics : MonoBehaviour
 
                 if (throwableRb != null)
                 {
-                    throwableRb.useGravity = false;
-                    throwableRb.isKinematic = true;
                     throwable.transform.SetParent(throwingPosition);
                     isHolding = true;
                 }
@@ -71,13 +68,7 @@ public class throwPhysics : MonoBehaviour
         if (throwable != null)
         {
             throwable.transform.SetParent(null);
-            if (throwableRb != null)
-            {
-                throwableRb.isKinematic = false;
-                throwableRb.useGravity = true;
-            }
             throwable = null;
-            throwableRb = null;
             isHolding = false;
         }
     }
