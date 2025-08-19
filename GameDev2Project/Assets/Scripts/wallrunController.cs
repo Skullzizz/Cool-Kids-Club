@@ -115,7 +115,7 @@ public class wallrunController : MonoBehaviour
     // Start Wallrunning
     void startWallrun()
     {
-        if (Input.GetButtonDown("Jump") && (wallLeft || wallRight) && !playerMovement.isGrounded && !isWallRunning)
+        if (Input.GetButtonDown("Jump") && (wallLeft || wallRight) && !playerMovement.isGrounded && !isWallRunning && !pController.isCrouching)
         {
             isWallRunning = true;
             if (wallrunBoostsUsed < wallBoostMax)
@@ -136,6 +136,10 @@ public class wallrunController : MonoBehaviour
                 endWallrun();
             }
             else if (playerMovement.isGrounded)
+            {
+                endWallrun();
+            }
+            else if (pController.isCrouching)
             {
                 endWallrun();
             }
