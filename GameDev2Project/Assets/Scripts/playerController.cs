@@ -53,6 +53,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         HPOrig = HP;
         heightOrig = controller.height;
+        gamemanager.instance.updateEnemyDeaths(0);
         updatePlayerUI();
     }
 
