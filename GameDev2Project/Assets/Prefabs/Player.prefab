@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ignorelayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   controller: {fileID: 7738361454935595237}
   wallrunController: {fileID: 2666879416117374726}
   HP: 20
