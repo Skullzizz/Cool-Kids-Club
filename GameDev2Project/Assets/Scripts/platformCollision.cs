@@ -7,7 +7,7 @@ public class PlatformCollision : MonoBehaviour
     [SerializeField] string playerTag = "Player";
     [SerializeField] Transform platform;
 
-    [SerializeField] bool playerOnPlatform;
+    private bool playerOnPlatform;
 
     private void OnTriggerEnter(Collider other)
     {

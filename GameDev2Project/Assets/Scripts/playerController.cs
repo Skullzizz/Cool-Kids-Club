@@ -11,9 +11,15 @@ public class playerController : MonoBehaviour, IDamage
 
     [SerializeField] int HP;
     [SerializeField] int speed;
+    [SerializeField] int crouchSpeed;
+    [SerializeField] float crouchHeight;
+    [SerializeField] float slideBoost;
+    [SerializeField] float airSlideBoost;
+    [SerializeField] float slideFriction;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpSpeed;
     [SerializeField] int jumpMax;
+    [SerializeField] float airControlMod;
     [SerializeField] public float gravity;
     
 
@@ -26,8 +32,11 @@ public class playerController : MonoBehaviour, IDamage
 
     int jumpCount;
     int HPOrig;
+    float heightOrig;
 
-    bool isSprinting;
+    public bool isSprinting;
+    public bool isCrouching;
+    public bool isSliding;
 
     float shootTimer;
 
@@ -43,6 +52,8 @@ public class playerController : MonoBehaviour, IDamage
     void Start()
     {
         HPOrig = HP;
+        heightOrig = controller.height;
+        gamemanager.instance.updateEnemyDeaths(0);
         updatePlayerUI();
     }
 
@@ -51,6 +62,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         movement();
         sprint();
+        crouch();
 
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
     }
@@ -61,10 +73,20 @@ public class playerController : MonoBehaviour, IDamage
 
         shootTimer += Time.deltaTime;
 
-        if (controller.isGrounded)
+        if (controller.isGrounded && !isSliding)
         {
             jumpCount = 0;
             playerVel = Vector3.zero;
+        }
+        else if (controller.isGrounded && isSliding)
+        {
+            jumpCount = 0;
+            playerVel -= playerVel / slideFriction * Time.deltaTime;
+            if (playerVel.x < 1f && playerVel.z < 1f && playerVel.x > -1f && playerVel.z > -1f)
+            {
+                playerVel = Vector3.zero;
+            }
+
         }
         else
         {
@@ -74,9 +96,38 @@ public class playerController : MonoBehaviour, IDamage
             moveDir = (Input.GetAxis("Horizontal") * transform.right) +
                        (Input.GetAxis("Vertical") * transform.forward);
 
-        controller.Move(moveDir * speed * Time.deltaTime);
+        if (controller.isGrounded)
+        {
+            if (!isCrouching)
+            {
+                controller.Move(moveDir * speed * Time.deltaTime);
+            }
+            else if (isSliding)
+            {
 
-        jump();
+            }
+            else
+            {
+                controller.Move(moveDir * crouchSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+            if (!isCrouching)
+            {
+                controller.Move(moveDir * speed / airControlMod * Time.deltaTime);
+            }
+            else if (isSliding)
+            {
+
+            }
+            else
+            {
+                controller.Move(moveDir * crouchSpeed / airControlMod * Time.deltaTime);
+            }
+        }
+
+            jump();
 
         controller.Move(playerVel * Time.deltaTime);
 
@@ -90,12 +141,39 @@ public class playerController : MonoBehaviour, IDamage
 
     void jump()
     {
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
+        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && !isSliding)
         {
             ++jumpCount;
+            playerVel.x += moveDir.x;
+            playerVel.z += moveDir.z;
             playerVel.y = jumpSpeed;
         }
 
+    }
+
+    void crouch()
+    {
+        if (Input.GetButtonDown("Crouch"))
+        {
+            isCrouching = true;
+            controller.height = crouchHeight;
+
+            if (isSprinting && controller.isGrounded) 
+            {
+                isSliding = true;
+                playerVel.x += moveDir.x * slideBoost;
+                playerVel.z += moveDir.z * slideBoost;
+            }
+        }
+        else if (Input.GetButtonUp("Crouch"))
+        {
+            isCrouching = false;
+            controller.height = heightOrig;
+            if (isSliding)
+            {
+                isSliding = false;
+            }
+        }
     }
 
     void sprint()

@@ -695,6 +695,7 @@ MonoBehaviour:
   throwingPosition: {fileID: 1775079533}
   pickUpDis: 10
   throwForce: 3500
+  HP: 0
 --- !u!1 &585453419 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6048738974235900180, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
@@ -1080,9 +1081,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwDamage: 10
-  explode: 1
-  HP: 15
-  type: 0
+  explode: 0
+  throwableHP: 5
 --- !u!4 &1675509047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1871681562335406940, guid: 59b5dd6e68b08774e9b7f7c73cc93f11, type: 3}
@@ -1489,8 +1489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   throwDamage: 5
   explode: 1
-  HP: 5
-  type: 0
+  throwableHP: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
