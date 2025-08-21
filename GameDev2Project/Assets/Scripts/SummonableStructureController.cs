@@ -5,12 +5,14 @@ using UnityEngine;
 public class SummonableStructureController : MonoBehaviour
 {
     [SerializeField] GameObject wallPrefab;
+    [SerializeField] GameObject particleGrowPrefab;
     [SerializeField] float wallSegmentLength = 2f;
     [SerializeField] float fadeTime = 3f;
     [SerializeField] float spawnCoolDown = .5f;
     [SerializeField] float expandTime = 2f;
     [SerializeField] Transform player;
     [SerializeField] float groundCheckDist = 1f;
+    [SerializeField] float wallActiveTime = 1f;
 
     public float lastSpawn;
     public bool isWallRunning;
@@ -107,19 +109,46 @@ public class SummonableStructureController : MonoBehaviour
         Vector3 startingPos = endPos - dir * segLength;
         wall.transform.position = startingPos;
 
-        while (timeToExpand < expandTime)
-        {
-            wall.transform.position = Vector3.Lerp(startingPos, endPos, timeToExpand / expandTime);
-            timeToExpand += Time.deltaTime;
-            yield return null;
-        }
-        expanding = false;
         Renderer rend = wall.GetComponent<Renderer>();
 
         Material material = rend.material;
         Color origColor = material.color;
 
+
+        GameObject particles;
+        
+
+
+        Quaternion lookRot = Quaternion.LookRotation(dir);
+       
+
+        particles = Instantiate(particleGrowPrefab, startingPos, lookRot);
+        particles.transform.parent = wall.transform;
+        particles.transform.rotation = lookRot;
+        particles.GetComponent<ParticleSystem>().Play();
+
+        while (timeToExpand < expandTime)
+        {
+            wall.transform.position = Vector3.Lerp(startingPos, endPos, timeToExpand / expandTime);
+            particles.transform.position = Vector3.Lerp(startingPos, endPos, timeToExpand / expandTime) + dir * (wall.transform.localScale.x /2f);
+            
+
+            float alphaColor = Mathf.Lerp(0f, 1f, timeToExpand / expandTime);
+            material.color = new Color(origColor.r, origColor.g, origColor.b, alphaColor);
+
+            timeToExpand += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(particles);
+
+        yield return new WaitForSeconds(wallActiveTime);
+
+        expanding = false;
+
+
         float timeFade = 0f;
+
         while (timeFade < fadeTime)
         {
             float alphaColor = Mathf.Lerp(1f, 0f, timeFade / fadeTime);
