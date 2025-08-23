@@ -8,9 +8,11 @@ public class throwableDamage : MonoBehaviour
     [SerializeField] int throwableHP;
     [SerializeField] int damageRate;
     [SerializeField] damageType type;
-    enum damageType { explosive, RAW }
+    [SerializeField] Rigidbody rb;
+    enum damageType { Explosive, RAW }
 
     bool isDamaging;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,31 +24,38 @@ public class throwableDamage : MonoBehaviour
     {
         
     }
-
-    private void onImpact(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (throwableHP <= 0 && type == damageType.explosive)
-        {
-            // break item and apply Explosion() and DOT damage
-        }
-        else if (throwableHP <- 0 && type == damageType.RAW)
-        {
-            // break item and apply RAW damage
-        }
-    }
+        if (collision.collider.isTrigger) return;
 
-    private void Explosion(Collider other)
-    {
-        if (other.isTrigger)
-            return;
+        // Reduce this object's HP by throwDamage every collision
+        throwableHP -= throwDamage;
 
-        IDamage dmg = other.GetComponent<IDamage>();
+        IDamage dmg = collision.collider.GetComponent<IDamage>();
 
-        if (dmg != null && type != damageType.explosive)
+        if (dmg != null && type == damageType.RAW)
         {
             if (!isDamaging)
             {
                 StartCoroutine(Damage(dmg));
+            }
+
+            if (throwableHP <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+        else if (dmg != null && type == damageType.Explosive)
+        {
+            if (!isDamaging)
+            {
+                StartCoroutine(Damage(dmg));
+            }
+
+            if (throwableHP <= 0)
+            {
+                throwDamage *= 2;
+                Destroy(gameObject);
             }
         }
     }
