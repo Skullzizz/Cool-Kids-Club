@@ -59,17 +59,17 @@ MonoBehaviour:
   wallrunController: {fileID: 2666879416117374726}
   HP: 20
   speed: 10
-  crouchSpeed: 0
-  crouchHeight: 0
-  slideBoost: 0
-  airSlideBoost: 0
-  slideFriction: 0
-  sprintMod: 3
+  crouchSpeed: 7
+  crouchHeight: -1
+  slideBoost: 30
+  airSlideBoost: 10
+  slideFriction: 2
+  sprintMod: 2
   jumpSpeed: 10
   jumpMax: 1
-  airControlMod: 0
+  airControlMod: 3
   gravity: 40
-  shootDamage: 3
+  shootDamage: 10
   shootRate: 1
   shootDist: 30
   playerVel: {x: 0, y: 0, z: 0}
@@ -93,7 +93,7 @@ MonoBehaviour:
   wallSegmentLength: 20
   fadeTime: 3
   spawnCoolDown: 0.5
-  expandTime: 1.5
+  expandTime: 3
   player: {fileID: 4903557523860850379}
   groundCheckDist: 1
   wallActiveTime: 1
@@ -132,8 +132,12 @@ MonoBehaviour:
   wallrunGravMod: 3
   wallrunStartBoost: 5
   wallClimbBoost: 10
-  wallBoostMax: 3
-  cameraTilt: 15
+  wallBoostMax: 10
+  cam: {fileID: 4164850193571722880}
+  tiltAmt: 15
+  tiltSpeed: 5
+  wallRunFov: 90
+  fovLerpSpeed: 5
   wallCheckDist: 1.5
   isWallRunning: 0
   pController: {fileID: 8075918143841736608}
