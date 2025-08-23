@@ -116,7 +116,7 @@ public class gamemanager : MonoBehaviour
             menuActive = menuUpgrade;
             menuActive.SetActive(true);
         }
-        playerLevelText.text =playerLevelCount.ToString("F0");
+        playerLevelText.text = playerLevelCount.ToString("F0");
     }
 
     public void loseGame()
