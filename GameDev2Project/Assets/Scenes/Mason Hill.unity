@@ -237,6 +237,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Heavy)
       objectReference: {fileID: 0}
+    - target: {fileID: 7155016395185049507, guid: 59b5dd6e68b08774e9b7f7c73cc93f11, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155016395185049507, guid: 59b5dd6e68b08774e9b7f7c73cc93f11, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -502,6 +510,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4862857840593933731, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
+      propertyPath: throwingPosition
+      value: 
+      objectReference: {fileID: 1316178973}
     - target: {fileID: 4903557523860850379, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.467
@@ -781,6 +793,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 585453424}
   m_SourcePrefab: {fileID: 100100000, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+--- !u!4 &1316178973 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 367108084138858619, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
+  m_PrefabInstance: {fileID: 543110971}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1381100785
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,9 +949,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwDamage: 10
-  throwableHP: 5
+  throwableHP: 15
   damageRate: 0
   type: 0
+  rb: {fileID: 1381100790}
 --- !u!4 &1675509047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1871681562335406940, guid: 59b5dd6e68b08774e9b7f7c73cc93f11, type: 3}
@@ -1123,6 +1141,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2146597125304093138, guid: 38515df285e904c4ba9bdb6681cf4657, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146597125304093138, guid: 38515df285e904c4ba9bdb6681cf4657, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2298625898079747812, guid: 38515df285e904c4ba9bdb6681cf4657, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -1134,6 +1160,10 @@ PrefabInstance:
     - target: {fileID: 7654000364218826206, guid: 38515df285e904c4ba9bdb6681cf4657, type: 3}
       propertyPath: m_ProvidesContacts
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7654000364218826206, guid: 38515df285e904c4ba9bdb6681cf4657, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8403797011833018018, guid: 38515df285e904c4ba9bdb6681cf4657, type: 3}
       propertyPath: m_Name
@@ -1147,7 +1177,8 @@ PrefabInstance:
       propertyPath: m_TagString
       value: throwable
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2146597125304093138, guid: 38515df285e904c4ba9bdb6681cf4657, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 228413950170566659, guid: 38515df285e904c4ba9bdb6681cf4657, type: 3}
@@ -1212,8 +1243,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   throwDamage: 5
   throwableHP: 5
-  damageRate: 0
+  damageRate: 5
   type: 0
+  rb: {fileID: 8039297651019273559}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
