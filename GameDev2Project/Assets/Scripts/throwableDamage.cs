@@ -9,6 +9,10 @@ public class throwableDamage : MonoBehaviour
     [SerializeField] int throwDamage;
     [SerializeField] int throwableHP;
     [SerializeField] int damageRate;
+    [SerializeField] float minDMGVel;
+    [SerializeField] float knockbackForce;
+    [SerializeField] float explKnockMult;
+
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
     enum damageType { Explosive, RAW }
@@ -26,7 +30,13 @@ public class throwableDamage : MonoBehaviour
     [SerializeField] int spawnForce;
     // ---
 
+
     bool isDamaging;
+
+    float impactSpeed;
+    float velFactor;
+    float velDMG;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,7 +51,21 @@ public class throwableDamage : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.isTrigger) return;
+        if (collision.collider.isTrigger)
+        {
+            return;
+        }
+
+        // Velocity check
+        impactSpeed = collision.relativeVelocity.magnitude;
+        if (impactSpeed < minDMGVel)
+        {
+            return;
+        }
+
+        // Velocity damage scaler
+        velFactor = impactSpeed / minDMGVel;
+        velDMG = throwDamage * velFactor;
 
         // Reduce this object's HP by throwDamage every collision
         throwableHP -= throwDamage;
@@ -52,10 +76,8 @@ public class throwableDamage : MonoBehaviour
         {
             if (!isDamaging)
             {
-                StartCoroutine(Damage(dmg));
+                StartCoroutine(Damage(dmg, velDMG));
             }
-
-           
 
             if (throwableHP <= 0)
             {
@@ -65,12 +87,20 @@ public class throwableDamage : MonoBehaviour
                 }
                 Destroy(gameObject);
             }
+
+            // Knockback
+            Rigidbody targetRb = collision.collider.attachedRigidbody;
+            if (targetRb != null)
+            {
+                Vector3 knockbackDir = (collision.collider.transform.position - transform.position).normalized;
+                targetRb.AddForce(knockbackDir * knockbackForce * velFactor, ForceMode.Impulse);
+            }
         }
         else if (dmg != null && type == damageType.Explosive)
         {
             if (!isDamaging)
             {
-                StartCoroutine(Damage(dmg));
+                StartCoroutine(Damage(dmg, velDMG));
             }
 
             if (throwableHP <= 0)
@@ -82,10 +112,22 @@ public class throwableDamage : MonoBehaviour
                 }
                 Destroy(gameObject);
             }
+
+            // Explosive knockback
+            Rigidbody targetRb = collision.collider.attachedRigidbody;
+            if (targetRb != null)
+            {
+                float knockback = knockbackForce * velFactor;
+                if (type == damageType.Explosive)
+                    knockback *= explKnockMult;
+
+                Vector3 knockbackDir = (collision.collider.transform.position - transform.position).normalized;
+                targetRb.AddForce(knockbackDir * knockbackForce * velFactor, ForceMode.Impulse);
+            }
         }
     }
 
-    IEnumerator Damage(IDamage dmg)
+    IEnumerator Damage(IDamage dmg, float velDMG)
     {
         isDamaging = true;
         dmg.takeDamage(throwDamage);
