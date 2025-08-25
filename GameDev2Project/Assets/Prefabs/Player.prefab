@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &890379583007334108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6996980749641330269}
+  m_Layer: 0
+  m_Name: EquipPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6996980749641330269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890379583007334108}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.38300002, y: -0.41400003, z: 0.66700006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7958822008438920210}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &941424058941952304
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,9 +102,10 @@ MonoBehaviour:
   jumpMax: 1
   airControlMod: 3
   gravity: 40
-  shootDamage: 10
-  shootRate: 1
-  shootDist: 30
+  shootDamage: 0
+  shootRate: 0
+  shootDist: 0
+  equippedWeapon: {fileID: 0}
   playerVel: {x: 0, y: 0, z: 0}
   isSprinting: 0
   isCrouching: 0
@@ -119,6 +151,8 @@ MonoBehaviour:
   throwingPosition: {fileID: 367108084138858619}
   pickUpDis: 10
   throwForce: 3500
+  equipPosition: {fileID: 6996980749641330269}
+  isEquiped: 0
 --- !u!114 &2666879416117374726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +343,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 367108084138858619}
+  - {fileID: 6996980749641330269}
   m_Father: {fileID: 4903557523860850379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2932129332649870884
