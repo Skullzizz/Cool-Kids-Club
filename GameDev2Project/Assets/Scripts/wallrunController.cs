@@ -9,7 +9,14 @@ public class wallrunController : MonoBehaviour
     [SerializeField] int wallClimbBoost;
     int wallrunBoostsUsed;
     [SerializeField] int wallBoostMax;
-    [SerializeField] float cameraTilt;
+    [SerializeField] Camera cam;
+    [SerializeField] float tiltAmt = 15f;
+    [SerializeField] float tiltSpeed = 5f;
+    [SerializeField] float wallRunFov = 90f;
+    [SerializeField] float fovLerpSpeed = 5f;
+    float currFov;
+    float currTilt = 0f;
+
 
     // Detection
     [SerializeField] float wallCheckDist;
@@ -17,6 +24,13 @@ public class wallrunController : MonoBehaviour
     bool wallRight;
     bool wallClimb;
     public bool isWallRunning;
+    float wallrunCooldown = 0.2f;
+    float wallrunTimer = 0;
+
+    Collider lastWall;
+    Collider currentWall;
+
+
 
     // References
     CharacterController playerMovement;
@@ -31,6 +45,7 @@ public class wallrunController : MonoBehaviour
         playerMovement = gamemanager.instance.player.GetComponent<CharacterController>();
         gravOrig = pController.gravity;
         wallrunBoostsUsed = 0;
+        currFov = cam.fieldOfView;
     }
 
     // Update is called once per frame
@@ -40,15 +55,43 @@ public class wallrunController : MonoBehaviour
         {
             wallrunBoostsUsed = 0;
         }
+        
+        if(wallrunTimer > 0)
+            wallrunTimer-=Time.deltaTime;
 
         detectWall();
         startWallrun();
         wallrunning();
+        wallJump();
         startWallClimb();
+        cameraTilt();
 
         Debug.DrawRay(transform.position, transform.right * wallCheckDist, Color.azure);
         Debug.DrawRay(transform.position, transform.right * wallCheckDist * -1, Color.azure);
         Debug.DrawRay(transform.position, transform.forward * wallCheckDist, Color.azure);
+    }
+
+    void cameraTilt()
+    {
+        float tiltDir = 0;
+        float fov = currFov;
+        if (isWallRunning)
+        {
+            fov = wallRunFov;
+            if (wallLeft)
+                tiltDir = -tiltAmt;
+            else if(wallRight) tiltDir = tiltAmt;
+        }
+        currTilt=Mathf.Lerp(currTilt,tiltDir,Time.deltaTime * tiltSpeed);
+        cam.transform.localRotation = Quaternion.Euler(cam.transform.localRotation.eulerAngles.x, cam.transform.localRotation.eulerAngles.y, currTilt);
+        cam.fieldOfView= Mathf.Lerp(cam.fieldOfView,fov,Time.deltaTime * fovLerpSpeed);
+    }
+
+    public void ResetWallrunCamera()
+    {
+        currTilt = 0f;
+        if (cam != null)
+            cam.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
     // Detect Wall
@@ -63,6 +106,7 @@ public class wallrunController : MonoBehaviour
             if (right.collider.tag == "RunnableWall")
             {
                 wallRight = true;
+                currentWall = right.collider;
             }
             else
             {
@@ -81,6 +125,7 @@ public class wallrunController : MonoBehaviour
             if (left.collider.tag == "RunnableWall")
             {
                 wallLeft = true;
+                currentWall = left.collider;
             }
             else
             {
@@ -117,13 +162,32 @@ public class wallrunController : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump") && (wallLeft || wallRight) && !playerMovement.isGrounded && !isWallRunning && !pController.isCrouching)
         {
-            isWallRunning = true;
-            if (wallrunBoostsUsed < wallBoostMax)
-            {
-                wallrunBoostsUsed += 1;
-                pController.gravity /= wallrunGravMod;
-                pController.playerVel.y = 0 + wallClimbBoost;
-            }
+            startWallrunAgain(true);
+            Debug.Log("First");
+        }
+        else if ((wallLeft || wallRight)&&!playerMovement.isGrounded&&!isWallRunning&&!pController.isCrouching&&pController.playerVel.y> 0.1f && currentWall != lastWall)
+        {
+            startWallrunAgain(false);
+            lastWall = currentWall;
+            Debug.Log("Again");
+        }
+    }
+
+    void startWallrunAgain(bool jumped)
+    {
+        isWallRunning = true;
+        wallrunTimer = wallrunCooldown;
+        if (wallrunBoostsUsed < wallBoostMax)
+        {
+            wallrunBoostsUsed++;
+            pController.gravity /= wallrunGravMod;
+            if (jumped)
+                pController.playerVel.y = wallClimbBoost;
+            else
+                pController.playerVel.y = Mathf.Max(pController.playerVel.y, 5f);
+
+            Vector3 forward = transform.forward;
+            pController.playerVel += forward * 2f;
         }
     }
 
@@ -160,11 +224,31 @@ public class wallrunController : MonoBehaviour
         {
             if (Input.GetButtonDown("Jump"))
             {
-                wallrunBoostsUsed += 1;
+                
                 pController.playerVel.y = 0 + wallClimbBoost;
             }
         }
     }
 
+    void wallJump()
+    {
+        if(isWallRunning&&Input.GetButtonDown("Jump")&&wallrunTimer<=0f&&wallrunBoostsUsed<wallBoostMax)
+        {
+            wallrunBoostsUsed++;
+            
+            Vector3 jump = transform.up*0.8f;
+            if(wallLeft)
+            {
+                jump += transform.right;
+            }
+            else if (wallRight)
+            {
+                jump-=transform.right;
+            }
+            jump += transform.forward;
+            pController.playerVel = jump*wallrunStartBoost;
+            wallrunTimer = wallrunCooldown;
+        }
+    }
 
 }

@@ -23,9 +23,11 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] public float gravity;
     
 
-    [SerializeField] int shootDamage;
-    [SerializeField] float shootRate;
-    [SerializeField] int shootDist;
+    [SerializeField] public int shootDamage;
+    [SerializeField] public float shootRate;
+    [SerializeField] public int shootDist;
+
+    public throwableDamage equippedWeapon;
 
     Vector3 moveDir;
     public Vector3 playerVel;
@@ -133,7 +135,7 @@ public class playerController : MonoBehaviour, IDamage
 
         
 
-        if (Input.GetButton("Fire1") && shootTimer >= shootRate)
+        if (Input.GetButton("Fire1") && shootTimer >= shootRate && equippedWeapon != null)
         {
             shoot();
         }
@@ -195,16 +197,21 @@ public class playerController : MonoBehaviour, IDamage
         RaycastHit hit;
 
         shootTimer = 0;
-
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignorelayer))
+        if (equippedWeapon.curAmmo > 0)
         {
-            Debug.Log(hit.collider.name);
-
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-            if (dmg != null)
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignorelayer))
             {
-                dmg.takeDamage(shootDamage);
+                Debug.Log(hit.collider.name);
+
+                Instantiate(equippedWeapon.gun.hitEffect, hit.point, Quaternion.identity);
+                equippedWeapon.curAmmo--;
+
+                IDamage dmg = hit.collider.GetComponent<IDamage>();
+
+                if (dmg != null)
+                {
+                    dmg.takeDamage(shootDamage);
+                }
             }
         }
     }
