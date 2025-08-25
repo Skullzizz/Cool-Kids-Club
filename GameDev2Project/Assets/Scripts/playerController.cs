@@ -11,30 +11,51 @@ public class playerController : MonoBehaviour, IDamage
 
     [SerializeField] int HP;
     [SerializeField] int speed;
+    [SerializeField] int crouchSpeed;
+    [SerializeField] float crouchHeight;
+    [SerializeField] float slideBoost;
+    [SerializeField] float airSlideBoost;
+    [SerializeField] float slideFriction;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpSpeed;
     [SerializeField] int jumpMax;
+    [SerializeField] float airControlMod;
     [SerializeField] public float gravity;
     
 
-    [SerializeField] int shootDamage;
-    [SerializeField] float shootRate;
-    [SerializeField] int shootDist;
+    [SerializeField] public int shootDamage;
+    [SerializeField] public float shootRate;
+    [SerializeField] public int shootDist;
+
+    public throwableDamage equippedWeapon;
 
     Vector3 moveDir;
     public Vector3 playerVel;
 
     int jumpCount;
     int HPOrig;
+    float heightOrig;
 
-    bool isSprinting;
+    public bool isSprinting;
+    public bool isCrouching;
+    public bool isSliding;
 
     float shootTimer;
+
+
+    public enum PlayerStats
+    {
+        Health,
+        Speed,
+        JumpMax
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         HPOrig = HP;
+        heightOrig = controller.height;
+        gamemanager.instance.updateEnemyDeaths(0);
         updatePlayerUI();
     }
 
@@ -43,6 +64,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         movement();
         sprint();
+        crouch();
 
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
     }
@@ -53,10 +75,20 @@ public class playerController : MonoBehaviour, IDamage
 
         shootTimer += Time.deltaTime;
 
-        if (controller.isGrounded)
+        if (controller.isGrounded && !isSliding)
         {
             jumpCount = 0;
             playerVel = Vector3.zero;
+        }
+        else if (controller.isGrounded && isSliding)
+        {
+            jumpCount = 0;
+            playerVel -= playerVel / slideFriction * Time.deltaTime;
+            if (playerVel.x < 1f && playerVel.z < 1f && playerVel.x > -1f && playerVel.z > -1f)
+            {
+                playerVel = Vector3.zero;
+            }
+
         }
         else
         {
@@ -66,15 +98,44 @@ public class playerController : MonoBehaviour, IDamage
             moveDir = (Input.GetAxis("Horizontal") * transform.right) +
                        (Input.GetAxis("Vertical") * transform.forward);
 
-        controller.Move(moveDir * speed * Time.deltaTime);
+        if (controller.isGrounded)
+        {
+            if (!isCrouching)
+            {
+                controller.Move(moveDir * speed * Time.deltaTime);
+            }
+            else if (isSliding)
+            {
 
-        jump();
+            }
+            else
+            {
+                controller.Move(moveDir * crouchSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+            if (!isCrouching)
+            {
+                controller.Move(moveDir * speed / airControlMod * Time.deltaTime);
+            }
+            else if (isSliding)
+            {
+
+            }
+            else
+            {
+                controller.Move(moveDir * crouchSpeed / airControlMod * Time.deltaTime);
+            }
+        }
+
+            jump();
 
         controller.Move(playerVel * Time.deltaTime);
 
         
 
-        if (Input.GetButton("Fire1") && shootTimer >= shootRate)
+        if (Input.GetButton("Fire1") && shootTimer >= shootRate && equippedWeapon != null)
         {
             shoot();
         }
@@ -82,12 +143,39 @@ public class playerController : MonoBehaviour, IDamage
 
     void jump()
     {
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
+        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && !isSliding)
         {
             ++jumpCount;
+            playerVel.x += moveDir.x;
+            playerVel.z += moveDir.z;
             playerVel.y = jumpSpeed;
         }
 
+    }
+
+    void crouch()
+    {
+        if (Input.GetButtonDown("Crouch"))
+        {
+            isCrouching = true;
+            controller.height = crouchHeight;
+
+            if (isSprinting && controller.isGrounded) 
+            {
+                isSliding = true;
+                playerVel.x += moveDir.x * slideBoost;
+                playerVel.z += moveDir.z * slideBoost;
+            }
+        }
+        else if (Input.GetButtonUp("Crouch"))
+        {
+            isCrouching = false;
+            controller.height = heightOrig;
+            if (isSliding)
+            {
+                isSliding = false;
+            }
+        }
     }
 
     void sprint()
@@ -109,16 +197,21 @@ public class playerController : MonoBehaviour, IDamage
         RaycastHit hit;
 
         shootTimer = 0;
-
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignorelayer))
+        if (equippedWeapon.curAmmo > 0)
         {
-            Debug.Log(hit.collider.name);
-
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-            if (dmg != null)
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignorelayer))
             {
-                dmg.takeDamage(shootDamage);
+                Debug.Log(hit.collider.name);
+
+                Instantiate(equippedWeapon.gun.hitEffect, hit.point, Quaternion.identity);
+                equippedWeapon.curAmmo--;
+
+                IDamage dmg = hit.collider.GetComponent<IDamage>();
+
+                if (dmg != null)
+                {
+                    dmg.takeDamage(shootDamage);
+                }
             }
         }
     }
@@ -139,6 +232,7 @@ public class playerController : MonoBehaviour, IDamage
     public void updatePlayerUI()
     {
         gamemanager.instance.playerHPBar.GetComponent<UISmoothFillBar>().SetFill((float)HP / HPOrig);
+        gamemanager.instance.playerXPBar.GetComponent<UISmoothFillBar>().SetFill(gamemanager.instance.enemiesKilled/ UpgradeManager.instance.soulsNeeded);
 
     }
 
@@ -148,4 +242,61 @@ public class playerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         gamemanager.instance.PlayerDamageScreen.SetActive(false);
     }
+
+    public int Health
+    {
+        get
+            {
+                return HP;
+            }
+        set
+            { 
+                HP += value;
+            }
+    }
+
+    public int Speed
+    {
+        get
+        {
+            return speed;
+        }
+        set
+        {
+            speed += value;
+        }
+    }
+    public int JumpMax
+    {
+        get
+        {
+            return jumpMax;
+        }
+        set
+        {
+            jumpMax += value;
+        }
+    }
+
+    public void UpdateStats(PlayerStats stat, int amt)
+    {
+        switch (stat)
+        {
+            case PlayerStats.Health:
+                HP += amt;
+                updatePlayerUI();
+                break;
+                
+            case PlayerStats.Speed:
+                speed += amt;
+                updatePlayerUI();
+                break;
+
+            case PlayerStats.JumpMax:
+                jumpMax += amt;
+                updatePlayerUI();
+                break;
+        }
+    }
+
 }

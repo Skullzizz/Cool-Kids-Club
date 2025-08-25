@@ -13,10 +13,12 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuUpgrade;
 
     [SerializeField] TMP_Text gameGoalCountText;
+    [SerializeField] TMP_Text playerLevelText;
 
     [SerializeField] private PauseDimmer pauseDimmer;
 
     public Image playerHPBar;
+    public Image playerXPBar;
     public GameObject PlayerDamageScreen;
 
     public GameObject player;
@@ -28,7 +30,9 @@ public class gamemanager : MonoBehaviour
 
     int gameGoalCount;
 
-    int enemiesKilled;
+    int playerLevelCount = 1;
+
+    public int enemiesKilled = 0;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -99,14 +103,20 @@ public class gamemanager : MonoBehaviour
     {
         enemiesKilled += amt;
 
+
+        playerScript.updatePlayerUI();
+
         if(enemiesKilled >= UpgradeManager.instance.soulsNeeded)
         {
+            playerLevelCount++;
+            enemiesKilled = 0;
             //Show Upgrades
             UpgradeManager.instance.soulsNeeded = Mathf.CeilToInt((float)(UpgradeManager.instance.soulsNeeded * 1.5));
             statePause();
             menuActive = menuUpgrade;
             menuActive.SetActive(true);
         }
+        playerLevelText.text = playerLevelCount.ToString("F0");
     }
 
     public void loseGame()

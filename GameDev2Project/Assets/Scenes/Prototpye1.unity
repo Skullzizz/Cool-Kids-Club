@@ -239,6 +239,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShortTestWall (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 868602580974636451, guid: cccd2950aa0aacb49b36fecc97c864c3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6631392757574538649, guid: cccd2950aa0aacb49b36fecc97c864c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 31.345982
@@ -415,6 +419,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Light) (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4495037601053298897, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.74999994
@@ -468,6 +476,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
+--- !u!114 &150056330 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6520352715655648207, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+  m_PrefabInstance: {fileID: 274734114}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &163777610
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -479,6 +498,10 @@ PrefabInstance:
     - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_Name
       value: Enemy (Light) (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4495037601053298897, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_LocalScale.x
@@ -658,6 +681,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Light) (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4495037601053298897, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.74999994
@@ -762,6 +789,10 @@ PrefabInstance:
     - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
       propertyPath: m_Name
       value: Enemy (Med) (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -948,6 +979,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1128416348571268272, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1128416348571268272, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1128416348571268272, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3039218497997451885, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      propertyPath: lerpSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3691662857549445227, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      propertyPath: playerXPBar
+      value: 
+      objectReference: {fileID: 150056330}
+    - target: {fileID: 4005377293818080088, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005377293818080088, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005377293818080088, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6048738974235900180, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
       propertyPath: m_Name
       value: UI
@@ -1167,6 +1230,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Light) (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4495037601053298897, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.74999994
@@ -1312,6 +1379,10 @@ PrefabInstance:
     - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
       propertyPath: m_Name
       value: Enemy (Med) (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1514,6 +1585,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Med) (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1660,7 +1735,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 476593061}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2990,6 +3065,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Med) (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3054,6 +3133,10 @@ PrefabInstance:
     - target: {fileID: 3107470968354550428, guid: 59b5dd6e68b08774e9b7f7c73cc93f11, type: 3}
       propertyPath: m_Name
       value: Enemy (Heavy)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3107470968354550428, guid: 59b5dd6e68b08774e9b7f7c73cc93f11, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3549,6 +3632,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Med) (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3666,6 +3753,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Med) (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3682,6 +3773,10 @@ PrefabInstance:
     - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_Name
       value: Enemy (Light) (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4495037601053298897, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_LocalScale.x
@@ -3860,6 +3955,10 @@ PrefabInstance:
     - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_Name
       value: Enemy (Light) (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4495037601053298897, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_LocalScale.x
@@ -4191,6 +4290,10 @@ PrefabInstance:
     - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
       propertyPath: m_Name
       value: Enemy (Med) (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4604,6 +4707,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Med) (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4620,6 +4727,10 @@ PrefabInstance:
     - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_Name
       value: Enemy (Light) (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4495037601053298897, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_LocalScale.x
@@ -4799,6 +4910,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Light) (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4495037601053298897, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.74999994
@@ -4903,6 +5018,10 @@ PrefabInstance:
     - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
       propertyPath: m_Name
       value: Enemy (Med) (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5074,6 +5193,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Med) (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5090,6 +5213,10 @@ PrefabInstance:
     - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_Name
       value: Enemy (Light) (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4495037601053298897, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_LocalScale.x
@@ -5196,6 +5323,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Med) (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5295,6 +5426,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4903557523860850379, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353733168904424118, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353733168904424118, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353733168904424118, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353733168904424118, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
+      propertyPath: m_BackGroundColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8075918143841736608, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
@@ -5399,6 +5546,10 @@ PrefabInstance:
     - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_Name
       value: Enemy (Light) (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4495037601053298897, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_LocalScale.x
@@ -5618,6 +5769,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Med) (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5782,6 +5937,10 @@ PrefabInstance:
     - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
       propertyPath: m_Name
       value: Enemy (Med) (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6147,6 +6306,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Light)
       objectReference: {fileID: 0}
+    - target: {fileID: 713927834601401112, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4495037601053298897, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.74999994
@@ -6252,6 +6415,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (Med)
       objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6349,6 +6516,10 @@ PrefabInstance:
     - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
       propertyPath: m_Name
       value: Enemy (Med) (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286208825419136355, guid: 5a471a5c4cac5974ea839148a8ffdfe4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
