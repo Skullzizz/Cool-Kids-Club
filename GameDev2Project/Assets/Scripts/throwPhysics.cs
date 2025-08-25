@@ -6,9 +6,17 @@ public class throwPhysics : MonoBehaviour
     [SerializeField] int pickUpDis;
     [SerializeField] int throwForce;
 
+    // Fields for Equiping Gun - Deven
+    [SerializeField] Transform equipPosition;
+
+    public bool isEquiped = false;
+    // ---
+
     GameObject throwable;
     Rigidbody throwableRb;
     bool isHolding = false;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,11 +29,11 @@ public class throwPhysics : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (!isHolding)
+            if (!isHolding && !isEquiped)
             {
                 TryPickup();
             }
-            else
+            else if (!isEquiped)
             {
                 DropObject();
             }
@@ -36,12 +44,31 @@ public class throwPhysics : MonoBehaviour
             ThrowObject();
         }
 
+        if (Input.GetButtonDown("Equip"))
+        {
+            if (isHolding)
+            {
+                TryEquipObject();
+            }
+            else if (isEquiped)
+            {
+                UnequipObject();
+            }
+        }
         
         if (isHolding && throwable != null)
         {
             throwable.transform.position = throwingPosition.position;
             throwable.transform.rotation = throwingPosition.rotation;
         }
+
+        if (isEquiped && throwable != null)
+        {
+            throwable.transform.position = equipPosition.position;
+            throwable.transform.rotation = equipPosition.rotation;
+        }
+
+       
     }
 
     void TryPickup()
@@ -84,4 +111,37 @@ public class throwPhysics : MonoBehaviour
             }
         }
     }
+
+
+    void TryEquipObject()
+    {
+        if (throwable != null && throwable.GetComponent<throwableDamage>().gun != null && !isEquiped)
+        {
+            throwable.transform.SetParent(equipPosition);
+            isHolding = false;
+            isEquiped = true;
+
+            gamemanager.instance.playerScript.equippedWeapon = throwable.GetComponent<throwableDamage>();
+            gamemanager.instance.playerScript.shootDamage = throwable.GetComponent<throwableDamage>().gun.shootDamage;
+            gamemanager.instance.playerScript.shootRate = throwable.GetComponent<throwableDamage>().gun.shootRate;
+            gamemanager.instance.playerScript.shootDist = throwable.GetComponent<throwableDamage>().gun.shootDist;
+        }
+    }
+
+    void UnequipObject()
+    {
+        if (throwable != null && isEquiped)
+        {
+            throwable.transform.SetParent(throwingPosition);
+            isHolding = true;
+            isEquiped = false;
+
+            gamemanager.instance.playerScript.equippedWeapon = null;
+            gamemanager.instance.playerScript.shootDamage = 0;
+            gamemanager.instance.playerScript.shootRate = 0;
+            gamemanager.instance.playerScript.shootDist = 0;
+        }
+    }
+
+  
 }
