@@ -243,42 +243,8 @@ public class playerController : MonoBehaviour, IDamage
         gamemanager.instance.PlayerDamageScreen.SetActive(false);
     }
 
-    public int Health
-    {
-        get
-            {
-                return HP;
-            }
-        set
-            { 
-                HP += value;
-            }
-    }
 
-    public int Speed
-    {
-        get
-        {
-            return speed;
-        }
-        set
-        {
-            speed += value;
-        }
-    }
-    public int JumpMax
-    {
-        get
-        {
-            return jumpMax;
-        }
-        set
-        {
-            jumpMax += value;
-        }
-    }
-
-    public void UpdateStats(PlayerStats stat, int amt)
+    public void updateStats(PlayerStats stat, int amt)
     {
         switch (stat)
         {
