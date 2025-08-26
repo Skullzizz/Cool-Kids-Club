@@ -18,6 +18,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
     [SerializeField] Transform shootPos;
+    [SerializeField] int animTransSpeed;
 
     Color colorOrig;
 
@@ -43,7 +44,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        anim.SetFloat("Speed", agent.velocity.normalized.magnitude);
+        setAnimLoco();
 
         shootTimer += Time.deltaTime;
 
@@ -59,6 +60,14 @@ public class EnemyAI : MonoBehaviour, IDamage
             checkRoam();
         }
 
+    }
+
+    void setAnimLoco()
+    {
+        float agentSpeedCur = agent.velocity.normalized.magnitude;
+        float animSpeedCurr = anim.GetFloat("Speed");
+
+        anim.SetFloat("Speed", Mathf.Lerp(animSpeedCurr,agentSpeedCur,Time.deltaTime*animTransSpeed));
     }
 
     void checkRoam()
@@ -144,6 +153,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     void shoot()
     {
         shootTimer = 0;
+        anim.SetTrigger("Shoot");
 
         Quaternion rot = Quaternion.LookRotation(playerDir);
 
