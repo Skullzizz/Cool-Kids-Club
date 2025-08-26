@@ -125,6 +125,15 @@ public class throwPhysics : MonoBehaviour
             gamemanager.instance.playerScript.shootDamage = throwable.GetComponent<throwableDamage>().gun.shootDamage;
             gamemanager.instance.playerScript.shootRate = throwable.GetComponent<throwableDamage>().gun.shootRate;
             gamemanager.instance.playerScript.shootDist = throwable.GetComponent<throwableDamage>().gun.shootDist;
+
+            //Update to Inventory UI
+            playerInventory playerInv = gamemanager.instance.playerScript.GetComponent<playerInventory>();
+            if (playerInv != null)
+            {
+                playerInv.equippedWeapon = throwable;
+                playerInv.UpdateWeaponUI();
+            }
+
         }
     }
 
