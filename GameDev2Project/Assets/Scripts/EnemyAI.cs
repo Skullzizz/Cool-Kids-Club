@@ -6,6 +6,8 @@ public class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Transform headPos;
+    [SerializeField] Animator anim;
 
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
@@ -16,6 +18,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
     [SerializeField] Transform shootPos;
+    [SerializeField] int animTransSpeed;
 
     Color colorOrig;
 
@@ -41,6 +44,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        setAnimLoco();
+
         shootTimer += Time.deltaTime;
 
         if (agent.remainingDistance < 0.01f)
@@ -55,6 +60,14 @@ public class EnemyAI : MonoBehaviour, IDamage
             checkRoam();
         }
 
+    }
+
+    void setAnimLoco()
+    {
+        float agentSpeedCur = agent.velocity.normalized.magnitude;
+        float animSpeedCurr = anim.GetFloat("Speed");
+
+        anim.SetFloat("Speed", Mathf.Lerp(animSpeedCurr,agentSpeedCur,Time.deltaTime*animTransSpeed));
     }
 
     void checkRoam()
@@ -81,12 +94,12 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     bool canSeePlayer()
     {
-        playerDir = gamemanager.instance.player.transform.position - transform.position;
+        playerDir = gamemanager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
-        Debug.DrawRay(transform.position, playerDir);
+        Debug.DrawRay(headPos.position, playerDir);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, playerDir, out hit))
+        if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
             // Enemy can see player!!!!
             if (hit.collider.CompareTag("Player") && angleToPlayer <= FOV)
@@ -140,6 +153,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     void shoot()
     {
         shootTimer = 0;
+        anim.SetTrigger("Shoot");
 
         Quaternion rot = Quaternion.LookRotation(playerDir);
 
