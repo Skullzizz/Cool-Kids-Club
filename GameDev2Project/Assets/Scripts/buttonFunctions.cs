@@ -24,22 +24,4 @@ public class ButtonFunctions : MonoBehaviour
         Application.Quit();
 #endif
     }
-
-    public void HealthUpgrade()
-    {
-        UpgradeManager.instance.UpgradeHealth(10);
-        gamemanager.instance.stateUnpause();
-    }
-
-    public void JumpUpgrade()
-    {
-        UpgradeManager.instance.UpgradeJumpCount(1);
-        gamemanager.instance.stateUnpause();
-    }
-
-    public void SpeedUpgrade()
-    {
-        UpgradeManager.instance.UpgradeSpeed(5);
-        gamemanager.instance.stateUnpause();
-    }
 }
