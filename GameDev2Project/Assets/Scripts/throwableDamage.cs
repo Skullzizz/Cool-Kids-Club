@@ -47,7 +47,7 @@ public class throwableDamage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        VisualClipping();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -180,5 +180,33 @@ public class throwableDamage : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         Debug.Log("Finished Spawn Item Delay");
+    }
+
+    void VisualClipping()
+    {
+        if (gamemanager.instance.throwScript.throwable == gameObject)
+        {
+            gameObject.layer = 12;
+            foreach (Transform child in gameObject.transform)
+            {
+                child.gameObject.layer = 12;
+                foreach (Transform subchild in child.transform)
+                {
+                    subchild.gameObject.layer = 12;
+                }
+            }
+        }
+        else
+        {
+            gameObject.layer = 10;
+            foreach (Transform child in gameObject.transform)
+            {
+                child.gameObject.layer = 10;
+                foreach (Transform subchild in child.transform)
+                {
+                    subchild.gameObject.layer = 10;
+                }
+            }
+        }
     }
 }

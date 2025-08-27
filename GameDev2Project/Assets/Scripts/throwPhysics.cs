@@ -59,17 +59,17 @@ public class throwPhysics : MonoBehaviour
                 }
             }
 
-            //if (isHolding && throwable != null)
-            //{
-            //    throwable.transform.position = handPosition.position;
-            //    throwable.transform.rotation = handPosition.rotation;
-            //}
+            if (isHolding && throwable != null)
+            {
+                throwable.transform.position = handPosition.position;
+                throwable.transform.rotation = handPosition.rotation;
+            }
 
-            //if (isEquiped && throwable != null)
-            //{
-            //    throwable.transform.position = equipPosition.position;
-            //    throwable.transform.rotation = equipPosition.rotation;
-            //}
+            if (isEquiped && throwable != null)
+            {
+                throwable.transform.position = equipPosition.position;
+                throwable.transform.rotation = equipPosition.rotation;
+            }
         }
        
     }
