@@ -11,7 +11,7 @@ public class playerController : MonoBehaviour, IDamage
 
     [SerializeField] int HP;
     [SerializeField] int speed;
-    [SerializeField] int crouchSpeed;
+    [SerializeField] float crouchSpeed;
     [SerializeField] float crouchHeight;
     [SerializeField] float slideBoost;
     [SerializeField] float airSlideBoost;
@@ -155,27 +155,34 @@ public class playerController : MonoBehaviour, IDamage
 
     void crouch()
     {
-        if (Input.GetButtonDown("Crouch"))
-        {
-            isCrouching = true;
-            controller.height = crouchHeight;
+        
 
-            if (isSprinting && controller.isGrounded) 
+        if (Input.GetButton("Crouch"))
+        {
+            if (Input.GetButtonDown("Crouch"))
             {
-                isSliding = true;
-                playerVel.x += moveDir.x * slideBoost;
-                playerVel.z += moveDir.z * slideBoost;
+                if (isSprinting && controller.isGrounded)
+                {
+                    isSliding = true;
+                    playerVel.x += moveDir.x * slideBoost;
+                    playerVel.z += moveDir.z * slideBoost;
+                }
             }
+            isCrouching = true;
+            controller.height = Mathf.MoveTowards(controller.height, crouchHeight, crouchSpeed * Time.deltaTime);
+
         }
-        else if (Input.GetButtonUp("Crouch"))
+        else
         {
             isCrouching = false;
-            controller.height = heightOrig;
+            controller.height = Mathf.MoveTowards(controller.height, heightOrig, crouchSpeed * Time.deltaTime);
             if (isSliding)
             {
                 isSliding = false;
             }
         }
+
+        
     }
 
     void sprint()
