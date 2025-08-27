@@ -26,7 +26,6 @@ public class UpgradeManager : MonoBehaviour
 
     private void Awake()
     {
-        soulsNeeded = 3;
         instance = this;
     }
     
@@ -56,9 +55,10 @@ public class UpgradeManager : MonoBehaviour
         {
             Upgrades upgrades = choices[i];
             upgradeTexts[i].text = upgrades.ToString();
+            upgradeButtons[i].onClick.RemoveAllListeners();
             upgradeButtons[i].onClick.AddListener(()=>GiveUpgrades(upgrades));
             upgradeButtons[i].onClick.AddListener(() => gamemanager.instance.stateUnpause());
-        }    
+        }       
     }
 
     //gets three random upgrades

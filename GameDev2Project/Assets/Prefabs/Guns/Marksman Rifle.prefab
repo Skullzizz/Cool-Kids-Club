@@ -256,6 +256,9 @@ MonoBehaviour:
   throwDamage: 15
   throwableHP: 200
   damageRate: 0
+  minDMGVel: 15
+  knockbackForce: 20
+  explKnockMult: 0
   type: 1
   rb: {fileID: 6762367379073521839}
   maxAmmo: 10
@@ -293,7 +296,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4008239825719905659}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 150
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

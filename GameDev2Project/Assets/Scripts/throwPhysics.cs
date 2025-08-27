@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class throwPhysics : MonoBehaviour
 {
-    [SerializeField] Transform throwingPosition;
+    [SerializeField] Transform handPosition;
+    [SerializeField] Transform throwPosition;
     [SerializeField] int pickUpDis;
     [SerializeField] int throwForce;
 
@@ -12,7 +13,7 @@ public class throwPhysics : MonoBehaviour
     public bool isEquiped = false;
     // ---
 
-    GameObject throwable;
+    public GameObject throwable;
     Rigidbody throwableRb;
     bool isHolding = false;
 
@@ -21,53 +22,55 @@ public class throwPhysics : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        throwable = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!gamemanager.instance.isPaused)
         {
-            if (!isHolding && !isEquiped)
+            if (Input.GetMouseButtonDown(0))
             {
-                TryPickup();
+                if (!isHolding && !isEquiped)
+                {
+                    TryPickup();
+                }
+                else if (!isEquiped)
+                {
+                    DropObject();
+                }
             }
-            else if (!isEquiped)
+
+            if (Input.GetMouseButtonDown(1) && isHolding)
             {
-                DropObject();
+                ThrowObject();
             }
-        }
 
-        if (Input.GetMouseButtonDown(1) && isHolding)
-        {
-            ThrowObject();
-        }
-
-        if (Input.GetButtonDown("Equip"))
-        {
-            if (isHolding)
+            if (Input.GetButtonDown("Equip"))
             {
-                TryEquipObject();
+                if (isHolding)
+                {
+                    TryEquipObject();
+                }
+                else if (isEquiped)
+                {
+                    UnequipObject();
+                }
             }
-            else if (isEquiped)
-            {
-                UnequipObject();
-            }
-        }
-        
-        if (isHolding && throwable != null)
-        {
-            throwable.transform.position = throwingPosition.position;
-            throwable.transform.rotation = throwingPosition.rotation;
-        }
 
-        if (isEquiped && throwable != null)
-        {
-            throwable.transform.position = equipPosition.position;
-            throwable.transform.rotation = equipPosition.rotation;
-        }
+            //if (isHolding && throwable != null)
+            //{
+            //    throwable.transform.position = handPosition.position;
+            //    throwable.transform.rotation = handPosition.rotation;
+            //}
 
+            //if (isEquiped && throwable != null)
+            //{
+            //    throwable.transform.position = equipPosition.position;
+            //    throwable.transform.rotation = equipPosition.rotation;
+            //}
+        }
        
     }
 
@@ -83,7 +86,7 @@ public class throwPhysics : MonoBehaviour
 
                 if (throwableRb != null)
                 {
-                    throwable.transform.SetParent(throwingPosition);
+                    throwable.transform.SetParent(handPosition);
                     isHolding = true;
                 }
             }
@@ -94,9 +97,12 @@ public class throwPhysics : MonoBehaviour
     {
         if (throwable != null)
         {
-            throwable.transform.SetParent(null);
-            throwable = null;
             isHolding = false;
+            
+            throwable.transform.SetParent(null);
+            throwable.transform.position = throwPosition.position;
+            throwable.transform.rotation = throwPosition.rotation;
+            throwable = null;
         }
     }
 
@@ -107,7 +113,9 @@ public class throwPhysics : MonoBehaviour
             DropObject();
             if (throwableRb != null)
             {
+                
                 throwableRb.AddForce(Camera.main.transform.forward * throwForce, ForceMode.Impulse);
+                throwableRb.AddForce(Camera.main.transform.up * throwForce/5, ForceMode.Impulse);
             }
         }
     }
@@ -147,17 +155,17 @@ public class throwPhysics : MonoBehaviour
     {
         if (throwable != null && isEquiped)
         {
-            throwable.transform.SetParent(throwingPosition);
+            throwable.transform.SetParent(handPosition);
             isHolding = true;
             isEquiped = false;
 
-            gamemanager.instance.playerScript.equippedWeapon = null;
             gamemanager.instance.playerScript.shootDamage = 0;
             gamemanager.instance.playerScript.shootRate = 0;
             gamemanager.instance.playerScript.shootDist = 0;
+            gamemanager.instance.playerScript.equippedWeapon = null;
 
-            gamemanager.instance.playerScript.GetComponent<playerInventory>().equippedWeaponIndex = -1;
-            gamemanager.instance.playerScript.GetComponent<playerInventory>().UpdateWeaponUI();
+            //gamemanager.instance.playerScript.GetComponent<playerInventory>().equippedWeaponIndex = -1;
+            //gamemanager.instance.playerScript.GetComponent<playerInventory>().UpdateWeaponUI();
         }
     }
 

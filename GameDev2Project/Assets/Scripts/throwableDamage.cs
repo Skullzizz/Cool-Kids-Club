@@ -51,14 +51,7 @@ public class throwableDamage : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.isTrigger)
-        {
-            return;
-        }
-
-        // Velocity check
-        impactSpeed = collision.relativeVelocity.magnitude;
-        if (impactSpeed < minDMGVel)
+        if (collision.collider.isTrigger || gamemanager.instance.throwScript.throwable == gameObject)
         {
             return;
         }
@@ -67,8 +60,20 @@ public class throwableDamage : MonoBehaviour
         velFactor = impactSpeed / minDMGVel;
         velDMG = throwDamage * velFactor;
 
+        // Velocity check
+        impactSpeed = collision.relativeVelocity.magnitude;
+        if (impactSpeed < minDMGVel)
+        {
+            return;
+        }
+        else
+        {
+            // Reduce object HP on collisions with enough velocity to deal damage
+            throwableHP -= throwDamage;
+        }
+
         // Reduce this object's HP by throwDamage every collision
-        throwableHP -= throwDamage;
+        // throwableHP -= throwDamage;
 
         IDamage dmg = collision.collider.GetComponent<IDamage>();
 
@@ -92,8 +97,12 @@ public class throwableDamage : MonoBehaviour
             Rigidbody targetRb = collision.collider.attachedRigidbody;
             if (targetRb != null)
             {
-                Vector3 knockbackDir = (collision.collider.transform.position - transform.position).normalized;
-                targetRb.AddForce(knockbackDir * knockbackForce * velFactor, ForceMode.Impulse);
+                float knockback = knockbackForce * velFactor;
+                if (type == damageType.RAW)
+                {
+                    Vector3 knockbackDir = (collision.collider.transform.position - transform.position).normalized;
+                    targetRb.AddForce(knockbackDir * knockbackForce * velFactor, ForceMode.Impulse);
+                }
             }
         }
         else if (dmg != null && type == damageType.Explosive)
@@ -117,12 +126,23 @@ public class throwableDamage : MonoBehaviour
             Rigidbody targetRb = collision.collider.attachedRigidbody;
             if (targetRb != null)
             {
-                float knockback = knockbackForce * velFactor;
-                if (type == damageType.Explosive)
-                    knockback *= explKnockMult;
+
+                float knockback = knockbackForce * velFactor * explKnockMult;
 
                 Vector3 knockbackDir = (collision.collider.transform.position - transform.position).normalized;
-                targetRb.AddForce(knockbackDir * knockbackForce * velFactor, ForceMode.Impulse);
+                targetRb.AddForce(knockbackDir * knockback, ForceMode.Impulse);
+            }
+        }
+        else if (dmg == null)
+        {
+            if (throwableHP <= 0)
+            {
+                if (storedAmount > 0)
+                {
+                    SpawnStoredItems();
+                }
+                Destroy(gameObject);
+
             }
         }
     }

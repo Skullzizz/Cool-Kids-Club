@@ -138,6 +138,9 @@ MonoBehaviour:
   throwDamage: 12
   throwableHP: 30
   damageRate: 0
+  minDMGVel: 15
+  knockbackForce: 20
+  explKnockMult: 0
   type: 1
   rb: {fileID: 3038170056333486636}
   maxAmmo: 8
