@@ -14,10 +14,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int FOV;
     [SerializeField] int roamDistance;
     [SerializeField] int roamPauseTime;
-
-
     [SerializeField] int animTransSpeed;
 
+  
 
     Color colorOrig;
 
@@ -58,8 +57,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             checkRoam();
         }
-
-        
 
     }
 
@@ -155,7 +152,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-
+    
 
     public virtual void takeDamage(int amount)
     {
