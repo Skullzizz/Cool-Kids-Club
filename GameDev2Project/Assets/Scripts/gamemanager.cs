@@ -23,6 +23,7 @@ public class gamemanager : MonoBehaviour
 
     public GameObject player;
     public playerController playerScript;
+    public throwPhysics throwScript;
 
     public bool isPaused;
 
@@ -43,6 +44,7 @@ public class gamemanager : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerController>();
+        throwScript = player.GetComponent<throwPhysics>();
     }
 
     // Update is called once per frame
