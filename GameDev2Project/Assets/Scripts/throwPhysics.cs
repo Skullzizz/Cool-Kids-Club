@@ -125,6 +125,21 @@ public class throwPhysics : MonoBehaviour
             gamemanager.instance.playerScript.shootDamage = throwable.GetComponent<throwableDamage>().gun.shootDamage;
             gamemanager.instance.playerScript.shootRate = throwable.GetComponent<throwableDamage>().gun.shootRate;
             gamemanager.instance.playerScript.shootDist = throwable.GetComponent<throwableDamage>().gun.shootDist;
+
+            //Update to Inventory UI
+            playerInventory playerInv = gamemanager.instance.playerScript.GetComponent<playerInventory>();
+            if (playerInv != null)
+            {
+                if (!playerInv.inventory.Contains(throwable))
+                {
+                    playerInv.AddItem(throwable);
+                }
+
+                playerInv.equippedWeapon = throwable;
+                playerInv.equippedWeaponIndex = playerInv.inventory.IndexOf(throwable);
+                playerInv.UpdateWeaponUI();
+            }
+
         }
     }
 
@@ -140,6 +155,9 @@ public class throwPhysics : MonoBehaviour
             gamemanager.instance.playerScript.shootDamage = 0;
             gamemanager.instance.playerScript.shootRate = 0;
             gamemanager.instance.playerScript.shootDist = 0;
+
+            gamemanager.instance.playerScript.GetComponent<playerInventory>().equippedWeaponIndex = -1;
+            gamemanager.instance.playerScript.GetComponent<playerInventory>().UpdateWeaponUI();
         }
     }
 

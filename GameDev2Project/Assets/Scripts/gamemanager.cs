@@ -115,6 +115,7 @@ public class gamemanager : MonoBehaviour
             statePause();
             menuActive = menuUpgrade;
             menuActive.SetActive(true);
+            UpgradeManager.instance.ShowRandomUpgrades();
         }
         playerLevelText.text = playerLevelCount.ToString("F0");
     }
