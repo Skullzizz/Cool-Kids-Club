@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 public class playerInventory : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class playerInventory : MonoBehaviour
     public Transform inventoryUIParent;
     public GameObject inventorySlotPrefab;
     public TextMeshProUGUI equippedWeaponText;
+    public Image weaponIcon;
 
     public GameObject equippedWeapon;
 
@@ -39,13 +41,34 @@ public class playerInventory : MonoBehaviour
 
     public void UpdateWeaponUI()
     {
-        if (equippedWeapon != null && equippedWeaponText != null)
+        if (equippedWeapon != null)
         {
-            equippedWeaponText.text = equippedWeapon.name;
+            if(equippedWeaponText != null)
+            {
+                equippedWeaponText.text = equippedWeapon.name;
+            }
+
+            if (weaponIcon != null) 
+            { 
+                var td = equippedWeapon.GetComponent<throwableDamage>();
+                if (td != null && td.gun != null && td.gun.weaponIcon != null)
+                {
+                    weaponIcon.sprite = td.gun.weaponIcon;
+                    weaponIcon.enabled = true;
+                }
+                else weaponIcon.enabled = false;
+            }
         }
         else
         {
-            Debug.LogWarning(" equipped weapon text is missing");
+            if (equippedWeaponText != null)
+                equippedWeaponText.text = "No Weapon";
+
+            if (weaponIcon != null)
+            {
+                weaponIcon.sprite = null;
+                weaponIcon.enabled = false;
+            }
         }
     }
 }

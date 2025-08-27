@@ -13,6 +13,6 @@ public class gunStats : ScriptableObject
     public AudioClip[] shootSound;
     public float shootVol;
 
-
+    public Sprite weaponIcon;
 
 }

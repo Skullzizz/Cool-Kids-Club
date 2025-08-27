@@ -19,3 +19,4 @@ MonoBehaviour:
   hitEffect: {fileID: 970440554703164915, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
   shootSound: []
   shootVol: 0
+  weaponIcon: {fileID: 21300000, guid: 4e3e5e12a43a71344919439903885107, type: 3}
