@@ -62,15 +62,20 @@ public class playerInventory : MonoBehaviour
         if(Input.GetAxis("Mouse ScrollWheel")> 0)
         {
             equippedWeaponIndex++;
-            UpdateWeaponUI();
+            if (equippedWeaponIndex >= inventory.Count)
+                equippedWeaponIndex = 0;
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             equippedWeaponIndex--;
             if (equippedWeaponIndex < 0)
-                equippedWeaponIndex = inventory.Count - 1;
+                equippedWeaponIndex = inventory.Count - 1; 
+        }
 
-            UpdateWeaponUI();   
+        if (equippedWeaponIndex >= 0 && equippedWeaponIndex < inventory.Count)
+        {
+            equippedWeapon = inventory[equippedWeaponIndex];
+            UpdateWeaponUI();
         }
     }
 
