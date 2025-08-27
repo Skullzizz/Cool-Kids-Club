@@ -119,6 +119,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &67502987
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2035213481756897074, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
+      propertyPath: m_Name
+      value: Pistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036825262032603641, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -23.328579
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036825262032603641, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.23027673
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036825262032603641, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -35.64736
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036825262032603641, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036825262032603641, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036825262032603641, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036825262032603641, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036825262032603641, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036825262032603641, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036825262032603641, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
 --- !u!1001 &103040858
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -197,7 +254,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2525979875369716456, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 2525979875369716456, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
       propertyPath: m_SizeDelta.y
@@ -559,7 +616,10 @@ MonoBehaviour:
   inventorySlotPrefab: {fileID: 0}
   equippedWeaponText: {fileID: 404897000}
   weaponIcon: {fileID: 103056920}
+  defaultEmptyColor: {r: 1, g: 0, b: 0, a: 0.4627451}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
   equippedWeapon: {fileID: 0}
+  equippedWeaponIndex: -1
 --- !u!1 &1015755890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,3 +1457,4 @@ SceneRoots:
   - {fileID: 1950191294}
   - {fileID: 1928802262}
   - {fileID: 1323510908}
+  - {fileID: 67502987}

@@ -130,7 +130,13 @@ public class throwPhysics : MonoBehaviour
             playerInventory playerInv = gamemanager.instance.playerScript.GetComponent<playerInventory>();
             if (playerInv != null)
             {
+                if (!playerInv.inventory.Contains(throwable))
+                {
+                    playerInv.AddItem(throwable);
+                }
+
                 playerInv.equippedWeapon = throwable;
+                playerInv.equippedWeaponIndex = playerInv.inventory.IndexOf(throwable);
                 playerInv.UpdateWeaponUI();
             }
 
@@ -149,6 +155,9 @@ public class throwPhysics : MonoBehaviour
             gamemanager.instance.playerScript.shootDamage = 0;
             gamemanager.instance.playerScript.shootRate = 0;
             gamemanager.instance.playerScript.shootDist = 0;
+
+            gamemanager.instance.playerScript.GetComponent<playerInventory>().equippedWeaponIndex = -1;
+            gamemanager.instance.playerScript.GetComponent<playerInventory>().UpdateWeaponUI();
         }
     }
 
