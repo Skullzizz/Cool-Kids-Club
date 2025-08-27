@@ -92,8 +92,12 @@ public class throwableDamage : MonoBehaviour
             Rigidbody targetRb = collision.collider.attachedRigidbody;
             if (targetRb != null)
             {
-                Vector3 knockbackDir = (collision.collider.transform.position - transform.position).normalized;
-                targetRb.AddForce(knockbackDir * knockbackForce * velFactor, ForceMode.Impulse);
+                float knockback = knockbackForce * velFactor;
+                if (type == damageType.RAW)
+                {
+                    Vector3 knockbackDir = (collision.collider.transform.position - transform.position).normalized;
+                    targetRb.AddForce(knockbackDir * knockbackForce * velFactor, ForceMode.Impulse);
+                }
             }
         }
         else if (dmg != null && type == damageType.Explosive)
@@ -119,10 +123,12 @@ public class throwableDamage : MonoBehaviour
             {
                 float knockback = knockbackForce * velFactor;
                 if (type == damageType.Explosive)
+                {
                     knockback *= explKnockMult;
 
-                Vector3 knockbackDir = (collision.collider.transform.position - transform.position).normalized;
-                targetRb.AddForce(knockbackDir * knockbackForce * velFactor, ForceMode.Impulse);
+                    Vector3 knockbackDir = (collision.collider.transform.position - transform.position).normalized;
+                    targetRb.AddForce(knockbackDir * knockbackForce * velFactor, ForceMode.Impulse);
+                }
             }
         }
     }
