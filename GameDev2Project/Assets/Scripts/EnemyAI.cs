@@ -15,18 +15,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int roamDistance;
     [SerializeField] int roamPauseTime;
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    [SerializeField] GameObject bullet;
-    [SerializeField] float shootRate;
-    [SerializeField] Transform shootPos;
+
     [SerializeField] int animTransSpeed;
-=======
-    
->>>>>>> Stashed changes
-=======
-    
->>>>>>> Stashed changes
+
 
     Color colorOrig;
 
@@ -53,7 +44,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        setAnimLoco();
+       // setAnimLoco();
 
 
         if (agent.remainingDistance < 0.01f)
@@ -69,7 +60,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
 
         
-<<<<<<< Updated upstream
+
     }
 
     void setAnimLoco()
@@ -78,8 +69,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         float animSpeedCurr = anim.GetFloat("Speed");
 
         anim.SetFloat("Speed", Mathf.Lerp(animSpeedCurr,agentSpeedCur,Time.deltaTime*animTransSpeed));
-=======
->>>>>>> Stashed changes
+
     }
 
     void checkRoam()
@@ -165,18 +155,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    void shoot()
-    {
-        shootTimer = 0;
-        anim.SetTrigger("Shoot");
-=======
-    
->>>>>>> Stashed changes
-=======
-    
->>>>>>> Stashed changes
+
 
     public virtual void takeDamage(int amount)
     {
