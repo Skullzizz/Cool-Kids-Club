@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3eeff5ead0a35ff458bf06156bd7a1f7
+guid: 099237fef35c62b48bb6c49fbf100f86
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -130,6 +130,6 @@ AssetOrigin:
   productId: 287096
   packageName: Gun Icons Package
   packageVersion: 1.0.0
-  assetPath: Assets/UnityStoreAssets/Navidtbt/Game Weapon Icon Pack/Single Icons/PNG/Rifle/Black/256/Name=AK
-    47 Type 01, Size=256, Rotation=30.png
+  assetPath: Assets/UnityStoreAssets/Navidtbt/Game Weapon Icon Pack/Single Icons/PNG/HandGun/Black/256/Name=Pistol
+    03, Size=256, Rotation=30.png
   uploadId: 674624

@@ -14,8 +14,23 @@ public class playerInventory : MonoBehaviour
     public TextMeshProUGUI equippedWeaponText;
     public Image weaponIcon;
 
-    public GameObject equippedWeapon;
+    [Header("UI Colors")]
+    public Color defaultEmptyColor = Color.red;
+    public Color normalColor = Color.white;
 
+    public GameObject equippedWeapon;
+    public int equippedWeaponIndex = -1;
+
+
+    private void Start()
+    {
+       UpdateWeaponUI();
+    }
+
+    private void Update()
+    {
+        selectGun();
+    }
     public void AddItem(GameObject item)
     {
         inventory.Add(item);
@@ -36,17 +51,36 @@ public class playerInventory : MonoBehaviour
             }
         }
         equippedWeapon = item;
+        equippedWeaponIndex = inventory.Count - 1;
         UpdateWeaponUI();
+    }
+
+    void selectGun()
+    {
+        if (inventory.Count == 0) return;
+
+        if(Input.GetAxis("Mouse ScrollWheel")> 0)
+        {
+            equippedWeaponIndex++;
+            UpdateWeaponUI();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            equippedWeaponIndex--;
+            if (equippedWeaponIndex < 0)
+                equippedWeaponIndex = inventory.Count - 1;
+
+            UpdateWeaponUI();   
+        }
     }
 
     public void UpdateWeaponUI()
     {
-        if (equippedWeapon != null)
+        if (equippedWeapon != null && equippedWeaponIndex >= 0 && equippedWeaponIndex < inventory.Count)
         {
             if(equippedWeaponText != null)
-            {
                 equippedWeaponText.text = equippedWeapon.name;
-            }
+            
 
             if (weaponIcon != null) 
             { 
@@ -54,9 +88,15 @@ public class playerInventory : MonoBehaviour
                 if (td != null && td.gun != null && td.gun.weaponIcon != null)
                 {
                     weaponIcon.sprite = td.gun.weaponIcon;
+                    weaponIcon.color = normalColor;
                     weaponIcon.enabled = true;
                 }
-                else weaponIcon.enabled = false;
+                else 
+                {
+                    weaponIcon.sprite=null;
+                    weaponIcon.color = defaultEmptyColor;
+                    weaponIcon.enabled = true;
+                }
             }
         }
         else
@@ -67,7 +107,8 @@ public class playerInventory : MonoBehaviour
             if (weaponIcon != null)
             {
                 weaponIcon.sprite = null;
-                weaponIcon.enabled = false;
+                weaponIcon.color = defaultEmptyColor;
+                weaponIcon.enabled = true;
             }
         }
     }
