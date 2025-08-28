@@ -55,17 +55,6 @@ public class playerInventory : MonoBehaviour
         UpdateWeaponUI();
     }
 
-    public void RemoveItem()
-    {
-        if (equippedWeapon != null)
-        {
-            inventory.Remove(equippedWeapon);
-            equippedWeaponIndex -= 1;
-            UpdateWeaponUI();
-            equippedWeapon = inventory[equippedWeaponIndex];
-        }
-    }
-
     void selectGun()
     {
         if (inventory.Count == 0) return;
