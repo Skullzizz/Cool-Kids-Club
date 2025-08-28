@@ -17,7 +17,7 @@ public class throwableDamage : MonoBehaviour
     [SerializeField] Rigidbody rb;
     enum damageType { Explosive, RAW }
 
-    
+
     // Weapon Ammo - Deven
     [SerializeField] public int maxAmmo;
     [SerializeField] public int curAmmo;
@@ -41,7 +41,7 @@ public class throwableDamage : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -170,7 +170,7 @@ public class throwableDamage : MonoBehaviour
             spawnDirection.y = 1;
             spawnDirection.x = Random.value;
             spawnDirection.z = Random.value;
-            spawnedObject = Instantiate(spawnThis, spawnPosition, Quaternion.Euler(0,0,0));
+            spawnedObject = Instantiate(spawnThis, spawnPosition, Quaternion.Euler(0, 0, 0));
             spawnedObject.GetComponent<Rigidbody>().AddForce(spawnDirection * spawnForce, ForceMode.Impulse);
             Debug.Log("Spawned Item: " + spawnedObject);
         }

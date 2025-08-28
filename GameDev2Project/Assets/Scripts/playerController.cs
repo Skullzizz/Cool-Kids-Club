@@ -21,7 +21,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int jumpMax;
     [SerializeField] float airControlMod;
     [SerializeField] public float gravity;
-    
+
 
     [SerializeField] public int shootDamage;
     [SerializeField] public float shootRate;
@@ -95,8 +95,8 @@ public class playerController : MonoBehaviour, IDamage
             playerVel.y -= gravity * Time.deltaTime;
         }
 
-            moveDir = (Input.GetAxis("Horizontal") * transform.right) +
-                       (Input.GetAxis("Vertical") * transform.forward);
+        moveDir = (Input.GetAxis("Horizontal") * transform.right) +
+                   (Input.GetAxis("Vertical") * transform.forward);
 
         if (controller.isGrounded)
         {
@@ -129,11 +129,11 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
 
-            jump();
+        jump();
 
         controller.Move(playerVel * Time.deltaTime);
 
-        
+
 
         if (Input.GetButton("Fire1") && shootTimer >= shootRate && equippedWeapon != null)
         {
@@ -155,7 +155,7 @@ public class playerController : MonoBehaviour, IDamage
 
     void crouch()
     {
-        
+
 
         if (Input.GetButton("Crouch"))
         {
@@ -182,7 +182,7 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
 
-        
+
     }
 
     void sprint()
@@ -240,7 +240,7 @@ public class playerController : MonoBehaviour, IDamage
     public void updatePlayerUI()
     {
         gamemanager.instance.playerHPBar.GetComponent<UISmoothFillBar>().SetFill((float)HP / HPOrig);
-        gamemanager.instance.playerXPBar.GetComponent<UISmoothFillBar>().SetFill(gamemanager.instance.enemiesKilled/ UpgradeManager.instance.soulsNeeded);
+        gamemanager.instance.playerXPBar.GetComponent<UISmoothFillBar>().SetFill(gamemanager.instance.enemiesKilled / UpgradeManager.instance.soulsNeeded);
 
     }
 
@@ -260,7 +260,7 @@ public class playerController : MonoBehaviour, IDamage
                 HP += amt;
                 updatePlayerUI();
                 break;
-                
+
             case PlayerStats.Speed:
                 speed += amt;
                 updatePlayerUI();

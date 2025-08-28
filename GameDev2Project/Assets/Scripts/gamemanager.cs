@@ -24,6 +24,7 @@ public class gamemanager : MonoBehaviour
     public GameObject player;
     public playerController playerScript;
     public throwPhysics throwScript;
+    public playerInventory playerInventory;
 
     public bool isPaused;
 
@@ -103,14 +104,14 @@ public class gamemanager : MonoBehaviour
 
     public void updateEnemyDeaths(int amt)
     {
-        if(menuActive == null) 
+        if (menuActive == null)
         {
             enemiesKilled += amt;
 
 
             playerScript.updatePlayerUI();
 
-            if(enemiesKilled >= UpgradeManager.instance.soulsNeeded)
+            if (enemiesKilled >= UpgradeManager.instance.soulsNeeded)
             {
                 playerLevelCount++;
                 enemiesKilled = 0;
