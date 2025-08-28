@@ -2962,15 +2962,16 @@ MonoBehaviour:
   menuUpgrade: {fileID: 8279448455894550529}
   gameGoalCountText: {fileID: 1748092617946791940}
   playerLevelText: {fileID: 3657598851041355884}
-  storedWeaponText: {fileID: 747839260516541125}
   pauseDimmer: {fileID: 322259939768474166}
   playerHPBar: {fileID: 8929355397930930080}
   playerXPBar: {fileID: 6520352715655648207}
   WeaponIcon: {fileID: 7565757110448970300}
   PlayerDamageScreen: {fileID: 8159423666042328888}
+  storedWeaponText: {fileID: 747839260516541125}
   player: {fileID: 0}
   playerScript: {fileID: 0}
   throwScript: {fileID: 0}
+  playerSpawnPos: {fileID: 0}
   playerInventory: {fileID: 0}
   isPaused: 0
   enemiesKilled: 0
@@ -3634,7 +3635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4311062263695046790
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3737,9 +3738,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1533795361163050378}
+      - m_Target: {fileID: 6450553958178011211}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: Respawn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
