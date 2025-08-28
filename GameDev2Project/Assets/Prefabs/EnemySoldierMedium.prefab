@@ -1037,7 +1037,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4129119091844778557}
-  - component: {fileID: 3646025798447872878}
+  - component: {fileID: 5556088030577467010}
   - component: {fileID: 676033803776369488}
   - component: {fileID: 4315028600012802565}
   - component: {fileID: 3117248698602180961}
@@ -1067,7 +1067,7 @@ Transform:
   - {fileID: 8519764442609304923}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3646025798447872878
+--- !u!114 &5556088030577467010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1076,7 +1076,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7861030587241772236}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 110c852f17f17584d9645ba7651f85e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 240c9c9499fdec0479d759a88b13db27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 3477435991483167698}
@@ -1088,10 +1088,11 @@ MonoBehaviour:
   FOV: 90
   roamDistance: 15
   roamPauseTime: 3
+  animTransSpeed: 8
+  playerDir: {x: 0, y: 0, z: 0}
   bullet: {fileID: 8670774205982178191, guid: efd99f98435b7954483a9301185e1148, type: 3}
   shootRate: 0.5
   shootPos: {fileID: 506165166280149395}
-  animTransSpeed: 8
 --- !u!114 &676033803776369488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1104,7 +1105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d718f37b8ac0442459c7b5e1404beff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 3646025798447872878}
+  enemy: {fileID: 0}
   model: {fileID: 3477435991483167698}
 --- !u!195 &4315028600012802565
 NavMeshAgent:
@@ -1192,7 +1193,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7908573053990977058
 GameObject:
