@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 9011332293168727660}
   - component: {fileID: 4862857840593933731}
   - component: {fileID: 2666879416117374726}
+  - component: {fileID: 5535965725801114343}
   - component: {fileID: 7738361454935595237}
   - component: {fileID: 5869777212548756593}
   - component: {fileID: 5403592800309561167}
@@ -210,6 +211,28 @@ MonoBehaviour:
   wallCheckDist: 1.5
   isWallRunning: 0
   pController: {fileID: 8075918143841736608}
+--- !u!114 &5535965725801114343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941424058941952304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3883661aae291245aaa0bf97c9b6bab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory:
+  - {fileID: 0}
+  inventoryUIParent: {fileID: 0}
+  inventorySlotPrefab: {fileID: 0}
+  equippedWeaponText: {fileID: 0}
+  weaponIcon: {fileID: 0}
+  defaultEmptyColor: {r: 1, g: 0, b: 0, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  equippedWeapon: {fileID: 0}
+  equippedWeaponIndex: -1
 --- !u!143 &7738361454935595237
 CharacterController:
   m_ObjectHideFlags: 0
@@ -305,7 +328,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2

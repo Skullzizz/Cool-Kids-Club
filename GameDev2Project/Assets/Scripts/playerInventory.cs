@@ -13,6 +13,7 @@ public class playerInventory : MonoBehaviour
     public GameObject inventorySlotPrefab;
     public TextMeshProUGUI equippedWeaponText;
     public Image weaponIcon;
+    public Sprite noWeaponIcon;
 
     [Header("UI Colors")]
     public Color defaultEmptyColor = Color.red;
@@ -24,7 +25,7 @@ public class playerInventory : MonoBehaviour
 
     private void Start()
     {
-       UpdateWeaponUI();
+        UpdateWeaponUI();
     }
 
     private void Update()
@@ -36,12 +37,12 @@ public class playerInventory : MonoBehaviour
         inventory.Add(item);
         Debug.Log("Added item " + item.name);
 
-        if(inventorySlotPrefab != null && inventoryUIParent != null)
+        if (inventorySlotPrefab != null && inventoryUIParent != null)
         {
             GameObject slot = Instantiate(inventorySlotPrefab, inventoryUIParent);
             TextMeshProUGUI textComponent = slot.GetComponentInChildren<TextMeshProUGUI>();
 
-            if(textComponent != null)
+            if (textComponent != null)
             {
                 textComponent.text = item.name;
             }
@@ -55,11 +56,30 @@ public class playerInventory : MonoBehaviour
         UpdateWeaponUI();
     }
 
+    public void RemoveItem()
+    {
+        if (equippedWeapon != null)
+        {
+            inventory.Remove(equippedWeapon);
+            equippedWeaponIndex -= 1;
+            UpdateWeaponUI();
+            if (inventory[equippedWeaponIndex] != null)
+            {
+                equippedWeapon = inventory[equippedWeaponIndex];
+            }
+            else
+            {
+                equippedWeapon = null;
+            }
+            
+        }
+    }
+
     void selectGun()
     {
         if (inventory.Count == 0) return;
 
-        if(Input.GetAxis("Mouse ScrollWheel")> 0)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             equippedWeaponIndex++;
             if (equippedWeaponIndex >= inventory.Count)
@@ -69,7 +89,7 @@ public class playerInventory : MonoBehaviour
         {
             equippedWeaponIndex--;
             if (equippedWeaponIndex < 0)
-                equippedWeaponIndex = inventory.Count - 1; 
+                equippedWeaponIndex = inventory.Count - 1;
         }
 
         if (equippedWeaponIndex >= 0 && equippedWeaponIndex < inventory.Count)
@@ -83,12 +103,12 @@ public class playerInventory : MonoBehaviour
     {
         if (equippedWeapon != null && equippedWeaponIndex >= 0 && equippedWeaponIndex < inventory.Count)
         {
-            if(equippedWeaponText != null)
+            if (equippedWeaponText != null)
                 equippedWeaponText.text = equippedWeapon.name;
-            
 
-            if (weaponIcon != null) 
-            { 
+
+            if (weaponIcon != null)
+            {
                 var td = equippedWeapon.GetComponent<throwableDamage>();
                 if (td != null && td.gun != null && td.gun.weaponIcon != null)
                 {
@@ -96,9 +116,9 @@ public class playerInventory : MonoBehaviour
                     weaponIcon.color = normalColor;
                     weaponIcon.enabled = true;
                 }
-                else 
+                else
                 {
-                    weaponIcon.sprite=null;
+                    weaponIcon.sprite = noWeaponIcon;
                     weaponIcon.color = defaultEmptyColor;
                     weaponIcon.enabled = true;
                 }
@@ -111,7 +131,7 @@ public class playerInventory : MonoBehaviour
 
             if (weaponIcon != null)
             {
-                weaponIcon.sprite = null;
+                weaponIcon.sprite = noWeaponIcon;
                 weaponIcon.color = defaultEmptyColor;
                 weaponIcon.enabled = true;
             }
