@@ -24,8 +24,8 @@ public class gamemanager : MonoBehaviour
     public GameObject player;
     public playerController playerScript;
     public throwPhysics throwScript;
-
     public GameObject playerSpawnPos;
+    public GameObject checkpointPopup;
 
     public playerInventory playerInventory;
 

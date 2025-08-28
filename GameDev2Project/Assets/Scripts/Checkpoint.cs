@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
@@ -9,8 +10,16 @@ public class Checkpoint : MonoBehaviour
         if (other.CompareTag("Player") && gamemanager.instance.playerSpawnPos.transform.position != transform.position)
         {
             gamemanager.instance.playerSpawnPos.transform.position = transform.position;
+            gamemanager.instance.playerSpawnPos.transform.rotation = transform.rotation;
             model.material.color = Color.lightBlue;
+            StartCoroutine(checkpointFeedback());
         }
     }
 
+    IEnumerator checkpointFeedback()
+    {
+        gamemanager.instance.checkpointPopup.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        gamemanager.instance.checkpointPopup.SetActive(false);
+    }
 }
