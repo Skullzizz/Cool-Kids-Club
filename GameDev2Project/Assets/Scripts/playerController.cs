@@ -226,6 +226,7 @@ public class playerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        Debug.Log("HIT");
 
         updatePlayerUI();
         StartCoroutine(flashDamageScreen());

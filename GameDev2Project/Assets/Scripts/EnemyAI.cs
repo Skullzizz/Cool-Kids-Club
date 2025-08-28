@@ -170,8 +170,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         if (HP <= 0)
         {
-            gamemanager.instance.updateEnemyDeaths(1);
             gamemanager.instance.updateGameGoal(-1);
+            gamemanager.instance.updateEnemyDeaths(1);
             Destroy(gameObject);
         }
     }
