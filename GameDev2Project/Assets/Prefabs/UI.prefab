@@ -2962,9 +2962,11 @@ MonoBehaviour:
   menuUpgrade: {fileID: 8279448455894550529}
   gameGoalCountText: {fileID: 1748092617946791940}
   playerLevelText: {fileID: 3657598851041355884}
+  storedWeaponText: {fileID: 747839260516541125}
   pauseDimmer: {fileID: 322259939768474166}
   playerHPBar: {fileID: 8929355397930930080}
   playerXPBar: {fileID: 6520352715655648207}
+  WeaponIcon: {fileID: 7565757110448970300}
   PlayerDamageScreen: {fileID: 8159423666042328888}
   player: {fileID: 0}
   playerScript: {fileID: 0}

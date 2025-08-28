@@ -958,10 +958,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5521830970035489636, guid: 3fb68b906afefd54db173fe9c39df8de, type: 3}
-      propertyPath: minDMGVel
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 6124797982617106508, guid: 3fb68b906afefd54db173fe9c39df8de, type: 3}
       propertyPath: m_Name
       value: Throwables
