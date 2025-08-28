@@ -13,6 +13,7 @@ public class playerInventory : MonoBehaviour
     public GameObject inventorySlotPrefab;
     public TextMeshProUGUI equippedWeaponText;
     public Image weaponIcon;
+    public Sprite noWeaponIcon;
 
     [Header("UI Colors")]
     public Color defaultEmptyColor = Color.red;
@@ -117,7 +118,7 @@ public class playerInventory : MonoBehaviour
                 }
                 else
                 {
-                    weaponIcon.sprite = null;
+                    weaponIcon.sprite = noWeaponIcon;
                     weaponIcon.color = defaultEmptyColor;
                     weaponIcon.enabled = true;
                 }
@@ -130,7 +131,7 @@ public class playerInventory : MonoBehaviour
 
             if (weaponIcon != null)
             {
-                weaponIcon.sprite = null;
+                weaponIcon.sprite = noWeaponIcon;
                 weaponIcon.color = defaultEmptyColor;
                 weaponIcon.enabled = true;
             }

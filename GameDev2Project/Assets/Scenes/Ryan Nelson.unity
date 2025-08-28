@@ -432,6 +432,7 @@ MonoBehaviour:
   inventorySlotPrefab: {fileID: 0}
   equippedWeaponText: {fileID: 404897000}
   weaponIcon: {fileID: 103056920}
+  noWeaponIcon: {fileID: 21300000, guid: d5ad855c08e83c3409a8053c8f886d54, type: 3}
   defaultEmptyColor: {r: 1, g: 0, b: 0, a: 0.4627451}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   equippedWeapon: {fileID: 0}
