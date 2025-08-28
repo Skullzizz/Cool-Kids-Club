@@ -33,7 +33,7 @@ public class cameraController : MonoBehaviour
 
 
         // rotate the camera to look up and down
-        transform.localRotation = Quaternion.Euler(rotX, 0, 0);
+        transform.localRotation = Quaternion.Euler(rotX, 0, transform.localEulerAngles.z);
         transform.parent.Rotate(Vector3.up * mouseX);
 
 

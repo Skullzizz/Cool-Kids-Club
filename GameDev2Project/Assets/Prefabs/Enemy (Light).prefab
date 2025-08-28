@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4495037601053298897}
   - component: {fileID: 3233691546346289467}
-  - component: {fileID: 3446134298041627921}
+  - component: {fileID: 6621097111663859232}
   - component: {fileID: 1498161445681157350}
   - component: {fileID: 315294256828890324}
   - component: {fileID: 163397120123322778}
@@ -82,7 +82,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713927834601401112}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &3446134298041627921
+--- !u!114 &6621097111663859232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,18 +91,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 713927834601401112}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 110c852f17f17584d9645ba7651f85e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 240c9c9499fdec0479d759a88b13db27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 315294256828890324}
   agent: {fileID: 1498161445681157350}
+  headPos: {fileID: 762779967275968654}
+  anim: {fileID: 0}
   HP: 6
   faceTargetSpeed: 10
   FOV: 90
   roamDistance: 15
   roamPauseTime: 3
+  playerDir: {x: 0, y: 0, z: 0}
   bullet: {fileID: 8670774205982178191, guid: efd99f98435b7954483a9301185e1148, type: 3}
-  shootRate: 0.5
+  shootRate: 0.25
   shootPos: {fileID: 1627724320997217575}
 --- !u!195 &1498161445681157350
 NavMeshAgent:
@@ -262,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d718f37b8ac0442459c7b5e1404beff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 3446134298041627921}
+  enemy: {fileID: 0}
   model: {fileID: 200225842218521184}
 --- !u!33 &1561873667240064731
 MeshFilter:
@@ -583,7 +586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d718f37b8ac0442459c7b5e1404beff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 3446134298041627921}
+  enemy: {fileID: 0}
   model: {fileID: 1413350179645943973}
 --- !u!33 &3269748503746673475
 MeshFilter:
