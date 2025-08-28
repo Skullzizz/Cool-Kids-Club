@@ -72,6 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4903557523860850379}
   - component: {fileID: 8075918143841736608}
+  - component: {fileID: 2988569257371417764}
   - component: {fileID: 9011332293168727660}
   - component: {fileID: 4862857840593933731}
   - component: {fileID: 2666879416117374726}
@@ -141,6 +142,28 @@ MonoBehaviour:
   isSprinting: 0
   isCrouching: 0
   isSliding: 0
+--- !u!114 &2988569257371417764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941424058941952304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3883661aae291245aaa0bf97c9b6bab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory:
+  - {fileID: 0}
+  inventoryUIParent: {fileID: 0}
+  inventorySlotPrefab: {fileID: 0}
+  equippedWeaponText: {fileID: 0}
+  weaponIcon: {fileID: 0}
+  defaultEmptyColor: {r: 1, g: 0, b: 0, a: 0.4627451}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  equippedWeapon: {fileID: 0}
+  equippedWeaponIndex: 0
 --- !u!114 &9011332293168727660
 MonoBehaviour:
   m_ObjectHideFlags: 0
