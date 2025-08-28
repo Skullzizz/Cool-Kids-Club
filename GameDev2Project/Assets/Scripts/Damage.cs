@@ -52,9 +52,9 @@ public class Damage : MonoBehaviour
             dmg.takeDamage(damageAmount);
         }
 
-        if (type == damageType.moving || type == damageType.homing)
+        if (type == damageType.moving || type == damageType.homing) 
         {
-            Destroy(gameObject);
+            Destroy(gameObject); 
         }
     }
 
@@ -65,7 +65,7 @@ public class Damage : MonoBehaviour
 
         IDamage dmg = other.GetComponent <IDamage>();
 
-        if(dmg != null && type != damageType.DOT)
+        if(dmg != null && type == damageType.DOT)
         {
             if(!isDamaging)
             {
