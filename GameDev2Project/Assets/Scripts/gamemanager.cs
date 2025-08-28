@@ -27,6 +27,9 @@ public class gamemanager : MonoBehaviour
     public GameObject player;
     public playerController playerScript;
     public throwPhysics throwScript;
+
+    public GameObject playerSpawnPos;
+
     public playerInventory playerInventory;
 
 
@@ -52,6 +55,8 @@ public class gamemanager : MonoBehaviour
         playerScript = player.GetComponent<playerController>();
         throwScript = player.GetComponent<throwPhysics>();
         playerInventory = player.GetComponent<playerInventory>();
+
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn");
     }
 
     // Update is called once per frame
