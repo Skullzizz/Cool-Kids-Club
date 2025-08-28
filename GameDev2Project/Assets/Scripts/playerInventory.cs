@@ -25,6 +25,8 @@ public class playerInventory : MonoBehaviour
 
     private void Start()
     {
+        weaponIcon = gamemanager.instance.WeaponIcon;
+        equippedWeaponText = gamemanager.instance.storedWeaponText;
         UpdateWeaponUI();
     }
 

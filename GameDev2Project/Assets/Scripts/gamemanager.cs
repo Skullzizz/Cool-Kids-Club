@@ -14,12 +14,15 @@ public class gamemanager : MonoBehaviour
 
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] TMP_Text playerLevelText;
+ 
 
     [SerializeField] private PauseDimmer pauseDimmer;
 
     public Image playerHPBar;
     public Image playerXPBar;
+    public Image WeaponIcon;
     public GameObject PlayerDamageScreen;
+    public TextMeshProUGUI storedWeaponText;
 
     public GameObject player;
     public playerController playerScript;
@@ -28,6 +31,7 @@ public class gamemanager : MonoBehaviour
     public GameObject checkpointPopup;
 
     public playerInventory playerInventory;
+
 
 
     public bool isPaused;
@@ -50,6 +54,7 @@ public class gamemanager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         throwScript = player.GetComponent<throwPhysics>();
+        playerInventory = player.GetComponent<playerInventory>();
 
         playerSpawnPos = GameObject.FindWithTag("Player Spawn");
     }
