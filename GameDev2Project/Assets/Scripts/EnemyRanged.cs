@@ -5,6 +5,7 @@ public class EnemyRanged : EnemyAI
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
     [SerializeField] Transform shootPos;
+    [SerializeField] Animator anime;
 
     float shootTimer;
 
@@ -19,7 +20,7 @@ public class EnemyRanged : EnemyAI
             shootTimer = 0;
 
             Quaternion rot = Quaternion.LookRotation(this.playerDir);
-
+            anime.SetTrigger("Shoot");
             Instantiate(bullet, shootPos.position, rot);
         }
     }
