@@ -214,7 +214,7 @@ MonoBehaviour:
   throwDamage: 5
   throwableHP: 5
   damageRate: 0
-  minDMGVel: 15
+  minDMGVel: 10
   knockbackForce: 20
   explKnockMult: 0
   type: 0

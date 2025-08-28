@@ -59,34 +59,6 @@ public class throwPhysics : MonoBehaviour
                 }
             }
 
-            if (Input.GetButtonDown("Store"))
-            {
-                if (isHolding && gamemanager.instance.playerInventory.equippedWeapon == null)
-                {
-                    //Update to Inventory UI
-                    playerInventory playerInv = gamemanager.instance.playerInventory;
-                    if (playerInv != null)
-                    {
-                        playerInv.AddItem(throwable);
-
-                        playerInv.equippedWeapon = throwable;
-                        playerInv.equippedWeaponIndex = playerInv.inventory.IndexOf(throwable);
-                        throwable.SetActive(false);
-                        throwable = null;
-                        isHolding = false;
-                        playerInv.UpdateWeaponUI();
-                    }
-                }
-                else if (!isHolding && !isEquiped && gamemanager.instance.playerInventory.equippedWeapon != null)
-                {
-                    throwable = gamemanager.instance.playerInventory.equippedWeapon;
-                    throwable.SetActive(true);
-                    isHolding = true;
-                    gamemanager.instance.playerInventory.RemoveItem();
-                }
-
-            }
-
             if (isHolding && throwable != null)
             {
                 throwable.transform.position = handPosition.position;
@@ -162,12 +134,21 @@ public class throwPhysics : MonoBehaviour
             gamemanager.instance.playerScript.shootRate = throwable.GetComponent<throwableDamage>().gun.shootRate;
             gamemanager.instance.playerScript.shootDist = throwable.GetComponent<throwableDamage>().gun.shootDist;
 
+            //Update to Inventory UI
+            playerInventory playerInv = gamemanager.instance.playerScript.GetComponent<playerInventory>();
+            if (playerInv != null)
+            {
+                if (!playerInv.inventory.Contains(throwable))
+                {
+                    playerInv.AddItem(throwable);
+                }
+
+                playerInv.equippedWeapon = throwable;
+                playerInv.equippedWeaponIndex = playerInv.inventory.IndexOf(throwable);
+                playerInv.UpdateWeaponUI();
+            }
+
         }
-    }
-
-    void StoreItem()
-    {
-
     }
 
     void UnequipObject()
@@ -183,7 +164,8 @@ public class throwPhysics : MonoBehaviour
             gamemanager.instance.playerScript.shootDist = 0;
             gamemanager.instance.playerScript.equippedWeapon = null;
 
-
+            //gamemanager.instance.playerScript.GetComponent<playerInventory>().equippedWeaponIndex = -1;
+            //gamemanager.instance.playerScript.GetComponent<playerInventory>().UpdateWeaponUI();
         }
     }
 

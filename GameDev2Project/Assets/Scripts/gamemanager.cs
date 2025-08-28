@@ -24,7 +24,6 @@ public class gamemanager : MonoBehaviour
     public GameObject player;
     public playerController playerScript;
     public throwPhysics throwScript;
-    public playerInventory playerInventory;
 
     public bool isPaused;
 
