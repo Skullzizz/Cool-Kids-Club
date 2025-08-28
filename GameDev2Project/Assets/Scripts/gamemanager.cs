@@ -103,30 +103,36 @@ public class gamemanager : MonoBehaviour
 
     public void updateEnemyDeaths(int amt)
     {
-        enemiesKilled += amt;
-
-
-        playerScript.updatePlayerUI();
-
-        if(enemiesKilled >= UpgradeManager.instance.soulsNeeded)
+        if(menuActive == null) 
         {
-            playerLevelCount++;
-            enemiesKilled = 0;
-            //Show Upgrades
-            UpgradeManager.instance.soulsNeeded = Mathf.CeilToInt((float)(UpgradeManager.instance.soulsNeeded * 1.5));
-            statePause();
-            menuActive = menuUpgrade;
-            menuActive.SetActive(true);
-            UpgradeManager.instance.ShowRandomUpgrades();
+            enemiesKilled += amt;
+
+
+            playerScript.updatePlayerUI();
+
+            if(enemiesKilled >= UpgradeManager.instance.soulsNeeded)
+            {
+                playerLevelCount++;
+                enemiesKilled = 0;
+                //Show Upgrades
+                UpgradeManager.instance.soulsNeeded = Mathf.CeilToInt((float)(UpgradeManager.instance.soulsNeeded * 1.5));
+                statePause();
+                menuActive = menuUpgrade;
+                menuActive.SetActive(true);
+                UpgradeManager.instance.ShowRandomUpgrades();
+            }
+            playerLevelText.text = playerLevelCount.ToString("F0");
         }
-        playerLevelText.text = playerLevelCount.ToString("F0");
     }
 
     public void loseGame()
     {
-        statePause();
-        menuActive = menuLose;
-        menuActive.SetActive(true);
-        pauseDimmer.ShowDim();
+        if (menuActive == null)
+        {
+            statePause();
+            menuActive = menuLose;
+            menuActive.SetActive(true);
+            pauseDimmer.ShowDim();
+        }
     }
 }
