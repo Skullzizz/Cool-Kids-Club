@@ -273,4 +273,14 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
+    public void SpawnPlayer()
+    {
+        controller.enabled = false;
+        controller.transform.position = gamemanager.instance.playerSpawnPos.transform.position;
+        controller.enabled = true;
+
+        playerVel = Vector3.zero;
+        HP = HPOrig;
+        updatePlayerUI();
+    }
 }
