@@ -49,8 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6629e7c94dbf3ac4ba4ed57084791547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwDamage: 5
-  throwableHP: 5
+  throwDamage: 30
+  throwableHP: 60
   damageRate: 0
   minDMGVel: 15
   knockbackForce: 20
