@@ -43,7 +43,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-       // setAnimLoco();
+       setAnimLoco();
 
 
         if (agent.remainingDistance < 0.01f)

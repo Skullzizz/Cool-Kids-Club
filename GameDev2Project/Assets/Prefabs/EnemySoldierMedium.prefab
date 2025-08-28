@@ -1093,6 +1093,7 @@ MonoBehaviour:
   bullet: {fileID: 8670774205982178191, guid: efd99f98435b7954483a9301185e1148, type: 3}
   shootRate: 0.5
   shootPos: {fileID: 506165166280149395}
+  anime: {fileID: 3117248698602180961}
 --- !u!114 &676033803776369488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,7 +1106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d718f37b8ac0442459c7b5e1404beff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
+  enemy: {fileID: 5556088030577467010}
   model: {fileID: 3477435991483167698}
 --- !u!195 &4315028600012802565
 NavMeshAgent:
