@@ -20,6 +20,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] int animTransSpeed;
 
+    private RagdollToggle ragdollToggle;
+
     Color colorOrig;
 
     float shootTimer;
@@ -39,6 +41,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         gamemanager.instance.updateGameGoal(1);
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
+
+        ragdollToggle = GetComponent<RagdollToggle>();
     }
 
     // Update is called once per frame
@@ -172,7 +176,15 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             gamemanager.instance.updateEnemyDeaths(1);
             gamemanager.instance.updateGameGoal(-1);
-            Destroy(gameObject);
+
+            //Ragdoll Physics
+            ragdollToggle.ToggleRagdoll(true);
+            Rigidbody hipsRigidbody = GetComponentInChildren<Rigidbody>();
+            if (hipsRigidbody != null)
+            {
+                hipsRigidbody.AddForce(Vector3.up * 5, ForceMode.Impulse);
+            }
+            Destroy(gameObject, 5f);
         }
     }
 
