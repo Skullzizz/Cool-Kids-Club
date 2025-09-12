@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class cameraController : MonoBehaviour
 {
-    [SerializeField] int sens;
-    [SerializeField] int lockVertMin, lockVertMax;
+    [SerializeField, Range(1, 10)] int sens = 3;
+    [SerializeField] int lockVertMin = -90, lockVertMax = 90;
     [SerializeField] bool invertY;
 
     float rotX;
@@ -18,9 +18,12 @@ public class cameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(Time.timeScale == 0f || Cursor.lockState != CursorLockMode.Locked) return;
+
         // get input
-        float mouseX = Input.GetAxisRaw("Mouse X") * sens * Time.deltaTime;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * sens * Time.deltaTime;
+        float mouseX = Input.GetAxisRaw("Mouse X") * sens;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * sens;
 
         // use invertY to give option of y look inversion
         if (invertY)

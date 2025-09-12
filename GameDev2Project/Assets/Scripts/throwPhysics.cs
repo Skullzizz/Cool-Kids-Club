@@ -15,6 +15,7 @@ public class throwPhysics : MonoBehaviour
 
     public GameObject throwable;
     Rigidbody throwableRb;
+    bool throwableRbDefaultGravity;
     bool isHolding = false;
 
 
@@ -111,10 +112,12 @@ public class throwPhysics : MonoBehaviour
             {
                 throwable = hit.collider.gameObject;
                 throwableRb = throwable.GetComponent<Rigidbody>();
+                throwableRbDefaultGravity = throwableRb.useGravity;
 
                 if (throwableRb != null)
                 {
                     throwable.transform.SetParent(handPosition);
+                    throwableRb.useGravity = false;
                     isHolding = true;
                 }
             }
@@ -129,23 +132,19 @@ public class throwPhysics : MonoBehaviour
 
             throwable.transform.SetParent(null);
             throwable.transform.position = throwPosition.position;
-            throwable.transform.rotation = throwPosition.rotation;
             throwable = null;
+            throwableRb.useGravity = throwableRbDefaultGravity;
         }
     }
 
     void ThrowObject()
     {
-        if (throwable != null)
-        {
-            DropObject();
             if (throwableRb != null)
             {
-
-                throwableRb.AddForce(Camera.main.transform.forward * throwForce, ForceMode.Impulse);
-                throwableRb.AddForce(Camera.main.transform.up * throwForce / 5, ForceMode.Impulse);
+            DropObject();
+            throwableRb.AddForce(throwableRb.transform.forward * throwForce, ForceMode.Impulse);
             }
-        }
+            
     }
 
 
