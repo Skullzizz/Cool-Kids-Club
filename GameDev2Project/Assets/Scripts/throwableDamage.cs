@@ -17,7 +17,7 @@ public class throwableDamage : MonoBehaviour
     [SerializeField] Rigidbody rb;
     enum damageType { Explosive, RAW }
 
-    
+
     // Weapon Ammo - Deven
     [SerializeField] public int maxAmmo;
     [SerializeField] public int curAmmo;
@@ -41,24 +41,17 @@ public class throwableDamage : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        VisualClipping();
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.isTrigger)
-        {
-            return;
-        }
-
-        // Velocity check
-        impactSpeed = collision.relativeVelocity.magnitude;
-        if (impactSpeed < minDMGVel)
+        if (collision.collider.isTrigger || gamemanager.instance.throwScript.throwable == gameObject)
         {
             return;
         }
@@ -67,8 +60,20 @@ public class throwableDamage : MonoBehaviour
         velFactor = impactSpeed / minDMGVel;
         velDMG = throwDamage * velFactor;
 
+        // Velocity check
+        impactSpeed = collision.relativeVelocity.magnitude;
+        if (impactSpeed < minDMGVel)
+        {
+            return;
+        }
+        else
+        {
+            // Reduce object HP on collisions with enough velocity to deal damage
+            throwableHP -= throwDamage;
+        }
+
         // Reduce this object's HP by throwDamage every collision
-        throwableHP -= throwDamage;
+        // throwableHP -= throwDamage;
 
         IDamage dmg = collision.collider.GetComponent<IDamage>();
 
@@ -121,14 +126,23 @@ public class throwableDamage : MonoBehaviour
             Rigidbody targetRb = collision.collider.attachedRigidbody;
             if (targetRb != null)
             {
-                float knockback = knockbackForce * velFactor;
-                if (type == damageType.Explosive)
-                {
-                    knockback *= explKnockMult;
 
-                    Vector3 knockbackDir = (collision.collider.transform.position - transform.position).normalized;
-                    targetRb.AddForce(knockbackDir * knockbackForce * velFactor, ForceMode.Impulse);
+                float knockback = knockbackForce * velFactor * explKnockMult;
+
+                Vector3 knockbackDir = (collision.collider.transform.position - transform.position).normalized;
+                targetRb.AddForce(knockbackDir * knockback, ForceMode.Impulse);
+            }
+        }
+        else if (dmg == null)
+        {
+            if (throwableHP <= 0)
+            {
+                if (storedAmount > 0)
+                {
+                    SpawnStoredItems();
                 }
+                Destroy(gameObject);
+
             }
         }
     }
@@ -156,7 +170,7 @@ public class throwableDamage : MonoBehaviour
             spawnDirection.y = 1;
             spawnDirection.x = Random.value;
             spawnDirection.z = Random.value;
-            spawnedObject = Instantiate(spawnThis, spawnPosition, Quaternion.Euler(0,0,0));
+            spawnedObject = Instantiate(spawnThis, spawnPosition, Quaternion.Euler(0, 0, 0));
             spawnedObject.GetComponent<Rigidbody>().AddForce(spawnDirection * spawnForce, ForceMode.Impulse);
             Debug.Log("Spawned Item: " + spawnedObject);
         }
@@ -166,5 +180,33 @@ public class throwableDamage : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         Debug.Log("Finished Spawn Item Delay");
+    }
+
+    void VisualClipping()
+    {
+        if (gamemanager.instance.throwScript.throwable == gameObject)
+        {
+            gameObject.layer = 12;
+            foreach (Transform child in gameObject.transform)
+            {
+                child.gameObject.layer = 12;
+                foreach (Transform subchild in child.transform)
+                {
+                    subchild.gameObject.layer = 12;
+                }
+            }
+        }
+        else
+        {
+            gameObject.layer = 10;
+            foreach (Transform child in gameObject.transform)
+            {
+                child.gameObject.layer = 10;
+                foreach (Transform subchild in child.transform)
+                {
+                    subchild.gameObject.layer = 10;
+                }
+            }
+        }
     }
 }

@@ -4,34 +4,31 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField] public Renderer model;
+    [SerializeField] public NavMeshAgent agent;
     [SerializeField] Transform headPos;
     [SerializeField] Animator anim;
 
-    [SerializeField] int HP;
+    [SerializeField] public int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
     [SerializeField] int roamDistance;
     [SerializeField] int roamPauseTime;
-
-    [SerializeField] GameObject bullet;
-    [SerializeField] float shootRate;
-    [SerializeField] Transform shootPos;
     [SerializeField] int animTransSpeed;
+
 
     private RagdollToggle ragdollToggle;
 
+
     Color colorOrig;
 
-    float shootTimer;
     float roamTimer;
     float angleToPlayer;
     float stoppingDistOrig;
 
     bool playerInTrigger;
 
-    Vector3 playerDir;
+    public Vector3 playerDir;
     Vector3 startingPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,15 +39,18 @@ public class EnemyAI : MonoBehaviour, IDamage
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
 
+
         ragdollToggle = GetComponent<RagdollToggle>();
+
+        roamTimer = roamPauseTime;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        setAnimLoco();
+       setAnimLoco();
 
-        shootTimer += Time.deltaTime;
 
         if (agent.remainingDistance < 0.01f)
             roamTimer += Time.deltaTime;
@@ -72,6 +72,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         float animSpeedCurr = anim.GetFloat("Speed");
 
         anim.SetFloat("Speed", Mathf.Lerp(animSpeedCurr,agentSpeedCur,Time.deltaTime*animTransSpeed));
+
     }
 
     void checkRoam()
@@ -94,6 +95,12 @@ public class EnemyAI : MonoBehaviour, IDamage
         NavMeshHit hit;
         NavMesh.SamplePosition(ranPos, out hit, roamDistance, 1);
         agent.SetDestination(hit.position);
+        
+    }
+
+    protected virtual void Attack()
+    {
+        // ranged or melee will have there own attack method
     }
 
     bool canSeePlayer()
@@ -109,11 +116,8 @@ public class EnemyAI : MonoBehaviour, IDamage
             if (hit.collider.CompareTag("Player") && angleToPlayer <= FOV)
             {
                 agent.SetDestination(gamemanager.instance.player.transform.position);
-
-                if (shootTimer >= shootRate)
-                {
-                    shoot();
-                }
+                    Attack();
+                
 
                 if (agent.remainingDistance <= agent.stoppingDistance)
                 {
@@ -137,7 +141,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -145,7 +149,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -154,17 +158,9 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-    void shoot()
-    {
-        shootTimer = 0;
-        anim.SetTrigger("Shoot");
+    
 
-        Quaternion rot = Quaternion.LookRotation(playerDir);
-
-        Instantiate(bullet, shootPos.position, rot);
-    }
-
-    public void takeDamage(int amount)
+    public virtual void takeDamage(int amount)
     {
         if (HP > 0)
         {
@@ -174,8 +170,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         if (HP <= 0)
         {
-            gamemanager.instance.updateEnemyDeaths(1);
             gamemanager.instance.updateGameGoal(-1);
+
 
             //Ragdoll Physics
             ragdollToggle.ToggleRagdoll(true);
@@ -185,6 +181,10 @@ public class EnemyAI : MonoBehaviour, IDamage
                 hipsRigidbody.AddForce(Vector3.up * 5, ForceMode.Impulse);
             }
             Destroy(gameObject, 5f);
+
+            gamemanager.instance.updateEnemyDeaths(1);
+            Destroy(gameObject);
+            
         }
     }
 

@@ -151,7 +151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4118140325331912074}
   - component: {fileID: 1227804617714235884}
-  - component: {fileID: 7047471846061739368}
+  - component: {fileID: 3472324132612946281}
   - component: {fileID: 5518766962932623031}
   - component: {fileID: 3112422576158685972}
   - component: {fileID: 4826848379155355888}
@@ -191,7 +191,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7286208825419136355}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &7047471846061739368
+--- !u!114 &3472324132612946281
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -200,16 +200,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7286208825419136355}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 110c852f17f17584d9645ba7651f85e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 240c9c9499fdec0479d759a88b13db27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 3112422576158685972}
   agent: {fileID: 5518766962932623031}
-  HP: 15
-  faceTargetSpeed: 15
+  headPos: {fileID: 3227934622030577123}
+  anim: {fileID: 0}
+  HP: 20
+  faceTargetSpeed: 80
   FOV: 90
-  roamDistance: 15
-  roamPauseTime: 3
+  roamDistance: 30
+  roamPauseTime: 2
+  playerDir: {x: 0, y: 0, z: 0}
   bullet: {fileID: 8670774205982178191, guid: efd99f98435b7954483a9301185e1148, type: 3}
   shootRate: 0.5
   shootPos: {fileID: 1658490835367672670}
@@ -371,7 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d718f37b8ac0442459c7b5e1404beff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 7047471846061739368}
+  enemy: {fileID: 0}
   model: {fileID: 2402783260340386120}
 --- !u!33 &3456414495923718430
 MeshFilter:
@@ -582,7 +585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d718f37b8ac0442459c7b5e1404beff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 7047471846061739368}
+  enemy: {fileID: 0}
   model: {fileID: 5086527687834679336}
 --- !u!33 &6949999069158571407
 MeshFilter:

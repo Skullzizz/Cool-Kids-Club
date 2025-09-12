@@ -11,7 +11,7 @@ public class playerController : MonoBehaviour, IDamage
 
     [SerializeField] int HP;
     [SerializeField] int speed;
-    [SerializeField] int crouchSpeed;
+    [SerializeField] float crouchSpeed;
     [SerializeField] float crouchHeight;
     [SerializeField] float slideBoost;
     [SerializeField] float airSlideBoost;
@@ -21,7 +21,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int jumpMax;
     [SerializeField] float airControlMod;
     [SerializeField] public float gravity;
-    
+
 
     [SerializeField] public int shootDamage;
     [SerializeField] public float shootRate;
@@ -103,8 +103,8 @@ public class playerController : MonoBehaviour, IDamage
             playerVel.y -= gravity * Time.deltaTime;
         }
 
-            moveDir = (Input.GetAxis("Horizontal") * transform.right) +
-                       (Input.GetAxis("Vertical") * transform.forward);
+        moveDir = (Input.GetAxis("Horizontal") * transform.right) +
+                   (Input.GetAxis("Vertical") * transform.forward);
 
         if (controller.isGrounded)
         {
@@ -137,11 +137,11 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
 
-            jump();
+        jump();
 
         controller.Move(playerVel * Time.deltaTime);
 
-        
+
 
         if (Input.GetButton("Fire1") && shootTimer >= shootRate && equippedWeapon != null)
         {
@@ -163,27 +163,34 @@ public class playerController : MonoBehaviour, IDamage
 
     void crouch()
     {
-        if (Input.GetButtonDown("Crouch"))
-        {
-            isCrouching = true;
-            controller.height = crouchHeight;
 
-            if (isSprinting && controller.isGrounded) 
+
+        if (Input.GetButton("Crouch"))
+        {
+            if (Input.GetButtonDown("Crouch"))
             {
-                isSliding = true;
-                playerVel.x += moveDir.x * slideBoost;
-                playerVel.z += moveDir.z * slideBoost;
+                if (isSprinting && controller.isGrounded)
+                {
+                    isSliding = true;
+                    playerVel.x += moveDir.x * slideBoost;
+                    playerVel.z += moveDir.z * slideBoost;
+                }
             }
+            isCrouching = true;
+            controller.height = Mathf.MoveTowards(controller.height, crouchHeight, crouchSpeed * Time.deltaTime);
+
         }
-        else if (Input.GetButtonUp("Crouch"))
+        else
         {
             isCrouching = false;
-            controller.height = heightOrig;
+            controller.height = Mathf.MoveTowards(controller.height, heightOrig, crouchSpeed * Time.deltaTime);
             if (isSliding)
             {
                 isSliding = false;
             }
         }
+
+
     }
 
     void sprint()
@@ -227,6 +234,7 @@ public class playerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        Debug.Log("HIT");
 
         updatePlayerUI();
         StartCoroutine(flashDamageScreen());
@@ -240,7 +248,7 @@ public class playerController : MonoBehaviour, IDamage
     public void updatePlayerUI()
     {
         gamemanager.instance.playerHPBar.GetComponent<UISmoothFillBar>().SetFill((float)HP / HPOrig);
-        gamemanager.instance.playerXPBar.GetComponent<UISmoothFillBar>().SetFill(gamemanager.instance.enemiesKilled/ UpgradeManager.instance.soulsNeeded);
+        gamemanager.instance.playerXPBar.GetComponent<UISmoothFillBar>().SetFill(gamemanager.instance.enemiesKilled / UpgradeManager.instance.soulsNeeded);
 
     }
 
@@ -260,7 +268,7 @@ public class playerController : MonoBehaviour, IDamage
                 HP += amt;
                 updatePlayerUI();
                 break;
-                
+
             case PlayerStats.Speed:
                 speed += amt;
                 updatePlayerUI();
@@ -272,6 +280,7 @@ public class playerController : MonoBehaviour, IDamage
                 break;
         }
     }
+
 
     private bool enableMovementOnNextTouch;
     public void JumpToPosition(Vector3 targetPos, float trajectoryHeight)
@@ -331,6 +340,17 @@ public class playerController : MonoBehaviour, IDamage
 
         // Combine vertical and horizontal velocities
         return velocityXZ + Vector3.up * velocityY;
+
+
+    public void SpawnPlayer()
+    {
+        controller.enabled = false;
+        controller.transform.position = gamemanager.instance.playerSpawnPos.transform.position;
+        controller.enabled = true;
+
+        playerVel = Vector3.zero;
+        HP = HPOrig;
+        updatePlayerUI();
 
     }
 }

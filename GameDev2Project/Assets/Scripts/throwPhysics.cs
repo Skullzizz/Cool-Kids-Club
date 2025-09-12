@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class throwPhysics : MonoBehaviour
 {
-    [SerializeField] Transform throwingPosition;
+    [SerializeField] Transform handPosition;
+    [SerializeField] Transform throwPosition;
     [SerializeField] int pickUpDis;
     [SerializeField] int throwForce;
 
@@ -12,8 +13,9 @@ public class throwPhysics : MonoBehaviour
     public bool isEquiped = false;
     // ---
 
-    GameObject throwable;
+    public GameObject throwable;
     Rigidbody throwableRb;
+    bool throwableRbDefaultGravity;
     bool isHolding = false;
 
 
@@ -21,54 +23,84 @@ public class throwPhysics : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        throwable = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!gamemanager.instance.isPaused)
         {
-            if (!isHolding && !isEquiped)
+            if (Input.GetMouseButtonDown(0))
             {
-                TryPickup();
+                if (!isHolding && !isEquiped)
+                {
+                    TryPickup();
+                }
+                else if (!isEquiped)
+                {
+                    DropObject();
+                }
             }
-            else if (!isEquiped)
+
+            if (Input.GetMouseButtonDown(1) && isHolding)
             {
-                DropObject();
+                ThrowObject();
+            }
+
+            if (Input.GetButtonDown("Equip"))
+            {
+                if (isHolding)
+                {
+                    TryEquipObject();
+                }
+                else if (isEquiped)
+                {
+                    UnequipObject();
+                }
+            }
+
+            if (Input.GetButtonDown("Store"))
+            {
+                if (isHolding && gamemanager.instance.playerInventory.equippedWeapon == null)
+                {
+                    //Update to Inventory UI
+                    playerInventory playerInv = gamemanager.instance.playerInventory;
+                    if (playerInv != null)
+                    {
+                        playerInv.AddItem(throwable);
+
+                        playerInv.equippedWeapon = throwable;
+                        playerInv.equippedWeaponIndex = playerInv.inventory.IndexOf(throwable);
+                        throwable.SetActive(false);
+                        throwable = null;
+                        isHolding = false;
+                        playerInv.UpdateWeaponUI();
+                    }
+                }
+                else if (!isHolding && !isEquiped && gamemanager.instance.playerInventory.equippedWeapon != null)
+                {
+                    throwable = gamemanager.instance.playerInventory.equippedWeapon;
+                    throwable.SetActive(true);
+                    isHolding = true;
+                    gamemanager.instance.playerInventory.RemoveItem();
+                }
+
+            }
+
+            if (isHolding && throwable != null)
+            {
+                throwable.transform.position = handPosition.position;
+                throwable.transform.rotation = handPosition.rotation;
+            }
+
+            if (isEquiped && throwable != null)
+            {
+                throwable.transform.position = equipPosition.position;
+                throwable.transform.rotation = equipPosition.rotation;
             }
         }
 
-        if (Input.GetMouseButtonDown(1) && isHolding)
-        {
-            ThrowObject();
-        }
-
-        if (Input.GetButtonDown("Equip"))
-        {
-            if (isHolding)
-            {
-                TryEquipObject();
-            }
-            else if (isEquiped)
-            {
-                UnequipObject();
-            }
-        }
-        
-        if (isHolding && throwable != null)
-        {
-            throwable.transform.position = throwingPosition.position;
-            throwable.transform.rotation = throwingPosition.rotation;
-        }
-
-        if (isEquiped && throwable != null)
-        {
-            throwable.transform.position = equipPosition.position;
-            throwable.transform.rotation = equipPosition.rotation;
-        }
-
-       
     }
 
     void TryPickup()
@@ -80,10 +112,12 @@ public class throwPhysics : MonoBehaviour
             {
                 throwable = hit.collider.gameObject;
                 throwableRb = throwable.GetComponent<Rigidbody>();
+                throwableRbDefaultGravity = throwableRb.useGravity;
 
                 if (throwableRb != null)
                 {
-                    throwable.transform.SetParent(throwingPosition);
+                    throwable.transform.SetParent(handPosition);
+                    throwableRb.useGravity = false;
                     isHolding = true;
                 }
             }
@@ -94,22 +128,23 @@ public class throwPhysics : MonoBehaviour
     {
         if (throwable != null)
         {
-            throwable.transform.SetParent(null);
-            throwable = null;
             isHolding = false;
+
+            throwable.transform.SetParent(null);
+            throwable.transform.position = throwPosition.position;
+            throwable = null;
+            throwableRb.useGravity = throwableRbDefaultGravity;
         }
     }
 
     void ThrowObject()
     {
-        if (throwable != null)
-        {
-            DropObject();
             if (throwableRb != null)
             {
-                throwableRb.AddForce(Camera.main.transform.forward * throwForce, ForceMode.Impulse);
+            DropObject();
+            throwableRb.AddForce(throwableRb.transform.forward * throwForce, ForceMode.Impulse);
             }
-        }
+            
     }
 
 
@@ -126,40 +161,30 @@ public class throwPhysics : MonoBehaviour
             gamemanager.instance.playerScript.shootRate = throwable.GetComponent<throwableDamage>().gun.shootRate;
             gamemanager.instance.playerScript.shootDist = throwable.GetComponent<throwableDamage>().gun.shootDist;
 
-            //Update to Inventory UI
-            playerInventory playerInv = gamemanager.instance.playerScript.GetComponent<playerInventory>();
-            if (playerInv != null)
-            {
-                if (!playerInv.inventory.Contains(throwable))
-                {
-                    playerInv.AddItem(throwable);
-                }
-
-                playerInv.equippedWeapon = throwable;
-                playerInv.equippedWeaponIndex = playerInv.inventory.IndexOf(throwable);
-                playerInv.UpdateWeaponUI();
-            }
-
         }
+    }
+
+    void StoreItem()
+    {
+
     }
 
     void UnequipObject()
     {
         if (throwable != null && isEquiped)
         {
-            throwable.transform.SetParent(throwingPosition);
+            throwable.transform.SetParent(handPosition);
             isHolding = true;
             isEquiped = false;
 
-            gamemanager.instance.playerScript.equippedWeapon = null;
             gamemanager.instance.playerScript.shootDamage = 0;
             gamemanager.instance.playerScript.shootRate = 0;
             gamemanager.instance.playerScript.shootDist = 0;
+            gamemanager.instance.playerScript.equippedWeapon = null;
 
-            gamemanager.instance.playerScript.GetComponent<playerInventory>().equippedWeaponIndex = -1;
-            gamemanager.instance.playerScript.GetComponent<playerInventory>().UpdateWeaponUI();
+
         }
     }
 
-  
+
 }

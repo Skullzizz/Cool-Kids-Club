@@ -6,6 +6,7 @@ TagManager:
   tags:
   - throwable
   - RunnableWall
+  - Player Spawn
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - IgnorePathing
   - throwable
   - Minimap
-  - 
+  - Held Throwable
   - 
   - 
   - 

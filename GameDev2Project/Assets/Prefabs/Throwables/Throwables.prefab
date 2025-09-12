@@ -29,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1696618128215439996}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1.75, y: 1.25, z: 3}
-  m_LocalScale: {x: 0.16785, y: 2, z: 0.24463975}
+  m_LocalScale: {x: 0.16785, y: 0.2446398, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 986197334045709422}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &6315703019418088957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51,8 +51,17 @@ MonoBehaviour:
   throwDamage: 10
   throwableHP: 40
   damageRate: 0
+  minDMGVel: 10
+  knockbackForce: 20
+  explKnockMult: 0
   type: 1
   rb: {fileID: 6888242220063757378}
+  maxAmmo: 0
+  curAmmo: 0
+  gun: {fileID: 0}
+  storedObjectList: []
+  storedAmount: 0
+  spawnForce: 0
 --- !u!33 &3749378241640245591
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -205,8 +214,17 @@ MonoBehaviour:
   throwDamage: 5
   throwableHP: 5
   damageRate: 0
+  minDMGVel: 15
+  knockbackForce: 20
+  explKnockMult: 0
   type: 0
   rb: {fileID: 9157309941585379755}
+  maxAmmo: 0
+  curAmmo: 0
+  gun: {fileID: 0}
+  storedObjectList: []
+  storedAmount: 0
+  spawnForce: 0
 --- !u!33 &1727798265852333488
 MeshFilter:
   m_ObjectHideFlags: 0

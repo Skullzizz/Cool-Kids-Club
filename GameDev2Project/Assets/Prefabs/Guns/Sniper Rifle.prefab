@@ -305,9 +305,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6629e7c94dbf3ac4ba4ed57084791547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwDamage: 15
+  throwDamage: 30
   throwableHP: 200
   damageRate: 0
+  minDMGVel: 15
+  knockbackForce: 20
+  explKnockMult: 0
   type: 1
   rb: {fileID: 1943847716549970300}
   maxAmmo: 5
@@ -335,7 +338,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.1, y: 0.2, z: 1.2}
+  m_Size: {x: 0.05, y: 0.2, z: 1.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1943847716549970300
 Rigidbody:
