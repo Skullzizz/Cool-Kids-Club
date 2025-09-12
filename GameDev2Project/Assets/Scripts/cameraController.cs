@@ -39,8 +39,6 @@ public class cameraController : MonoBehaviour
 
         // rotate the player to look left and right
 
-
-
-
     }
+
 }

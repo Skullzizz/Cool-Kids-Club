@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
+using UnityEngine.UI;
 
 
 public class playerController : MonoBehaviour, IDamage
@@ -42,7 +44,9 @@ public class playerController : MonoBehaviour, IDamage
 
     float shootTimer;
 
+    bool deathCoroutineRun = false;
 
+    Camera mainCam;
     public enum PlayerStats
     {
         Health,
@@ -56,6 +60,7 @@ public class playerController : MonoBehaviour, IDamage
         HPOrig = HP;
         heightOrig = controller.height;
         gamemanager.instance.updateEnemyDeaths(0);
+        mainCam = Camera.main;
         updatePlayerUI();
     }
 
@@ -233,7 +238,10 @@ public class playerController : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            gamemanager.instance.loseGame();
+            if (!deathCoroutineRun)
+            {
+                StartCoroutine(OnDeath());
+            }
         }
     }
 
@@ -250,7 +258,6 @@ public class playerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         gamemanager.instance.PlayerDamageScreen.SetActive(false);
     }
-
 
     public void updateStats(PlayerStats stat, int amt)
     {
@@ -277,10 +284,27 @@ public class playerController : MonoBehaviour, IDamage
     {
         controller.enabled = false;
         controller.transform.position = gamemanager.instance.playerSpawnPos.transform.position;
+        controller.transform.rotation = gamemanager.instance.playerSpawnPos.transform.rotation;
         controller.enabled = true;
 
         playerVel = Vector3.zero;
         HP = HPOrig;
+        GetComponent<Animator>().enabled = false;
+        gamemanager.instance.PlayerDeathScreen.gameObject.SetActive(false);
+        deathCoroutineRun = false;
         updatePlayerUI();
     }
+
+    public IEnumerator OnDeath()
+    {
+        deathCoroutineRun = true;
+        GetComponent<Animator>().enabled = true;
+
+        yield return new WaitForSeconds(1.2f);
+
+        gamemanager.instance.loseGame();
+
+        yield break;
+    }
+
 }

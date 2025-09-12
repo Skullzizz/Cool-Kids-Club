@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 5869777212548756593}
   - component: {fileID: 5403592800309561167}
   - component: {fileID: 4745857446485728581}
+  - component: {fileID: 913172380596474289}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -229,6 +230,7 @@ MonoBehaviour:
   inventorySlotPrefab: {fileID: 0}
   equippedWeaponText: {fileID: 0}
   weaponIcon: {fileID: 0}
+  noWeaponIcon: {fileID: 0}
   defaultEmptyColor: {r: 1, g: 0, b: 0, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   equippedWeapon: {fileID: 0}
@@ -334,6 +336,28 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &913172380596474289
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941424058941952304}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 996c5f67e8d65e5409cf59c277733e15, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1736032382254977300
 GameObject:
   m_ObjectHideFlags: 0

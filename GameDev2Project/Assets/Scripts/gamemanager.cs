@@ -22,6 +22,7 @@ public class gamemanager : MonoBehaviour
     public Image playerXPBar;
     public Image WeaponIcon;
     public GameObject PlayerDamageScreen;
+    public Image PlayerDeathScreen;
     public TextMeshProUGUI storedWeaponText;
 
     public GameObject player;
@@ -141,6 +142,7 @@ public class gamemanager : MonoBehaviour
     {
         if (menuActive == null)
         {
+            PlayerDeathScreen.gameObject.SetActive(true);
             statePause();
             menuActive = menuLose;
             menuActive.SetActive(true);
