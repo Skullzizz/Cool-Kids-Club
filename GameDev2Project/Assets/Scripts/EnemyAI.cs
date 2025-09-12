@@ -16,7 +16,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int roamPauseTime;
     [SerializeField] int animTransSpeed;
 
-  
+
+    private RagdollToggle ragdollToggle;
+
 
     Color colorOrig;
 
@@ -37,7 +39,11 @@ public class EnemyAI : MonoBehaviour, IDamage
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
 
+
+        ragdollToggle = GetComponent<RagdollToggle>();
+
         roamTimer = roamPauseTime;
+
     }
 
     // Update is called once per frame
@@ -165,8 +171,20 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             gamemanager.instance.updateGameGoal(-1);
+
+
+            //Ragdoll Physics
+            ragdollToggle.ToggleRagdoll(true);
+            Rigidbody hipsRigidbody = GetComponentInChildren<Rigidbody>();
+            if (hipsRigidbody != null)
+            {
+                hipsRigidbody.AddForce(Vector3.up * 5, ForceMode.Impulse);
+            }
+            Destroy(gameObject, 5f);
+
             gamemanager.instance.updateEnemyDeaths(1);
             Destroy(gameObject);
+            
         }
     }
 
