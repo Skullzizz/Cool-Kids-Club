@@ -108,7 +108,7 @@ public class throwPhysics : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, pickUpDis))
         {
-            if (hit.collider.gameObject.CompareTag("throwable"))
+            if (hit.collider.gameObject.GetComponent<IThrowable>() != null)
             {
                 throwable = hit.collider.gameObject;
                 throwableRb = throwable.GetComponent<Rigidbody>();

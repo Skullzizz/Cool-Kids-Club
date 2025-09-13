@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using NUnit.Framework;
 
-public class throwableDamage : MonoBehaviour
+public class throwableDamage : MonoBehaviour, IThrowable
 {
     [SerializeField] int throwDamage;
     [SerializeField] int throwableHP;
