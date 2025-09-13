@@ -145,7 +145,7 @@ MonoBehaviour:
   isSliding: 0
   isGrappling: 0
   activeGrapple: 0
-  hasShield: 0
+  hasShield: 1
   shieldCharge: 100
   maxShield: 100
   shieldRegenRate: 5

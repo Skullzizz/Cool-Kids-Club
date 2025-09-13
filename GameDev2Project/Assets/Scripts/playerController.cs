@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class playerController : MonoBehaviour, IDamage
 {
-    public static playerController instance;
 
     [SerializeField] LayerMask ignorelayer;
 
@@ -64,10 +63,6 @@ public class playerController : MonoBehaviour, IDamage
         JumpMax
     }
 
-    private void Awake()
-    {
-        instance = this;
-    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
