@@ -137,11 +137,21 @@ MonoBehaviour:
   shootDamage: 0
   shootRate: 0
   shootDist: 0
+  rb: {fileID: 0}
   equippedWeapon: {fileID: 0}
   playerVel: {x: 0, y: 0, z: 0}
   isSprinting: 0
   isCrouching: 0
   isSliding: 0
+  isGrappling: 0
+  activeGrapple: 0
+  hasShield: 0
+  shieldCharge: 100
+  maxShield: 100
+  shieldRegenRate: 5
+  shieldRegenInterval: 0.5
+  shieldChargeCooldown: 5
+  locked: 0
 --- !u!114 &9011332293168727660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,6 +220,7 @@ MonoBehaviour:
   fovLerpSpeed: 5
   wallCheckDist: 1.5
   isWallRunning: 0
+  ableToWallRun: 1
   pController: {fileID: 8075918143841736608}
 --- !u!114 &5535965725801114343
 MonoBehaviour:

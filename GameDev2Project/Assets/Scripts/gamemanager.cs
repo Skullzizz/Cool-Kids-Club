@@ -20,6 +20,7 @@ public class gamemanager : MonoBehaviour
 
     public Image playerHPBar;
     public Image playerXPBar;
+    public Image playerArmorBar;
     public Image WeaponIcon;
     public GameObject PlayerDamageScreen;
     public TextMeshProUGUI storedWeaponText;
@@ -31,6 +32,8 @@ public class gamemanager : MonoBehaviour
     public GameObject checkpointPopup;
 
     public playerInventory playerInventory;
+
+    [SerializeField] GameObject waterScreen;
 
 
 
@@ -146,5 +149,10 @@ public class gamemanager : MonoBehaviour
             menuActive.SetActive(true);
             pauseDimmer.ShowDim();
         }
+    }
+
+    public void WaterScreen(bool isWater)
+    {
+        waterScreen.SetActive(isWater);
     }
 }
