@@ -7,7 +7,9 @@ TagManager:
   - throwable
   - RunnableWall
   - Player Spawn
-  - MinimapCam
+  - Ground
+  - octopusThrow
+  - Octopus
   layers:
   - Default
   - TransparentFX

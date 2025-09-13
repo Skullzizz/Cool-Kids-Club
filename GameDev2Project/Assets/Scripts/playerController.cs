@@ -6,12 +6,14 @@ using UnityEngine.UI;
 
 public class playerController : MonoBehaviour, IDamage
 {
+    public static playerController instance;
+
     [SerializeField] LayerMask ignorelayer;
 
     [SerializeField] CharacterController controller;
     [SerializeField] wallrunController wallrunController;
 
-    [SerializeField] int HP;
+    [SerializeField] public int HP;
     [SerializeField] int speed;
     [SerializeField] float crouchSpeed;
     [SerializeField] float crouchHeight;
@@ -44,6 +46,15 @@ public class playerController : MonoBehaviour, IDamage
     public bool isSliding;
     public bool isGrappling;
     public bool activeGrapple;
+    public bool hasShield;
+    public int shieldCharge;
+    [SerializeField] int maxShield = 100;
+    [SerializeField] int shieldRegenRate = 5;
+    [SerializeField] float shieldRegenInterval = 0.2f;
+    [SerializeField] float shieldChargeCooldown = 3f;
+    float lastHitTime;
+    float regenTimer;
+    public bool locked = false;
 
     float shootTimer;
 
@@ -59,6 +70,10 @@ public class playerController : MonoBehaviour, IDamage
         JumpMax
     }
 
+    private void Awake()
+    {
+        instance = this;
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -84,6 +99,8 @@ public class playerController : MonoBehaviour, IDamage
             rb.angularVelocity = Vector3.zero;
         }
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
+
+        ShieldRecharge();
     }
 
 
@@ -243,25 +260,42 @@ public class playerController : MonoBehaviour, IDamage
 
     public void takeDamage(int amount)
     {
-        HP -= amount;
-        Debug.Log("HIT");
-
+        if (hasShield && shieldCharge > 0)
+        {
+            shieldCharge -= amount;
+            
+            if(shieldCharge < 0)
+            {
+                HP += shieldCharge;
+                shieldCharge = 0;
+            }
+        }
+        else
+        {
+            HP -= amount;
+            Debug.Log("HIT BODY");
+        }
+        lastHitTime=Time.time;
         updatePlayerUI();
         StartCoroutine(flashDamageScreen());
 
         if (HP <= 0)
         {
+            locked = true;                
+            isDead = true;
             if (!deathCoroutineRun)
             {
-                isDead = true;
                 StartCoroutine(OnDeath());
             }
+
         }
     }
 
     public void updatePlayerUI()
     {
         gamemanager.instance.playerHPBar.GetComponent<UISmoothFillBar>().SetFill((float)HP / HPOrig);
+        if (hasShield)
+            gamemanager.instance.playerArmorBar.GetComponent<UISmoothFillBar>().SetFill((float)shieldCharge / maxShield);
         gamemanager.instance.playerXPBar.GetComponent<UISmoothFillBar>().SetFill(gamemanager.instance.enemiesKilled / UpgradeManager.instance.soulsNeeded);
 
     }
@@ -353,9 +387,8 @@ public class playerController : MonoBehaviour, IDamage
 
         // Combine vertical and horizontal velocities
         return velocityXZ + Vector3.up * velocityY;
+
     }
-
-
     public void SpawnPlayer()
     {
         controller.enabled = false;
@@ -372,6 +405,29 @@ public class playerController : MonoBehaviour, IDamage
         deathCoroutineRun = false;
         updatePlayerUI();
 
+    }
+    void ShieldRecharge()
+    {
+        if (!hasShield)
+            return;
+
+        if(Time.time-lastHitTime>=shieldChargeCooldown&&shieldCharge<maxShield)
+        {
+            regenTimer += Time.deltaTime;
+            if(regenTimer>=shieldRegenInterval)
+            {
+                regenTimer = 0;
+                shieldCharge += shieldRegenRate;
+                if(shieldCharge>maxShield)
+                    shieldCharge = maxShield;
+
+                updatePlayerUI();
+            }
+        }
+        else
+        {
+            regenTimer = 0f;
+        }
     }
 
     public IEnumerator OnDeath()
