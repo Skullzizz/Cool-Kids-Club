@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 5869777212548756593}
   - component: {fileID: 5403592800309561167}
   - component: {fileID: 4745857446485728581}
+  - component: {fileID: 913172380596474289}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -147,7 +148,7 @@ MonoBehaviour:
   isSliding: 0
   isGrappling: 0
   activeGrapple: 0
-  hasShield: 0
+  hasShield: 1
   shieldCharge: 100
   maxShield: 100
   shieldRegenRate: 5
@@ -348,6 +349,28 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &913172380596474289
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941424058941952304}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 996c5f67e8d65e5409cf59c277733e15, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1364722492564526463
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,7 +1139,7 @@ GameObject:
   - component: {fileID: 7587732257483057078}
   m_Layer: 3
   m_Name: Minimap Cam
-  m_TagString: Untagged
+  m_TagString: MinimapCam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

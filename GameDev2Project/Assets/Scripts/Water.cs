@@ -4,40 +4,49 @@ public class Water : MonoBehaviour
 {
     [SerializeField] float gravity = 10;
     float ogGrav;
-    bool inWater;
+    public bool inWater;
+    public static Water instance;
+    bool wasInWater = false;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
-        ogGrav=playerController.instance.gravity;
+        ogGrav=gamemanager.instance.playerScript.gravity;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(playerController.instance.locked)
+        if (gamemanager.instance.isPaused)
+            return;
+
+        if(gamemanager.instance.playerScript.locked)
         {
             waterFilter(false);
             return;
         }
         if (inWater)
         {
-            waterGrav(gravity);
             waterFilter(true);
         }
         else
         {
-            waterGrav(ogGrav);
             waterFilter(false);
         }
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")&&!playerController.instance.locked)
+        if (other.CompareTag("Player")&&!gamemanager.instance.playerScript.locked)
         {
-            inWater= true;
             wallrunController.instance.ableToWallRun = false;
+            inWater= true;
+            gamemanager.instance.playerScript.gravity = gravity;
         }
     }
 
@@ -45,14 +54,10 @@ public class Water : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            inWater= false;
             wallrunController.instance.ableToWallRun = true;
+            inWater= false;
+            gamemanager.instance.playerScript.gravity = ogGrav;
         }
-    }
-
-    void waterGrav(float grav)
-    {
-        playerController.instance.gravity = grav;
     }
 
     void waterFilter(bool isWater)
