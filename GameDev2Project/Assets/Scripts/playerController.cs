@@ -433,11 +433,12 @@ public class playerController : MonoBehaviour, IDamage
     public IEnumerator OnDeath()
     {
         deathCoroutineRun = true;
-        isDead = true;
+        isDead = true;        
+        minimapCam.enabled = false;
         GetComponent<Animator>().enabled = true;
 
         yield return new WaitForSeconds(1.2f);
-        minimapCam.enabled = false;
+
         gamemanager.instance.loseGame();
 
         yield break;
