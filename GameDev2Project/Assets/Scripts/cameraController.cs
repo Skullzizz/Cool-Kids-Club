@@ -7,12 +7,16 @@ public class cameraController : MonoBehaviour
     [SerializeField] bool invertY;
 
     float rotX;
+    const string SensKey = "Sensitivity";
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        int saved = PlayerPrefs.GetInt(SensKey, sens);
+        sens = Mathf.Clamp(saved, 1, 10); 
     }
 
     // Update is called once per frame
@@ -39,9 +43,11 @@ public class cameraController : MonoBehaviour
         transform.localRotation = Quaternion.Euler(rotX, 0, transform.localEulerAngles.z);
         transform.parent.Rotate(Vector3.up * mouseX);
 
-
-        // rotate the player to look left and right
-
     }
-
+public void SetSensitivity(int value)
+    {
+        sens = Mathf.Clamp(value, 1, 10);
+        PlayerPrefs.SetInt(SensKey, sens);
+        PlayerPrefs.Save();
+    }
 }
