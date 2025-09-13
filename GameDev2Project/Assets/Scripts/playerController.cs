@@ -29,6 +29,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] public float shootRate;
     [SerializeField] public int shootDist;
 
+    public Rigidbody rb;
     public throwableDamage equippedWeapon;
 
     Vector3 moveDir;
@@ -41,10 +42,13 @@ public class playerController : MonoBehaviour, IDamage
     public bool isSprinting;
     public bool isCrouching;
     public bool isSliding;
+    public bool isGrappling;
+    public bool activeGrapple;
 
     float shootTimer;
 
     bool deathCoroutineRun = false;
+    bool isDead;
 
     Camera minimapCam;
 
@@ -68,16 +72,24 @@ public class playerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        movement();
-        sprint();
-        crouch();
+        if (!isDead)
+        {
+            movement();
+            sprint();
+            crouch();
+        }
 
+        if (isGrappling)
+        {
+            rb.angularVelocity = Vector3.zero;
+        }
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
     }
 
 
     void movement()
     {
+        if (activeGrapple) return;
 
         shootTimer += Time.deltaTime;
 
@@ -241,6 +253,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             if (!deathCoroutineRun)
             {
+                isDead = true;
                 StartCoroutine(OnDeath());
             }
         }
@@ -281,6 +294,68 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
+
+    private bool enableMovementOnNextTouch;
+    public void JumpToPosition(Vector3 targetPos, float trajectoryHeight)
+    {
+        activeGrapple = true;
+
+        velocityToSet = CalculateGrappleVelocity(transform.position, targetPos, trajectoryHeight);
+
+        Invoke(nameof(SetVelocity), 0.1f);
+
+        Invoke(nameof(ResetRestrictions), 3f);
+    }
+
+    private Vector3 velocityToSet;
+    private void SetVelocity()
+    {
+        enableMovementOnNextTouch = true;
+        rb.linearVelocity = velocityToSet;
+    }
+
+    public void ResetRestrictions()
+    {
+        activeGrapple = false;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (enableMovementOnNextTouch)
+        {
+            enableMovementOnNextTouch = false;
+            ResetRestrictions();
+
+            GetComponent<Grappling>().StopGrapple();
+        }
+    }
+
+    public Vector3 CalculateGrappleVelocity(Vector3 startpoint, Vector3 endPoint, float trajectoryHeight)
+    {
+
+        float gravity = Physics.gravity.y; // gravity is negative
+        float displacementY = endPoint.y - startpoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startpoint.x, 0f, endPoint.z - startpoint.z);
+
+        // Calculate initial vertical velocity to reach the trajectory height
+        float velocityY = Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+
+        // Time to reach the peak
+        float timeToPeak = Mathf.Sqrt(2 * trajectoryHeight / -gravity);
+
+        // Time to fall from peak to end point
+        float timeFromPeakToEnd = Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / -gravity);
+
+        // Total time of flight
+        float totalTime = timeToPeak + timeFromPeakToEnd;
+
+        // Calculate horizontal velocity
+        Vector3 velocityXZ = displacementXZ / totalTime;
+
+        // Combine vertical and horizontal velocities
+        return velocityXZ + Vector3.up * velocityY;
+    }
+
+
     public void SpawnPlayer()
     {
         controller.enabled = false;
@@ -290,22 +365,23 @@ public class playerController : MonoBehaviour, IDamage
         minimapCam.enabled = true;
         playerVel = Vector3.zero;
         HP = HPOrig;
+        isDead = false;
         GetComponent<Animator>().enabled = false;
         GetComponent<Animator>().Rebind();
         gamemanager.instance.PlayerDeathScreen.gameObject.SetActive(false);
         deathCoroutineRun = false;
         updatePlayerUI();
+
     }
 
     public IEnumerator OnDeath()
     {
-        controller.enabled = false;
         deathCoroutineRun = true;
-        minimapCam.enabled = false;
+        isDead = true;
         GetComponent<Animator>().enabled = true;
 
         yield return new WaitForSeconds(1.2f);
-
+        minimapCam.enabled = false;
         gamemanager.instance.loseGame();
 
         yield break;
