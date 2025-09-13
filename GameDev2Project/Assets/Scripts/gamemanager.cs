@@ -23,6 +23,7 @@ public class gamemanager : MonoBehaviour
     public Image playerArmorBar;
     public Image WeaponIcon;
     public GameObject PlayerDamageScreen;
+    public Image PlayerDeathScreen;
     public TextMeshProUGUI storedWeaponText;
 
     public GameObject player;
@@ -33,8 +34,9 @@ public class gamemanager : MonoBehaviour
 
     public playerInventory playerInventory;
 
-    [SerializeField] GameObject waterScreen;
+    Camera minimapCam;
 
+    [SerializeField] GameObject waterScreen;
 
 
     public bool isPaused;
@@ -59,6 +61,7 @@ public class gamemanager : MonoBehaviour
         throwScript = player.GetComponent<throwPhysics>();
         playerInventory = player.GetComponent<playerInventory>();
 
+        minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn");
     }
 
@@ -144,6 +147,8 @@ public class gamemanager : MonoBehaviour
     {
         if (menuActive == null)
         {
+            PlayerDeathScreen.gameObject.SetActive(true);
+            //minimapCam.enabled = false;
             statePause();
             menuActive = menuLose;
             menuActive.SetActive(true);
