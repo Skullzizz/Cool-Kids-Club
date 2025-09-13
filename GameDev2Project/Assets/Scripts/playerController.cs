@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
+using UnityEngine.UI;
 
 
 public class playerController : MonoBehaviour, IDamage
@@ -56,6 +58,10 @@ public class playerController : MonoBehaviour, IDamage
 
     float shootTimer;
 
+    bool deathCoroutineRun = false;
+    bool isDead;
+
+    Camera minimapCam;
 
     public enum PlayerStats
     {
@@ -74,15 +80,19 @@ public class playerController : MonoBehaviour, IDamage
         HPOrig = HP;
         heightOrig = controller.height;
         gamemanager.instance.updateEnemyDeaths(0);
+        minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
         updatePlayerUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        movement();
-        sprint();
-        crouch();
+        if (!isDead)
+        {
+            movement();
+            sprint();
+            crouch();
+        }
 
         if (isGrappling)
         {
@@ -271,8 +281,13 @@ public class playerController : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            locked = true;
-            gamemanager.instance.loseGame();
+            locked = true;                
+            isDead = true;
+            if (!deathCoroutineRun)
+            {
+                StartCoroutine(OnDeath());
+            }
+
         }
     }
 
@@ -291,7 +306,6 @@ public class playerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         gamemanager.instance.PlayerDamageScreen.SetActive(false);
     }
-
 
     public void updateStats(PlayerStats stat, int amt)
     {
@@ -379,10 +393,16 @@ public class playerController : MonoBehaviour, IDamage
     {
         controller.enabled = false;
         controller.transform.position = gamemanager.instance.playerSpawnPos.transform.position;
+        controller.transform.rotation = gamemanager.instance.playerSpawnPos.transform.rotation;
         controller.enabled = true;
-
+        minimapCam.enabled = true;
         playerVel = Vector3.zero;
         HP = HPOrig;
+        isDead = false;
+        GetComponent<Animator>().enabled = false;
+        GetComponent<Animator>().Rebind();
+        gamemanager.instance.PlayerDeathScreen.gameObject.SetActive(false);
+        deathCoroutineRun = false;
         updatePlayerUI();
 
     }
@@ -409,4 +429,24 @@ public class playerController : MonoBehaviour, IDamage
             regenTimer = 0f;
         }
     }
+
+    public IEnumerator OnDeath()
+    {
+        deathCoroutineRun = true;
+        isDead = true;        
+        minimapCam.enabled = false;
+        GetComponent<Animator>().enabled = true;
+
+        yield return new WaitForSeconds(1.2f);
+
+        gamemanager.instance.loseGame();
+
+        yield break;
+    }
+
+    public int GetHP()
+    {
+        return HP;
+    }
+
 }
