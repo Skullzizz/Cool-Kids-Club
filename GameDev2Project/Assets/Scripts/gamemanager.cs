@@ -33,7 +33,7 @@ public class gamemanager : MonoBehaviour
 
     public playerInventory playerInventory;
 
-
+    Camera minimapCam;
 
     public bool isPaused;
 
@@ -57,6 +57,7 @@ public class gamemanager : MonoBehaviour
         throwScript = player.GetComponent<throwPhysics>();
         playerInventory = player.GetComponent<playerInventory>();
 
+        minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn");
     }
 
@@ -143,6 +144,7 @@ public class gamemanager : MonoBehaviour
         if (menuActive == null)
         {
             PlayerDeathScreen.gameObject.SetActive(true);
+            //minimapCam.enabled = false;
             statePause();
             menuActive = menuLose;
             menuActive.SetActive(true);

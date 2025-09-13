@@ -43,7 +43,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-       setAnimLoco();
+        setAnimLoco();
 
 
         if (agent.remainingDistance < 0.01f)
@@ -58,6 +58,10 @@ public class EnemyAI : MonoBehaviour, IDamage
             checkRoam();
         }
 
+        if (gamemanager.instance.player.GetComponent<playerController>().GetHP() <= 0)
+        {
+            playerInTrigger = false;
+        }
     }
 
     void setAnimLoco()

@@ -46,7 +46,8 @@ public class playerController : MonoBehaviour, IDamage
 
     bool deathCoroutineRun = false;
 
-    Camera mainCam;
+    Camera minimapCam;
+
     public enum PlayerStats
     {
         Health,
@@ -60,7 +61,7 @@ public class playerController : MonoBehaviour, IDamage
         HPOrig = HP;
         heightOrig = controller.height;
         gamemanager.instance.updateEnemyDeaths(0);
-        mainCam = Camera.main;
+        minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
         updatePlayerUI();
     }
 
@@ -286,10 +287,11 @@ public class playerController : MonoBehaviour, IDamage
         controller.transform.position = gamemanager.instance.playerSpawnPos.transform.position;
         controller.transform.rotation = gamemanager.instance.playerSpawnPos.transform.rotation;
         controller.enabled = true;
-
+        minimapCam.enabled = true;
         playerVel = Vector3.zero;
         HP = HPOrig;
         GetComponent<Animator>().enabled = false;
+        GetComponent<Animator>().Rebind();
         gamemanager.instance.PlayerDeathScreen.gameObject.SetActive(false);
         deathCoroutineRun = false;
         updatePlayerUI();
@@ -297,7 +299,9 @@ public class playerController : MonoBehaviour, IDamage
 
     public IEnumerator OnDeath()
     {
+        controller.enabled = false;
         deathCoroutineRun = true;
+        minimapCam.enabled = false;
         GetComponent<Animator>().enabled = true;
 
         yield return new WaitForSeconds(1.2f);
@@ -305,6 +309,11 @@ public class playerController : MonoBehaviour, IDamage
         gamemanager.instance.loseGame();
 
         yield break;
+    }
+
+    public int GetHP()
+    {
+        return HP;
     }
 
 }
