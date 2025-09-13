@@ -321,7 +321,7 @@ public class playerController : MonoBehaviour, IDamage
 
         float gravity = Physics.gravity.y; // gravity is negative
         float displacementY = endPoint.y - startpoint.y;
-        Vector3 displacementXZ = new Vector3(endPoint.x - startpoint .x, 0f, endPoint.z - startpoint.z);
+        Vector3 displacementXZ = new Vector3(endPoint.x - startpoint.x, 0f, endPoint.z - startpoint.z);
 
         // Calculate initial vertical velocity to reach the trajectory height
         float velocityY = Mathf.Sqrt(-2 * gravity * trajectoryHeight);
@@ -341,7 +341,7 @@ public class playerController : MonoBehaviour, IDamage
         // Combine vertical and horizontal velocities
         return velocityXZ + Vector3.up * velocityY;
 
-
+    }
     public void SpawnPlayer()
     {
         controller.enabled = false;
