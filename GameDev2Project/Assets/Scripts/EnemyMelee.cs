@@ -8,13 +8,9 @@ public class EnemyMelee : EnemyAI
 
     float meleeTimer;
 
-    [SerializeField] bool isPsycho;
-    [SerializeField] float enrageMultiplier;
-    [SerializeField] int soulsNeeded;
+   
     [SerializeField] float targetScan;  // radius to scan for nearby enemies
 
-    int soulsTaken = 0;
-    bool enraged = false;
 
     Transform currentTarget;
     IDamage currentTargetDamage;
@@ -51,11 +47,7 @@ public class EnemyMelee : EnemyAI
 
                 currentTargetDamage?.takeDamage(meleeDamage);
 
-                if (isPsycho && currentTarget.TryGetComponent<EnemyMelee>(out EnemyMelee enemy))
-                {
-                    if (enemy.HP <= 0)
-                        takeSoul();
-                }
+                
             }
         }
     }
@@ -66,8 +58,7 @@ public class EnemyMelee : EnemyAI
         IDamage closestDamage = gamemanager.instance.player.GetComponent<IDamage>();
         float closestDist = Vector3.Distance(transform.position, closestTarget.position);
 
-        if (isPsycho && enraged)
-        {
+        
             // Scan for nearby enemies
             Collider[] hits = Physics.OverlapSphere(transform.position, targetScan);
             foreach (var hit in hits)
@@ -83,7 +74,7 @@ public class EnemyMelee : EnemyAI
                     }
                 }
             }
-        }
+        
 
         currentTarget = closestTarget;
         currentTargetDamage = closestDamage;
@@ -101,50 +92,20 @@ public class EnemyMelee : EnemyAI
     {
         base.takeDamage(amount);
 
-        if (isPsycho && !enraged)
-        {
-            enraged = true;
-            meleeRange *= 2;
-            meleeDamage = Mathf.RoundToInt(meleeDamage * enrageMultiplier);
-            HP = Mathf.RoundToInt(HP * enrageMultiplier);
-            transform.localScale *= 2f;
-            model.material.color = Color.yellow;
-        }
     }
-
-    void takeSoul()
-    {
-        if (!isPsycho)
-            return;
-
-        soulsTaken++;
-
-        if (soulsTaken >= soulsNeeded)
-        {
-            Enrage();
-        }
-    }
-
-    void Enrage()
-    {
-        HP *= 2;
-        meleeDamage *= 2;
-        transform.localScale *= 1.5f;
-        model.material.color = Color.purple;
-    }
+ 
 
     protected new void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
 
-        if (isPsycho && enraged)
-        {
+        
             if (other.TryGetComponent<EnemyMelee>(out EnemyMelee enemy) && enemy != this)
             {
                 currentTarget = enemy.transform;
                 currentTargetDamage = enemy.GetComponent<IDamage>();
             }
-        }
+        
     }
 
     protected new void OnTriggerExit(Collider other)
