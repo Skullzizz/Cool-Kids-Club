@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 5403592800309561167}
   - component: {fileID: 4745857446485728581}
   - component: {fileID: 913172380596474289}
+  - component: {fileID: 138102855484135209}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -148,9 +149,9 @@ MonoBehaviour:
   isSliding: 0
   isGrappling: 0
   activeGrapple: 0
-  hasShield: 1
-  shieldCharge: 100
-  maxShield: 100
+  hasShield: 0
+  shieldCharge: 50
+  maxShield: 50
   shieldRegenRate: 5
   shieldRegenInterval: 0.5
   shieldChargeCooldown: 5
@@ -371,6 +372,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &138102855484135209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941424058941952304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fdfbdaa517c5e418432ae03bba0f95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objIndex: 0
 --- !u!1 &1364722492564526463
 GameObject:
   m_ObjectHideFlags: 0
