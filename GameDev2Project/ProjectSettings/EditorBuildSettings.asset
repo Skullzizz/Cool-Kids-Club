@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prototype2/Prototype2.unity
     guid: a8bfb798c8ac48c488647e8764f464eb
+  - enabled: 1
+    path: Assets/Scenes/Armor.unity
+    guid: 84092f8a6a72cdc428f86f5594511ab9
+  - enabled: 1
+    path: Assets/Scenes/Gabriel Milius.unity
+    guid: 59aa9b560c26a5549abebe883e0c5895
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

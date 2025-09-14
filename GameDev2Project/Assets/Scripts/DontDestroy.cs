@@ -11,6 +11,7 @@ public class DontDestroy : MonoBehaviour
         {
             persObjects[objIndex] = gameObject;
             DontDestroyOnLoad(gameObject); 
+            gamemanager.instance.playerScript.updatePlayerUI();
         }
         else if (persObjects[objIndex]!=gameObject)
         {
