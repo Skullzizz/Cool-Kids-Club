@@ -1892,8 +1892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platform: {fileID: 663040803}
-  startPoint: {fileID: 1888397261}
-  endPoint: {fileID: 416607025}
+  endPos: {fileID: 0}
   speed: 10
   delay: 1
 --- !u!4 &476973813
@@ -3944,6 +3943,73 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4495037601053298897, guid: 228ba06f18400354a8cd5f10546fb550, type: 3}
   m_PrefabInstance: {fileID: 1547268313}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1063388530
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2906120482330374204, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: exitPos
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803051242191315626, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: m_TagString
+      value: BackwardScenePortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 7401775839023687723, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: m_Name
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058842593747548439, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.5336623
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058842593747548439, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.189
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058842593747548439, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.083563
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058842593747548439, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058842593747548439, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058842593747548439, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058842593747548439, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058842593747548439, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058842593747548439, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058842593747548439, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2906120482330374204, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 1474551067745120960, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
 --- !u!1001 &1087404004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4481,7 +4547,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTag: Player
   platform: {fileID: 663040807}
-  playerOnPlatform: 0
 --- !u!1 &1281697671
 GameObject:
   m_ObjectHideFlags: 0
@@ -5398,7 +5463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4903557523860850379, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.4000001
       objectReference: {fileID: 0}
     - target: {fileID: 4903557523860850379, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6208,8 +6273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platform: {fileID: 70887904}
-  startPoint: {fileID: 1520769112}
-  endPoint: {fileID: 1922594551}
+  endPos: {fileID: 0}
   speed: 10
   delay: 1
 --- !u!4 &1873576589
@@ -6820,7 +6884,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTag: Player
   platform: {fileID: 70887908}
-  playerOnPlatform: 0
 --- !u!1 &2053307137
 GameObject:
   m_ObjectHideFlags: 0
@@ -7122,3 +7185,4 @@ SceneRoots:
   - {fileID: 887947786}
   - {fileID: 403043900}
   - {fileID: 1896302159}
+  - {fileID: 1063388530}

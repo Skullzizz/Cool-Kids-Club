@@ -148,11 +148,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6754718103900409991}
-  - component: {fileID: 2906120482330374204}
   - component: {fileID: 6838696906932612009}
   m_Layer: 0
   m_Name: PortalCollider
-  m_TagString: Untagged
+  m_TagString: ForwardScenePortal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,20 +171,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2462843878824429118}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2906120482330374204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4803051242191315626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 147624c95424ac74ca8891aa0edb0334, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  linkedPortal: {fileID: 0}
-  exitPos: {fileID: 6191422440465361488}
 --- !u!65 &6838696906932612009
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -272,7 +257,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 44b02c48a3774ad4fb6429b63696983a, type: 2}
+  - {fileID: 2100000, guid: ec15408e73e59a44d95bee804cb1b21d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -304,8 +289,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8058842593747548439}
   m_Layer: 0
-  m_Name: Portal
-  m_TagString: PortalA
+  m_Name: ScenePortal
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

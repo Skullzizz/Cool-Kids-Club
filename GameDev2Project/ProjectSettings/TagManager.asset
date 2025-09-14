@@ -11,8 +11,8 @@ TagManager:
   - octopusThrow
   - Octopus
   - MinimapCam
-  - PortalA
-  - PortalB
+  - ForwardScenePortal
+  - BackwardScenePortal
   layers:
   - Default
   - TransparentFX
