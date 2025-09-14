@@ -167,7 +167,8 @@ public class wallrunController : MonoBehaviour
     // Start Wallrunning
     void startWallrun()
     {
-        if (!ableToWallRun/*||Water.instance.inWater*/)
+
+        if (!ableToWallRun||(Water.instance!=null&&Water.instance.inWater))
         { return; }
             if (Input.GetButtonDown("Jump") && (wallLeft || wallRight) && !playerMovement.isGrounded && !isWallRunning && !pController.isCrouching)
             {
