@@ -64,6 +64,11 @@ public class gamemanager : MonoBehaviour
 
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn");
+
+        if (menuPause == null) menuPause = GameObject.Find("Pause Menu");
+        if (menuWin == null) menuWin = GameObject.Find("Win Menu");
+        if (menuLose == null) menuLose = GameObject.Find("Lose Menu");
+        if (menuUpgrade == null) menuUpgrade = GameObject.Find("Upgrade Menu");
     }
 
     // Update is called once per frame
@@ -101,8 +106,11 @@ public class gamemanager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         pauseDimmer.HideDim();
-        menuActive.SetActive(false);
-        menuActive = null;
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+            menuActive = null;
+        }
         FindFirstObjectByType<PauseMenuMusic>().StopMusic();
     }
 
@@ -161,6 +169,7 @@ public class gamemanager : MonoBehaviour
 
     public void WaterScreen(bool isWater)
     {
-        waterScreen.SetActive(isWater);
+        if(waterScreen!= null)
+            waterScreen.SetActive(isWater);
     }
 }

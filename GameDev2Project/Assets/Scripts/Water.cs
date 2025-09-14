@@ -62,7 +62,8 @@ public class Water : MonoBehaviour
 
     void waterFilter(bool isWater)
     {
-        gamemanager.instance.WaterScreen(isWater);
+        if(gamemanager.instance!=null)
+            gamemanager.instance.WaterScreen(isWater);
     }
 
 }
