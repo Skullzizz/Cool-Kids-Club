@@ -8,10 +8,6 @@ public class EnemyMelee : EnemyAI
 
     float meleeTimer;
 
-   
-    [SerializeField] float targetScan;  // radius to scan for nearby enemies
-
-
     Transform currentTarget;
     IDamage currentTargetDamage;
 
@@ -57,23 +53,6 @@ public class EnemyMelee : EnemyAI
         Transform closestTarget = gamemanager.instance.player.transform;
         IDamage closestDamage = gamemanager.instance.player.GetComponent<IDamage>();
         float closestDist = Vector3.Distance(transform.position, closestTarget.position);
-
-        
-            // Scan for nearby enemies
-            Collider[] hits = Physics.OverlapSphere(transform.position, targetScan);
-            foreach (var hit in hits)
-            {
-                if (hit.TryGetComponent<EnemyMelee>(out EnemyMelee enemy) && enemy != this)
-                {
-                    float dist = Vector3.Distance(transform.position, enemy.transform.position);
-                    if (dist < closestDist)
-                    {
-                        closestDist = dist;
-                        closestTarget = enemy.transform;
-                        closestDamage = enemy.GetComponent<IDamage>();
-                    }
-                }
-            }
         
 
         currentTarget = closestTarget;
