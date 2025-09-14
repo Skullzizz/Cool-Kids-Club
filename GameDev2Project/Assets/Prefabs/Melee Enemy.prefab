@@ -267,11 +267,12 @@ MonoBehaviour:
   roamDistance: 50
   roamPauseTime: 3
   animTransSpeed: 0
+  waypoints: {fileID: 0}
+  waypointThreshold: 0.5
   playerDir: {x: 0, y: 0, z: 0}
   meleeRange: 2
   meleeDamage: 2
   meleeRate: 0.5
-  targetScan: 0
 --- !u!195 &7059059574370922178
 NavMeshAgent:
   m_ObjectHideFlags: 0
