@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
@@ -11,6 +12,8 @@ public class AudioSettings : MonoBehaviour
 
     public Slider musicSlider;
     public Slider sfxSlider;
+    public TMP_Text musicVolumeText;
+    public TMP_Text sfxVolumeText;  
 
     private const string KeyMusic = "MusicVolume";
     private const string KeySFX = "SFXVolume";
@@ -18,7 +21,7 @@ public class AudioSettings : MonoBehaviour
     private const float MinLinear = 0.0001f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void OnEnable()
+    void Start()
     {
         float music = PlayerPrefs.GetFloat(KeyMusic, 0.8f);
         float sfx = PlayerPrefs.GetFloat(KeySFX, 0.8f);
@@ -36,6 +39,9 @@ public class AudioSettings : MonoBehaviour
         audioMixer.SetFloat(musicParam, dB);
         PlayerPrefs.SetFloat(KeyMusic, volume);
         PlayerPrefs.Save();
+
+        if(musicVolumeText)
+            musicVolumeText.text = Mathf.RoundToInt(volume * 100) + "%";
     }
     public void SetSFXVolume(float volume)
     {
@@ -43,5 +49,8 @@ public class AudioSettings : MonoBehaviour
         audioMixer.SetFloat(sfxParam, dB);
         PlayerPrefs.SetFloat(KeySFX, volume);
         PlayerPrefs.Save();
+
+        if (sfxVolumeText)
+            sfxVolumeText.text = Mathf.RoundToInt(volume * 100) + "%";
     }
 }

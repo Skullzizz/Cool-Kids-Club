@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class SensitivitySettings : MonoBehaviour
 {
     [SerializeField] Slider sensitivitySlider;
-    [SerializeField] private TextMeshProUGUI valueLabel;
+    [SerializeField] cameraController cam;
+    [SerializeField] TMP_Text sensitivityValueText;
     const string SensKey = "Sensitivity";
 
     
@@ -18,14 +19,19 @@ public class SensitivitySettings : MonoBehaviour
             sensitivitySlider.minValue = 1;
             sensitivitySlider.maxValue = 10;
 
-        int saved = PlayerPrefs.GetInt(SensKey, 3);
-        sensitivitySlider.SetValueWithoutNotify(saved);
-           sensitivitySlider.onValueChanged.AddListener(OnSensitivityChange);
+            int saved = PlayerPrefs.GetInt(SensKey, 3);
+            sensitivitySlider.SetValueWithoutNotify(saved);
+
+            sensitivitySlider.onValueChanged.AddListener(OnSensitivityChange);
+
+            if(cam) cam.SetSensitivity(saved);
+            UpdateLabel(saved);
         }
     }
     public void OnSensitivityChange (float value)
     {
         int val = Mathf.RoundToInt(value);
+        if (cam) cam.SetSensitivity(val);
         PlayerPrefs.SetInt(SensKey, val);
         PlayerPrefs.Save();
         UpdateLabel(val);
@@ -33,9 +39,9 @@ public class SensitivitySettings : MonoBehaviour
 
     private void UpdateLabel(int val)
     {
-        if (valueLabel) valueLabel.text = $"Sensitivity: {val}";
-        {
+        if (sensitivityValueText)
+            sensitivityValueText.text = val.ToString();
             
-        }
+        
     }
 }
