@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class wallrunController : MonoBehaviour
 {
+    public static wallrunController instance;
+
     // Wallrunning Components
     LayerMask ignoreLayer;
     [SerializeField] public int wallrunGravMod;
@@ -26,9 +28,11 @@ public class wallrunController : MonoBehaviour
     public bool isWallRunning;
     float wallrunCooldown = 0.2f;
     float wallrunTimer = 0;
+    public bool ableToWallRun = true;
 
     Collider lastWall;
     Collider currentWall;
+
 
 
 
@@ -38,7 +42,10 @@ public class wallrunController : MonoBehaviour
 
     float gravOrig;
 
-
+    private void Awake()
+    {
+        instance = this;
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -160,17 +167,20 @@ public class wallrunController : MonoBehaviour
     // Start Wallrunning
     void startWallrun()
     {
-        if (Input.GetButtonDown("Jump") && (wallLeft || wallRight) && !playerMovement.isGrounded && !isWallRunning && !pController.isCrouching)
-        {
-            startWallrunAgain(true);
-            Debug.Log("First");
-        }
-        else if ((wallLeft || wallRight)&&!playerMovement.isGrounded&&!isWallRunning&&!pController.isCrouching&&pController.playerVel.y> 0.1f && currentWall != lastWall)
-        {
-            startWallrunAgain(false);
-            lastWall = currentWall;
-            Debug.Log("Again");
-        }
+
+        if (!ableToWallRun||(Water.instance!=null&&Water.instance.inWater))
+        { return; }
+            if (Input.GetButtonDown("Jump") && (wallLeft || wallRight) && !playerMovement.isGrounded && !isWallRunning && !pController.isCrouching)
+            {
+                startWallrunAgain(true);
+                Debug.Log("First");
+            }
+            else if ((wallLeft || wallRight) && !playerMovement.isGrounded && !isWallRunning && !pController.isCrouching && pController.playerVel.y > 0.1f && currentWall != lastWall)
+            {
+                startWallrunAgain(false);
+                lastWall = currentWall;
+                Debug.Log("Again");
+            }
     }
 
     void startWallrunAgain(bool jumped)
