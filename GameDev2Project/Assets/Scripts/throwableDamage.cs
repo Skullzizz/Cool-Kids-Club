@@ -1,13 +1,11 @@
-using NUnit.Framework;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+using NUnit.Framework;
 
-public class throwableDamage : MonoBehaviour, IThrowable, IDamage
+public class throwableDamage : MonoBehaviour, IThrowable
 {
-    [Header("Base Throwable Stats")]
     [SerializeField] int throwDamage;
     [SerializeField] int throwableHP;
     [SerializeField] int damageRate;
@@ -19,18 +17,7 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage
     [SerializeField] Rigidbody rb;
     enum damageType { Explosive, RAW }
 
-    [Header("Explosive Stats")]
-    [SerializeField] public int maxHits;
-    [SerializeField] public float Radius;
-    [SerializeField] public int explosiveMaxDamage;
-    [SerializeField] public int explosiveMinDamage;
-    [SerializeField] public float explosiveForce;
-    [SerializeField] ParticleSystem ParticleSystemPrefab;
-    public LayerMask targetLayer;
-    public LayerMask blockDamageLayer;
-    Collider[] hitList;
 
-    [Header("Gun Stats")]
     // Weapon Ammo - Deven
     [SerializeField] public int maxAmmo;
     [SerializeField] public int curAmmo;
@@ -50,10 +37,6 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage
     float velFactor;
     float velDMG;
 
-    void Awake()
-    {
-        hitList = new Collider[maxHits];
-    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -127,7 +110,6 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage
             if (!isDamaging)
             {
                 StartCoroutine(Damage(dmg, velDMG));
-
             }
 
             if (throwableHP <= 0)
@@ -137,11 +119,10 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage
                 {
                     SpawnStoredItems();
                 }
-                StartCoroutine(Explode());
-
+                Destroy(gameObject);
             }
 
-            //Explosive knockback
+            // Explosive knockback
             Rigidbody targetRb = collision.collider.attachedRigidbody;
             if (targetRb != null)
             {
@@ -160,7 +141,7 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage
                 {
                     SpawnStoredItems();
                 }
-                StartCoroutine(Explode());
+                Destroy(gameObject);
 
             }
         }
@@ -225,64 +206,6 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage
                 {
                     subchild.gameObject.layer = 10;
                 }
-            }
-        }
-    }
-
-    IEnumerator Explode()
-    {
-        yield return new WaitForSeconds(0.01f);
-        if (ParticleSystemPrefab != null)
-            Instantiate(ParticleSystemPrefab, transform.position, Quaternion.identity);
-        int hits = Physics.OverlapSphereNonAlloc(transform.position, Radius, hitList, targetLayer);
-        MonoBehaviour script;
-        IDamage explodeDmg;
-        for (int i = 0; i < hits; i++)
-        {
-            if (hitList[i].gameObject != gameObject)
-            {
-                Debug.Log(hitList[i].name + " has been hit with explosive");
-                if (hitList[i].TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
-                {
-                    float distance = Vector3.Distance(transform.position, rigidbody.position);
-
-                    if (!Physics.Raycast(transform.position, (hitList[i].transform.position - transform.position).normalized, distance, blockDamageLayer.value))
-                    {
-                        rigidbody.AddExplosionForce(explosiveForce, transform.position, Radius);
-
-                    }
-                }
-
-                if (hitList[i].TryGetComponent<MonoBehaviour>(out script))
-                {
-                    float distance = Vector3.Distance(transform.position, script.gameObject.transform.position);
-                    Debug.Log(script.gameObject.name + " testing damage through " + script + " script");
-                    explodeDmg = script.GetComponent<IDamage>();
-                    explodeDmg.takeDamage((Mathf.FloorToInt(Mathf.Lerp(explosiveMaxDamage, explosiveMinDamage, distance / Radius))));
-                }
-            }
-        }
-        Destroy(gameObject);
-    }
-
-    public void takeDamage(int amount)
-    {
-        throwableHP -= amount;
-
-        if (throwableHP <= 0)
-        {
-            if (storedAmount > 0)
-            {
-                SpawnStoredItems();
-            }
-
-            if (type == damageType.Explosive)
-            {
-                StartCoroutine(Explode());
-            }
-            else
-            {
-                Destroy(gameObject);
             }
         }
     }
