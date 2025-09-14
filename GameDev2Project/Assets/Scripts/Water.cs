@@ -19,7 +19,7 @@ public class Water : MonoBehaviour
 
     void Update()
     {
-        if (inWater && gamemanager.instance.playerScript.locked)
+        if (inWater && gamemanager.instance.playerScript.locked||gamemanager.instance.isPaused)
         {
             ExitWater();
         }
