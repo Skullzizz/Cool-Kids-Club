@@ -10,6 +10,9 @@ TagManager:
   - Ground
   - octopusThrow
   - Octopus
+  - MinimapCam
+  - ForwardScenePortal
+  - BackwardScenePortal
   layers:
   - Default
   - TransparentFX
@@ -24,7 +27,7 @@ TagManager:
   - throwable
   - Minimap
   - Held Throwable
-  - 
+  - Interactable
   - 
   - 
   - 
