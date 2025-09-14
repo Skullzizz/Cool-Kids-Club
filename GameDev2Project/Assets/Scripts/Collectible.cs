@@ -51,7 +51,7 @@ public class Collectible : MonoBehaviour
     IEnumerator waitForSound()
     {
         gamemanager.instance.collectiblePopup.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
         gamemanager.instance.collectiblePopup.gameObject.SetActive(false);
         Destroy(gameObject);
     }

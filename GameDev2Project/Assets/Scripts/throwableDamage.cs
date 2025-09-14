@@ -1,11 +1,12 @@
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
-public class throwableDamage : MonoBehaviour, IThrowable, IDamage
+public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
 {
     [Header("Base Throwable Stats")]
     [SerializeField] int throwDamage;
@@ -37,6 +38,14 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage
     [SerializeField] public gunStats gun;
     // ---
 
+    [SerializeField] private bool startFull = true;
+    [SerializeField] private bool isReloading;
+
+    public event System.Action OnAmmoChanged;
+    public int CurrentAmmo => curAmmo;
+    public int MaxAmmo => maxAmmo;
+    public bool IsReloading => isReloading;
+
     // Stored Item - Deven
     [SerializeField] GameObject[] storedObjectList;
     [SerializeField] int storedAmount;
@@ -53,6 +62,9 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage
     void Awake()
     {
         hitList = new Collider[maxHits];
+
+        if (startFull && maxAmmo > 0 && curAmmo <= 0) 
+            curAmmo = maxAmmo;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -185,10 +197,10 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage
         Vector3 spawnPosition = gameObject.transform.position;
         for (int spawn = 0; spawn < storedAmount; spawn++)
         {
-            spawnThis = storedObjectList[Random.Range(0, storedObjectList.Length - 1)];
+            spawnThis = storedObjectList[UnityEngine.Random.Range(0, storedObjectList.Length - 1)];
             spawnDirection.y = 1;
-            spawnDirection.x = Random.value;
-            spawnDirection.z = Random.value;
+            spawnDirection.x = UnityEngine.Random.value;
+            spawnDirection.z = UnityEngine.Random.value;
             spawnedObject = Instantiate(spawnThis, spawnPosition, Quaternion.Euler(0, 0, 0));
             spawnedObject.GetComponent<Rigidbody>().AddForce(spawnDirection * spawnForce, ForceMode.Impulse);
             Debug.Log("Spawned Item: " + spawnedObject);
@@ -285,5 +297,34 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage
                 Destroy(gameObject);
             }
         }
+    }
+    public bool Consume(int amount = 1)
+    {
+        if (MaxAmmo <= 0) return true;
+        if (curAmmo <= 0) return false;
+
+        int next = Mathf.Clamp(curAmmo - Mathf.Abs(amount), 0, MaxAmmo);
+        if (next != curAmmo)
+        {
+            curAmmo = next;
+            OnAmmoChanged?.Invoke();
+        }
+        return curAmmo > 0;
+       
+    }
+
+    public void Reload()
+    {
+        if(MaxAmmo <= 0)return;
+
+        curAmmo = MaxAmmo;
+        isReloading = false;
+        OnAmmoChanged?.Invoke();
+    }
+     public void SetAmmo(int current, int max)
+    {
+        maxAmmo = Mathf.Max(0, max);
+        curAmmo = Mathf.Clamp(current, 0, maxAmmo);
+        OnAmmoChanged?.Invoke();
     }
 }
