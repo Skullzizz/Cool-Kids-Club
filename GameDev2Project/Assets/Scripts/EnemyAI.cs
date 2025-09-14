@@ -1,14 +1,20 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEngine.XR;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
+    public enum EnemyState { Idle, Roaming, Chasing, Attacking, Dead }
+    private EnemyState currentState;
+
+    [Header("References")]
     [SerializeField] public Renderer model;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] Transform headPos;
     [SerializeField] Animator anim;
 
+    [Header("Stats")]
     [SerializeField] public int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
@@ -45,17 +51,24 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
        setAnimLoco();
 
-
-        if (agent.remainingDistance < 0.01f)
-            roamTimer += Time.deltaTime;
-
-        if (playerInTrigger && !canSeePlayer())
+        switch(currentState)
         {
-            checkRoam();
-        }
-        else if (!playerInTrigger)
-        {
-            checkRoam();
+            case EnemyState.Idle:
+                UpdateIdle();
+                break;
+
+            case EnemyState.Roaming:
+                UpdateRoam();
+                break;
+
+            case EnemyState.Chasing:
+                UpdateChase();
+                break;
+
+            case EnemyState.Attacking:
+                UpdateAttack();
+                break;
+
         }
 
     }
@@ -65,24 +78,83 @@ public class EnemyAI : MonoBehaviour, IDamage
         float agentSpeedCur = agent.velocity.normalized.magnitude;
         float animSpeedCurr = anim.GetFloat("Speed");
 
-        anim.SetFloat("Speed", Mathf.Lerp(animSpeedCurr,agentSpeedCur,Time.deltaTime*animTransSpeed));
+        anim.SetFloat("Speed", Mathf.Lerp(animSpeedCurr, agentSpeedCur, Time.deltaTime * animTransSpeed));
 
     }
 
-    void checkRoam()
-    {
-        if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
-        {
-            roam();
-        }
+    // STATE LOGIC
 
+    void UpdateIdle()
+    {
+        roamTimer += Time.deltaTime;
+        if (roamTimer >= roamPauseTime)
+            ChangeState(EnemyState.Roaming);
+
+        if (playerInTrigger && canSeePlayer())
+            ChangeState(EnemyState.Chasing);
+    }
+
+    void UpdateRoam()
+    {
+        if (agent.remainingDistance <= 0.1f)
+            ChangeState(EnemyState.Idle);
+
+        if (playerInTrigger && canSeePlayer())
+            ChangeState(EnemyState.Chasing);
+    }
+
+    void UpdateChase()
+    {
+        agent.SetDestination(gamemanager.instance.player.transform.position);
+
+        if (agent.remainingDistance <= agent.stoppingDistance + 0.5f)
+            ChangeState(EnemyState.Attacking);
+        else if (!canSeePlayer())
+            ChangeState(EnemyState.Idle);
+    }
+
+    void UpdateAttack()
+    {
+        faceTarget();
+        Attack();
+
+        if (agent.remainingDistance > agent.stoppingDistance + 0.5f)
+            ChangeState(EnemyState.Chasing);
+    }
+
+    void ChangeState(EnemyState newState)
+    {
+        currentState = newState;
+
+        switch (newState)
+        {
+            case EnemyState.Idle:
+                roamTimer = 0;
+                agent.stoppingDistance = 0;
+                agent.ResetPath();
+                break;
+
+            case EnemyState.Roaming:
+                roamTimer = 0;
+                roam();
+                break;
+
+            case EnemyState.Chasing:
+                agent.stoppingDistance = stoppingDistOrig;
+                break;
+
+            case EnemyState.Attacking:
+                agent.stoppingDistance = stoppingDistOrig;
+                break;
+
+            case EnemyState.Dead:
+                Destroy(gameObject);
+                break;
+        }
     }
 
     void roam()
     {
-        roamTimer = 0;
-        agent.stoppingDistance = 0;
-
         Vector3 ranPos = Random.insideUnitSphere * roamDistance;
         ranPos += startingPos;
 
