@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class playerController : MonoBehaviour, IDamage
@@ -464,4 +465,15 @@ public class playerController : MonoBehaviour, IDamage
         return HP;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("ForwardScenePortal"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else if (other.CompareTag("BackwardScenePortal"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
+    }
 }
