@@ -64,6 +64,11 @@ public class gamemanager : MonoBehaviour
 
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn");
+
+        if (menuPause == null) menuPause = GameObject.Find("Pause Menu");
+        if (menuWin == null) menuWin = GameObject.Find("Win Menu");
+        if (menuLose == null) menuLose = GameObject.Find("Lose Menu");
+        if (menuUpgrade == null) menuUpgrade = GameObject.Find("Upgrade Menu");
     }
 
     // Update is called once per frame
@@ -101,8 +106,11 @@ public class gamemanager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         pauseDimmer.HideDim();
-        menuActive.SetActive(false);
-        menuActive = null;
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+            menuActive = null;
+        }
         FindFirstObjectByType<PauseMenuMusic>().StopMusic();
     }
 
@@ -150,7 +158,7 @@ public class gamemanager : MonoBehaviour
     {
         if (menuActive == null)
         {
-            PlayerDeathScreen.gameObject.SetActive(true);
+            //PlayerDeathScreen.gameObject.SetActive(true);
             //minimapCam.enabled = false;
             statePause();
             menuActive = menuLose;
@@ -161,6 +169,31 @@ public class gamemanager : MonoBehaviour
 
     public void WaterScreen(bool isWater)
     {
-        waterScreen.SetActive(isWater);
+        if(waterScreen!= null)
+            waterScreen.SetActive(isWater);
+    }
+
+    public void RefreshUI()
+    {
+        if (playerHPBar == null)
+            playerHPBar = GameObject.Find("Player HP").GetComponent<Image>();
+        if (playerXPBar == null)
+            playerXPBar = GameObject.Find("Player XP").GetComponent<Image>();
+        if (playerArmorBar == null)
+            playerArmorBar = GameObject.Find("Armor Fill").GetComponent<Image>();
+        if (PlayerDamageScreen == null)
+            PlayerDamageScreen = GameObject.Find("Player Damage Screen");
+        if (PlayerDeathScreen == null)
+            PlayerDeathScreen = GameObject.Find("Player Death Screen").GetComponent<Image>();
+        if (player == null)
+            player = GameObject.Find("Player");
+        if (playerScript == null)
+            playerScript = GameObject.Find("Player").GetComponent<playerController>();
+        if (throwScript == null)
+            throwScript = GameObject.Find("Player").GetComponent<throwPhysics>();
+        if (playerSpawnPos == null)
+            playerSpawnPos = GameObject.Find("Player Spawn");
+        if (playerInventory == null)
+            playerInventory = GameObject.Find("Player").GetComponent<playerInventory>();
     }
 }
