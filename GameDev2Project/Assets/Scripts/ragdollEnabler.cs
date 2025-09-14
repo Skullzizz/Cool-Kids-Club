@@ -4,8 +4,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Animator))]
 public class RagdollController : MonoBehaviour
 {
-    [Tooltip("Downward impulse applied when ragdoll activates")]
-    public float downForce = 20f;
+    // Downward impulse applied when ragdoll activates
+    [SerializeField] float downForce;
 
     private Animator animator;
     private NavMeshAgent navAgent;
