@@ -1,9 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-public class ButtonFunctions : MonoBehaviour
+public class ButtonFunctions : MonoBehaviour, IPointerEnterHandler
 {
 
+    [Header("Main Menu Panels")]
+    [SerializeField] private GameObject panelMain;
+    [SerializeField] private GameObject panelOptions;
+    [SerializeField] private GameObject panelCredits;
     public void resume()
     {
         gamemanager.instance.stateUnpause();
@@ -15,6 +20,12 @@ public class ButtonFunctions : MonoBehaviour
         gamemanager.instance.stateUnpause();
     }
 
+    public void Respawn()
+    {
+        gamemanager.instance.playerScript.SpawnPlayer();
+        gamemanager.instance.stateUnpause();
+    }
+
     public void quit()
     {
 
@@ -23,5 +34,47 @@ public class ButtonFunctions : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    public void startGame(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName); // main game scene needs to be added here
+    }                                      // SEE: QuitToMain below
+    public void openOptions()
+    {
+        panelMain.SetActive(false);
+        panelOptions.SetActive(true);
+    }
+
+    public void openCredits()
+    {
+        panelMain.SetActive(false);
+        panelCredits.SetActive(true);
+    }
+
+    public void backToMain(GameObject currentPanel)
+    {
+        if (currentPanel != null && panelMain != null){
+
+
+            currentPanel.SetActive(false);
+            panelMain.SetActive(true);
+        }
+
+    }
+
+    public void QuitToMainMenu()
+    {
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(gameObject);
     }
 }

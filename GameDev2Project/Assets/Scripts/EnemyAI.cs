@@ -1,35 +1,41 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEngine.XR;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
+    public enum EnemyState { Idle, Roaming, Chasing, Attacking, Dead }
+    private EnemyState currentState;
+
+    [Header("References")]
+    [SerializeField] public Renderer model;
+    [SerializeField] public NavMeshAgent agent;
     [SerializeField] Transform headPos;
     [SerializeField] Animator anim;
 
-    [SerializeField] int HP;
+    [Header("Stats")]
+    [SerializeField] public int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
     [SerializeField] int roamDistance;
     [SerializeField] int roamPauseTime;
-
-    [SerializeField] GameObject bullet;
-    [SerializeField] float shootRate;
-    [SerializeField] Transform shootPos;
     [SerializeField] int animTransSpeed;
+
+
+
+    private RagdollToggle ragdollToggle;
+
 
     Color colorOrig;
 
-    float shootTimer;
     float roamTimer;
     float angleToPlayer;
     float stoppingDistOrig;
 
     bool playerInTrigger;
 
-    Vector3 playerDir;
+    public Vector3 playerDir;
     Vector3 startingPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -39,6 +45,12 @@ public class EnemyAI : MonoBehaviour, IDamage
         gamemanager.instance.updateGameGoal(1);
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
+
+        ragdollToggle = GetComponent<RagdollToggle>();
+
+        roamTimer = roamPauseTime;
+
+
     }
 
     // Update is called once per frame
@@ -46,20 +58,30 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         setAnimLoco();
 
-        shootTimer += Time.deltaTime;
-
-        if (agent.remainingDistance < 0.01f)
-            roamTimer += Time.deltaTime;
-
-        if (playerInTrigger && !canSeePlayer())
+        switch(currentState)
         {
-            checkRoam();
-        }
-        else if (!playerInTrigger)
-        {
-            checkRoam();
+            case EnemyState.Idle:
+                UpdateIdle();
+                break;
+
+            case EnemyState.Roaming:
+                UpdateRoam();
+                break;
+
+            case EnemyState.Chasing:
+                UpdateChase();
+                break;
+
+            case EnemyState.Attacking:
+                UpdateAttack();
+                break;
+
         }
 
+        if (gamemanager.instance.player.GetComponent<playerController>().GetHP() <= 0)
+        {
+            playerInTrigger = false;
+        }
     }
 
     void setAnimLoco()
@@ -67,29 +89,95 @@ public class EnemyAI : MonoBehaviour, IDamage
         float agentSpeedCur = agent.velocity.normalized.magnitude;
         float animSpeedCurr = anim.GetFloat("Speed");
 
-        anim.SetFloat("Speed", Mathf.Lerp(animSpeedCurr,agentSpeedCur,Time.deltaTime*animTransSpeed));
+        anim.SetFloat("Speed", Mathf.Lerp(animSpeedCurr, agentSpeedCur, Time.deltaTime * animTransSpeed));
+
     }
 
-    void checkRoam()
-    {
-        if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
-        {
-            roam();
-        }
+    // STATE LOGIC
 
+    void UpdateIdle()
+    {
+        roamTimer += Time.deltaTime;
+        if (roamTimer >= roamPauseTime)
+            ChangeState(EnemyState.Roaming);
+
+        if (playerInTrigger && canSeePlayer())
+            ChangeState(EnemyState.Chasing);
+    }
+
+    void UpdateRoam()
+    {
+        if (agent.remainingDistance <= 0.1f)
+            ChangeState(EnemyState.Idle);
+
+        if (playerInTrigger && canSeePlayer())
+            ChangeState(EnemyState.Chasing);
+    }
+
+    void UpdateChase()
+    {
+        agent.SetDestination(gamemanager.instance.player.transform.position);
+
+        if (agent.remainingDistance <= agent.stoppingDistance + 0.5f)
+            ChangeState(EnemyState.Attacking);
+        else if (!canSeePlayer())
+            ChangeState(EnemyState.Idle);
+    }
+
+    void UpdateAttack()
+    {
+        faceTarget();
+        Attack();
+
+        if (agent.remainingDistance > agent.stoppingDistance + 0.5f)
+            ChangeState(EnemyState.Chasing);
+    }
+
+    void ChangeState(EnemyState newState)
+    {
+        currentState = newState;
+
+        switch (newState)
+        {
+            case EnemyState.Idle:
+                roamTimer = 0;
+                agent.stoppingDistance = 0;
+                agent.ResetPath();
+                break;
+
+            case EnemyState.Roaming:
+                roamTimer = 0;
+                roam();
+                break;
+
+            case EnemyState.Chasing:
+                agent.stoppingDistance = stoppingDistOrig;
+                break;
+
+            case EnemyState.Attacking:
+                agent.stoppingDistance = stoppingDistOrig;
+                break;
+
+            case EnemyState.Dead:
+                Destroy(gameObject);
+                break;
+        }
     }
 
     void roam()
     {
-        roamTimer = 0;
-        agent.stoppingDistance = 0;
-
         Vector3 ranPos = Random.insideUnitSphere * roamDistance;
         ranPos += startingPos;
 
         NavMeshHit hit;
         NavMesh.SamplePosition(ranPos, out hit, roamDistance, 1);
         agent.SetDestination(hit.position);
+        
+    }
+
+    protected virtual void Attack()
+    {
+        // ranged or melee will have there own attack method
     }
 
     bool canSeePlayer()
@@ -105,11 +193,8 @@ public class EnemyAI : MonoBehaviour, IDamage
             if (hit.collider.CompareTag("Player") && angleToPlayer <= FOV)
             {
                 agent.SetDestination(gamemanager.instance.player.transform.position);
-
-                if (shootTimer >= shootRate)
-                {
-                    shoot();
-                }
+                    Attack();
+                
 
                 if (agent.remainingDistance <= agent.stoppingDistance)
                 {
@@ -133,7 +218,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -141,7 +226,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -150,17 +235,9 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-    void shoot()
-    {
-        shootTimer = 0;
-        anim.SetTrigger("Shoot");
+    
 
-        Quaternion rot = Quaternion.LookRotation(playerDir);
-
-        Instantiate(bullet, shootPos.position, rot);
-    }
-
-    public void takeDamage(int amount)
+    public virtual void takeDamage(int amount)
     {
         if (HP > 0)
         {
@@ -170,12 +247,25 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         if (HP <= 0)
         {
-            gamemanager.instance.updateEnemyDeaths(1);
             gamemanager.instance.updateGameGoal(-1);
+
 
             GetComponent<RagdollController>().ActivateRagdoll();
 
             Destroy(gameObject, 2f);
+
+
+            //Ragdoll Physics
+            ragdollToggle.ToggleRagdoll(true);
+            Rigidbody hipsRigidbody = GetComponentInChildren<Rigidbody>();
+            if (hipsRigidbody != null)
+            {
+                hipsRigidbody.AddForce(Vector3.up * 5, ForceMode.Impulse);
+            }
+            Destroy(gameObject, 5f);
+
+            gamemanager.instance.updateEnemyDeaths(1);
+            Destroy(gameObject);
         }
     }
 

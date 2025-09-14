@@ -6,6 +6,13 @@ TagManager:
   tags:
   - throwable
   - RunnableWall
+  - Player Spawn
+  - Ground
+  - octopusThrow
+  - Octopus
+  - MinimapCam
+  - ForwardScenePortal
+  - BackwardScenePortal
   layers:
   - Default
   - TransparentFX
@@ -19,8 +26,8 @@ TagManager:
   - IgnorePathing
   - throwable
   - Minimap
-  - 
-  - 
+  - Held Throwable
+  - Interactable
   - 
   - 
   - 

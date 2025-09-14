@@ -14,15 +14,31 @@ public class gamemanager : MonoBehaviour
 
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] TMP_Text playerLevelText;
+ 
 
     [SerializeField] private PauseDimmer pauseDimmer;
 
     public Image playerHPBar;
     public Image playerXPBar;
+    public Image playerArmorBar;
+    public Image WeaponIcon;
     public GameObject PlayerDamageScreen;
+    public Image PlayerDeathScreen;
+    public TextMeshProUGUI storedWeaponText;
 
     public GameObject player;
     public playerController playerScript;
+    public throwPhysics throwScript;
+    public GameObject playerSpawnPos;
+    public GameObject checkpointPopup;
+    public GameObject collectiblePopup;
+
+    public playerInventory playerInventory;
+
+    Camera minimapCam;
+
+    [SerializeField] GameObject waterScreen;
+
 
     public bool isPaused;
 
@@ -43,6 +59,11 @@ public class gamemanager : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerController>();
+        throwScript = player.GetComponent<throwPhysics>();
+        playerInventory = player.GetComponent<playerInventory>();
+
+        minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn");
     }
 
     // Update is called once per frame
@@ -70,6 +91,7 @@ public class gamemanager : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         pauseDimmer.ShowDim();
+        FindFirstObjectByType<PauseMenuMusic>().PlayMusic();
     }
 
     public void stateUnpause()
@@ -81,6 +103,7 @@ public class gamemanager : MonoBehaviour
         pauseDimmer.HideDim();
         menuActive.SetActive(false);
         menuActive = null;
+        FindFirstObjectByType<PauseMenuMusic>().StopMusic();
     }
 
     public void updateGameGoal(int amount)
@@ -101,30 +124,43 @@ public class gamemanager : MonoBehaviour
 
     public void updateEnemyDeaths(int amt)
     {
-        enemiesKilled += amt;
-
-
-        playerScript.updatePlayerUI();
-
-        if(enemiesKilled >= UpgradeManager.instance.soulsNeeded)
+        if (menuActive == null)
         {
-            playerLevelCount++;
-            enemiesKilled = 0;
-            //Show Upgrades
-            UpgradeManager.instance.soulsNeeded = Mathf.CeilToInt((float)(UpgradeManager.instance.soulsNeeded * 1.5));
-            statePause();
-            menuActive = menuUpgrade;
-            menuActive.SetActive(true);
-            UpgradeManager.instance.ShowRandomUpgrades();
+            enemiesKilled += amt;
+
+
+            playerScript.updatePlayerUI();
+
+            if (enemiesKilled >= UpgradeManager.instance.soulsNeeded)
+            {
+                playerLevelCount++;
+                enemiesKilled = 0;
+                //Show Upgrades
+                UpgradeManager.instance.soulsNeeded = Mathf.CeilToInt((float)(UpgradeManager.instance.soulsNeeded * 1.5));
+                statePause();
+                menuActive = menuUpgrade;
+                menuActive.SetActive(true);
+                UpgradeManager.instance.ShowRandomUpgrades();
+            }
+            playerLevelText.text = playerLevelCount.ToString("F0");
         }
-        playerLevelText.text = playerLevelCount.ToString("F0");
     }
 
     public void loseGame()
     {
-        statePause();
-        menuActive = menuLose;
-        menuActive.SetActive(true);
-        pauseDimmer.ShowDim();
+        if (menuActive == null)
+        {
+            PlayerDeathScreen.gameObject.SetActive(true);
+            //minimapCam.enabled = false;
+            statePause();
+            menuActive = menuLose;
+            menuActive.SetActive(true);
+            pauseDimmer.ShowDim();
+        }
+    }
+
+    public void WaterScreen(bool isWater)
+    {
+        waterScreen.SetActive(isWater);
     }
 }
