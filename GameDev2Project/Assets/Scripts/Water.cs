@@ -6,7 +6,7 @@ public class Water : MonoBehaviour
     float ogGrav;
     public bool inWater;
     public static Water instance;
-    bool wasInWater = false;
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
