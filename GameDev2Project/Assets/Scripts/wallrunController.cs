@@ -167,8 +167,8 @@ public class wallrunController : MonoBehaviour
     // Start Wallrunning
     void startWallrun()
     {
-        if (ableToWallRun)
-        {
+        if (!ableToWallRun||(Water.instance!=null&&Water.instance.inWater))
+        { return; }
             if (Input.GetButtonDown("Jump") && (wallLeft || wallRight) && !playerMovement.isGrounded && !isWallRunning && !pController.isCrouching)
             {
                 startWallrunAgain(true);
@@ -180,7 +180,6 @@ public class wallrunController : MonoBehaviour
                 lastWall = currentWall;
                 Debug.Log("Again");
             }
-        }
     }
 
     void startWallrunAgain(bool jumped)

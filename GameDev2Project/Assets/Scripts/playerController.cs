@@ -1,18 +1,22 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
 
 
 public class playerController : MonoBehaviour, IDamage
 {
-    public static playerController instance;
 
     [SerializeField] LayerMask ignorelayer;
 
+    [Header("Controllers")]
     [SerializeField] CharacterController controller;
     [SerializeField] wallrunController wallrunController;
+    public Rigidbody rb;
 
+
+    [Header("Player Statistics")]
     [SerializeField] public int HP;
     [SerializeField] int speed;
     [SerializeField] float crouchSpeed;
@@ -25,28 +29,36 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int jumpMax;
     [SerializeField] float airControlMod;
     [SerializeField] public float gravity;
+    [SerializeField] float coyoteTimeMax;
+    float lastGroundedTime;
+    int jumpCount;
 
-
+    [Header("Player Combat Statistics")]
     [SerializeField] public int shootDamage;
     [SerializeField] public float shootRate;
     [SerializeField] public int shootDist;
+    float shootTimer;
 
-    public Rigidbody rb;
+    [Header("Throwable Management")]
     public throwableDamage equippedWeapon;
 
+    [Header("Movement Controls")]
     Vector3 moveDir;
     public Vector3 playerVel;
 
-    int jumpCount;
+    [Header("Originals")]
     int HPOrig;
     float heightOrig;
 
+    [Header("General Bools")]
     public bool isSprinting;
     public bool isCrouching;
     public bool isSliding;
     public bool isGrappling;
     public bool activeGrapple;
     public bool hasShield;
+
+    [Header("Shield Systems")]
     public int shieldCharge;
     [SerializeField] int maxShield = 100;
     [SerializeField] int shieldRegenRate = 5;
@@ -56,12 +68,13 @@ public class playerController : MonoBehaviour, IDamage
     float regenTimer;
     public bool locked = false;
 
-    float shootTimer;
 
     bool deathCoroutineRun = false;
     bool isDead;
 
     Camera minimapCam;
+
+
 
     public enum PlayerStats
     {
@@ -70,10 +83,6 @@ public class playerController : MonoBehaviour, IDamage
         JumpMax
     }
 
-    private void Awake()
-    {
-        instance = this;
-    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -107,6 +116,11 @@ public class playerController : MonoBehaviour, IDamage
     void movement()
     {
         if (activeGrapple) return;
+
+        if (controller.isGrounded)
+        {
+            lastGroundedTime = Time.time;
+        }
 
         shootTimer += Time.deltaTime;
 
@@ -196,7 +210,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             if (Input.GetButtonDown("Crouch"))
             {
-                if (isSprinting && controller.isGrounded)
+                if (isSprinting && (controller.isGrounded || Time.time - lastGroundedTime <= coyoteTimeMax))
                 {
                     isSliding = true;
                     playerVel.x += moveDir.x * slideBoost;
@@ -307,6 +321,7 @@ public class playerController : MonoBehaviour, IDamage
         gamemanager.instance.PlayerDamageScreen.SetActive(false);
     }
 
+    
     public void updateStats(PlayerStats stat, int amt)
     {
         switch (stat)
@@ -387,7 +402,6 @@ public class playerController : MonoBehaviour, IDamage
 
         // Combine vertical and horizontal velocities
         return velocityXZ + Vector3.up * velocityY;
-
     }
     public void SpawnPlayer()
     {
@@ -406,6 +420,7 @@ public class playerController : MonoBehaviour, IDamage
         updatePlayerUI();
 
     }
+
     void ShieldRecharge()
     {
         if (!hasShield)
