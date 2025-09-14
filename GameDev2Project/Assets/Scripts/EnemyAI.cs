@@ -22,6 +22,11 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int roamPauseTime;
     [SerializeField] int animTransSpeed;
 
+    [Header("Waypoints")]
+    [SerializeField] private Waypoint waypoints;
+    [SerializeField] private float waypointThreshold = 0.5f;
+    private Transform currentWaypoint;
+
 
 
     private RagdollToggle ragdollToggle;
@@ -51,14 +56,18 @@ public class EnemyAI : MonoBehaviour, IDamage
         roamTimer = roamPauseTime;
 
 
+
+        if (waypoints != null)
+            currentWaypoint = waypoints.GetNextWaypoint(null);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        setAnimLoco();
+        // setAnimLoco();
 
-        switch(currentState)
+        switch (currentState)
         {
             case EnemyState.Idle:
                 UpdateIdle();
@@ -107,8 +116,20 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     void UpdateRoam()
     {
-        if (agent.remainingDistance <= 0.1f)
-            ChangeState(EnemyState.Idle);
+        if (waypoints != null)
+        {
+            if (agent.remainingDistance <= waypointThreshold)
+            {
+                currentWaypoint = waypoints.GetNextWaypoint(currentWaypoint);
+                agent.SetDestination(currentWaypoint.position);
+            }
+        }
+        else
+        {
+
+            if (agent.remainingDistance <= 0.1f)
+                ChangeState(EnemyState.Idle);
+        }
 
         if (playerInTrigger && canSeePlayer())
             ChangeState(EnemyState.Chasing);
@@ -166,13 +187,23 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     void roam()
     {
-        Vector3 ranPos = Random.insideUnitSphere * roamDistance;
-        ranPos += startingPos;
+        if (waypoints != null)
+        {
+            agent.stoppingDistance = 0;
+            if (currentWaypoint == null)
+                currentWaypoint = waypoints.GetNextWaypoint(null);
 
-        NavMeshHit hit;
-        NavMesh.SamplePosition(ranPos, out hit, roamDistance, 1);
-        agent.SetDestination(hit.position);
-        
+            agent.SetDestination(currentWaypoint.position);
+        }
+        else
+        {
+            Vector3 ranPos = Random.insideUnitSphere * roamDistance;
+            ranPos += startingPos;
+
+            NavMeshHit hit;
+            NavMesh.SamplePosition(ranPos, out hit, roamDistance, 1);
+            agent.SetDestination(hit.position);
+        }
     }
 
     protected virtual void Attack()

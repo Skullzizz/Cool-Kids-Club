@@ -6,63 +6,54 @@ public class Water : MonoBehaviour
     float ogGrav;
     public bool inWater;
     public static Water instance;
-    
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
         instance = this;
     }
+
     void Start()
     {
-        ogGrav=gamemanager.instance.playerScript.gravity;
+        ogGrav = gamemanager.instance.playerScript.gravity;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (gamemanager.instance.isPaused)
-            return;
-
-        if(gamemanager.instance.playerScript.locked)
+        if (inWater && gamemanager.instance.playerScript.locked||gamemanager.instance.isPaused)
         {
-            waterFilter(false);
-            return;
-        }
-        if (inWater)
-        {
-            waterFilter(true);
-        }
-        else
-        {
-            waterFilter(false);
+            ExitWater();
         }
     }
 
-    public void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")&&!gamemanager.instance.playerScript.locked)
+        if (other.CompareTag("Player") && !gamemanager.instance.playerScript.locked)
         {
-            wallrunController.instance.ableToWallRun = false;
-            inWater= true;
-            gamemanager.instance.playerScript.gravity = gravity;
+            EnterWater();
         }
     }
 
-    public void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            wallrunController.instance.ableToWallRun = true;
-            inWater= false;
-            gamemanager.instance.playerScript.gravity = ogGrav;
+            ExitWater();
         }
     }
 
-    void waterFilter(bool isWater)
+    void EnterWater()
     {
-        gamemanager.instance.WaterScreen(isWater);
+        inWater = true;
+        wallrunController.instance.ableToWallRun = false;
+        gamemanager.instance.playerScript.gravity = gravity;
+        gamemanager.instance.WaterScreen(true);
     }
 
+    void ExitWater()
+    {
+        inWater = false;
+        wallrunController.instance.ableToWallRun = true;
+        gamemanager.instance.playerScript.gravity = ogGrav;
+        gamemanager.instance.WaterScreen(false);
+    }
 }
