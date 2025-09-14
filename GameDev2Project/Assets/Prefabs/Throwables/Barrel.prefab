@@ -57,18 +57,6 @@ MonoBehaviour:
   explKnockMult: 0
   type: 0
   rb: {fileID: 1287557129109141754}
-  maxHits: 25
-  Radius: 20
-  explosiveMaxDamage: 50
-  explosiveMinDamage: 10
-  explosiveForce: 100000
-  ParticleSystemPrefab: {fileID: 198917022394846920, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 1096
-  blockDamageLayer:
-    serializedVersion: 2
-    m_Bits: 8193
   maxAmmo: 0
   curAmmo: 0
   gun: {fileID: 0}
