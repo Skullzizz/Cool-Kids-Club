@@ -16,8 +16,10 @@ public class ButtonFunctions : MonoBehaviour, IPointerEnterHandler
 
     public void restart()
     {
+        //Destroy(gamemanager.instance.playerScript.gameObject);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         gamemanager.instance.stateUnpause();
+        //gamemanager.instance.RefreshUI();
     }
 
     public void Respawn()
