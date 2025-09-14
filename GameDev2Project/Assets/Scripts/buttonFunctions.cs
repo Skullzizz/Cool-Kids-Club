@@ -39,7 +39,7 @@ public class ButtonFunctions : MonoBehaviour, IPointerEnterHandler
     public void startGame(string sceneName)
     {
         SceneManager.LoadScene(sceneName); // main game scene needs to be added here
-    }
+    }                                      // SEE: QuitToMain below
     public void openOptions()
     {
         panelMain.SetActive(false);
@@ -61,6 +61,15 @@ public class ButtonFunctions : MonoBehaviour, IPointerEnterHandler
             panelMain.SetActive(true);
         }
 
+    }
+
+    public void QuitToMainMenu()
+    {
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
