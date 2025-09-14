@@ -90,6 +90,7 @@ public class gamemanager : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         pauseDimmer.ShowDim();
+        FindFirstObjectByType<PauseMenuMusic>().PlayMusic();
     }
 
     public void stateUnpause()
@@ -101,6 +102,7 @@ public class gamemanager : MonoBehaviour
         pauseDimmer.HideDim();
         menuActive.SetActive(false);
         menuActive = null;
+        FindFirstObjectByType<PauseMenuMusic>().StopMusic();
     }
 
     public void updateGameGoal(int amount)
