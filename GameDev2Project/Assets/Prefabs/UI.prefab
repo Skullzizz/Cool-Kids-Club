@@ -4289,7 +4289,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You Lose!
+  m_text: You ran out of HP!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4650,7 +4650,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -4884,7 +4884,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8265904537733938449
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5218,6 +5218,7 @@ MonoBehaviour:
   throwScript: {fileID: 0}
   playerSpawnPos: {fileID: 0}
   checkpointPopup: {fileID: 5775934828616179143}
+  collectiblePopup: {fileID: 0}
   playerInventory: {fileID: 0}
   waterScreen: {fileID: 1625526412486035471}
   isPaused: 0

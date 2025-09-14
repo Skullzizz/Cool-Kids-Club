@@ -150,7 +150,7 @@ public class gamemanager : MonoBehaviour
     {
         if (menuActive == null)
         {
-            PlayerDeathScreen.gameObject.SetActive(true);
+            //PlayerDeathScreen.gameObject.SetActive(true);
             //minimapCam.enabled = false;
             statePause();
             menuActive = menuLose;

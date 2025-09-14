@@ -2,9 +2,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class playerInventory : MonoBehaviour
 {
+    public event Action<GameObject> OnEquippedWeaponChanged;
+
     [Header("Inventory Settings")]
     public List<GameObject> inventory = new List<GameObject>();
 
@@ -28,6 +31,7 @@ public class playerInventory : MonoBehaviour
         weaponIcon = gamemanager.instance.WeaponIcon;
         equippedWeaponText = gamemanager.instance.storedWeaponText;
         UpdateWeaponUI();
+        OnEquippedWeaponChanged?.Invoke(equippedWeapon);
     }
 
     private void Update()
@@ -45,17 +49,15 @@ public class playerInventory : MonoBehaviour
             TextMeshProUGUI textComponent = slot.GetComponentInChildren<TextMeshProUGUI>();
 
             if (textComponent != null)
-            {
                 textComponent.text = item.name;
-            }
             else
-            {
                 Debug.LogWarning("No component found in inventory slot");
-            }
         }
         equippedWeapon = item;
         equippedWeaponIndex = inventory.Count - 1;
+
         UpdateWeaponUI();
+        RaiseEquippedChanged();
     }
 
     public void RemoveItem()
@@ -75,6 +77,8 @@ public class playerInventory : MonoBehaviour
             }
             
         }
+        UpdateWeaponUI();
+        RaiseEquippedChanged();
     }
 
     void selectGun()
@@ -138,5 +142,10 @@ public class playerInventory : MonoBehaviour
                 weaponIcon.enabled = true;
             }
         }
+    }
+
+    void RaiseEquippedChanged()
+    {
+        OnEquippedWeaponChanged?.Invoke(equippedWeapon);
     }
 }
