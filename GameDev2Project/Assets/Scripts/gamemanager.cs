@@ -172,4 +172,28 @@ public class gamemanager : MonoBehaviour
         if(waterScreen!= null)
             waterScreen.SetActive(isWater);
     }
+
+    public void RefreshUI()
+    {
+        if (playerHPBar == null)
+            playerHPBar = GameObject.Find("Player HP").GetComponent<Image>();
+        if (playerXPBar == null)
+            playerXPBar = GameObject.Find("Player XP").GetComponent<Image>();
+        if (playerArmorBar == null)
+            playerArmorBar = GameObject.Find("Armor Fill").GetComponent<Image>();
+        if (PlayerDamageScreen == null)
+            PlayerDamageScreen = GameObject.Find("Player Damage Screen");
+        if (PlayerDeathScreen == null)
+            PlayerDeathScreen = GameObject.Find("Player Death Screen").GetComponent<Image>();
+        if (player == null)
+            player = GameObject.Find("Player");
+        if (playerScript == null)
+            playerScript = GameObject.Find("Player").GetComponent<playerController>();
+        if (throwScript == null)
+            throwScript = GameObject.Find("Player").GetComponent<throwPhysics>();
+        if (playerSpawnPos == null)
+            playerSpawnPos = GameObject.Find("Player Spawn");
+        if (playerInventory == null)
+            playerInventory = GameObject.Find("Player").GetComponent<playerInventory>();
+    }
 }
