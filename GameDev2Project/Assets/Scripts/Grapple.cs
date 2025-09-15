@@ -90,7 +90,7 @@ public class GrapplingGun : MonoBehaviour
             lr.enabled = true;
             lr.positionCount = 2;
 
-            // If object is tagged "throwable", grab it instead
+            // If object is tagged "Throwable", grab it instead
             if (hit.collider.CompareTag("throwable"))
             {
                 grabbingThrowable = true;
@@ -103,7 +103,7 @@ public class GrapplingGun : MonoBehaviour
         }
     }
 
-    void StopAllActions()
+    public void StopAllActions()
     {
         isGrappling = false;
         grabbingThrowable = false;
@@ -124,4 +124,3 @@ public class GrapplingGun : MonoBehaviour
             lr.SetPosition(1, grapplePoint);
     }
 }
-

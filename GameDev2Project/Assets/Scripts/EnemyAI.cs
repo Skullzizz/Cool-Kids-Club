@@ -29,7 +29,6 @@ public class EnemyAI : MonoBehaviour, IDamage
 
 
 
-    private RagdollToggle ragdollToggle;
 
 
     Color colorOrig;
@@ -50,8 +49,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         gamemanager.instance.updateGameGoal(1);
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
-
-        ragdollToggle = GetComponent<RagdollToggle>();
 
         roamTimer = roamPauseTime;
 
@@ -287,16 +284,9 @@ public class EnemyAI : MonoBehaviour, IDamage
 
 
             //Ragdoll Physics
-            ragdollToggle.ToggleRagdoll(true);
-            Rigidbody hipsRigidbody = GetComponentInChildren<Rigidbody>();
-            if (hipsRigidbody != null)
-            {
-                hipsRigidbody.AddForce(Vector3.up * 5, ForceMode.Impulse);
-            }
-            Destroy(gameObject, 5f);
-
+            GetComponent<RagdollController>().ActivateRagdoll();
             gamemanager.instance.updateEnemyDeaths(1);
-            Destroy(gameObject);
+            Destroy(gameObject, 5f);
         }
     }
 

@@ -342,42 +342,6 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
-
-
-    private bool enableMovementOnNextTouch;
-    public void JumpToPosition(Vector3 targetPos, float trajectoryHeight)
-    {
-        activeGrapple = true;
-
-        velocityToSet = CalculateGrappleVelocity(transform.position, targetPos, trajectoryHeight);
-
-        Invoke(nameof(SetVelocity), 0.1f);
-
-        Invoke(nameof(ResetRestrictions), 3f);
-    }
-
-    private Vector3 velocityToSet;
-    private void SetVelocity()
-    {
-        enableMovementOnNextTouch = true;
-        rb.linearVelocity = velocityToSet;
-    }
-
-    public void ResetRestrictions()
-    {
-        activeGrapple = false;
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (enableMovementOnNextTouch)
-        {
-            enableMovementOnNextTouch = false;
-            ResetRestrictions();
-
-            GetComponent<Grappling>().StopGrapple();
-        }
-    }
-
     public Vector3 CalculateGrappleVelocity(Vector3 startpoint, Vector3 endPoint, float trajectoryHeight)
     {
 

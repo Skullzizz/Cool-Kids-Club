@@ -3275,10 +3275,10 @@ MonoBehaviour:
   FOV: 90
   roamDistance: 15
   roamPauseTime: 2
-  bullet: {fileID: 8670774205982178191, guid: efd99f98435b7954483a9301185e1148, type: 3}
-  shootRate: 2
-  shootPos: {fileID: 527448014}
   animTransSpeed: 5
+  waypoints: {fileID: 0}
+  waypointThreshold: 0.5
+  playerDir: {x: 0, y: 0, z: 0}
 --- !u!23 &258720396
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4638,9 +4638,23 @@ MonoBehaviour:
   explKnockMult: 3
   type: 0
   rb: {fileID: 388257103}
+  maxHits: 0
+  Radius: 0
+  explosiveMaxDamage: 0
+  explosiveMinDamage: 0
+  explosiveForce: 0
+  ParticleSystemPrefab: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  blockDamageLayer:
+    serializedVersion: 2
+    m_Bits: 0
   maxAmmo: 0
   curAmmo: 0
   gun: {fileID: 0}
+  startFull: 1
+  isReloading: 0
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
@@ -6081,11 +6095,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 522597392}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &527448014 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 479538, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
-  m_PrefabInstance: {fileID: 539341148}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &531958084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12457,6 +12466,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2959234872948238269, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4232586735579465746, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -13472,9 +13485,23 @@ MonoBehaviour:
   explKnockMult: 3
   type: 0
   rb: {fileID: 1311130842}
+  maxHits: 0
+  Radius: 0
+  explosiveMaxDamage: 0
+  explosiveMinDamage: 0
+  explosiveForce: 0
+  ParticleSystemPrefab: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  blockDamageLayer:
+    serializedVersion: 2
+    m_Bits: 0
   maxAmmo: 0
   curAmmo: 0
   gun: {fileID: 0}
+  startFull: 1
+  isReloading: 0
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
@@ -13776,9 +13803,23 @@ MonoBehaviour:
   explKnockMult: 3
   type: 0
   rb: {fileID: 1329319288}
+  maxHits: 0
+  Radius: 0
+  explosiveMaxDamage: 0
+  explosiveMinDamage: 0
+  explosiveForce: 0
+  ParticleSystemPrefab: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  blockDamageLayer:
+    serializedVersion: 2
+    m_Bits: 0
   maxAmmo: 0
   curAmmo: 0
   gun: {fileID: 0}
+  startFull: 1
+  isReloading: 0
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
@@ -15494,10 +15535,10 @@ MonoBehaviour:
   FOV: 90
   roamDistance: 15
   roamPauseTime: 2
-  bullet: {fileID: 8670774205982178191, guid: efd99f98435b7954483a9301185e1148, type: 3}
-  shootRate: 2
-  shootPos: {fileID: 1962514757}
   animTransSpeed: 5
+  waypoints: {fileID: 0}
+  waypointThreshold: 0.5
+  playerDir: {x: 0, y: 0, z: 0}
 --- !u!1 &1495954959 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8272766731378854171, guid: 90ec5796e247a3d4c94b24f3251aa44e, type: 3}
@@ -17662,11 +17703,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 170590, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
   m_PrefabInstance: {fileID: 1621175449}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1621175461 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 479538, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
-  m_PrefabInstance: {fileID: 1621175449}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1621175462 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 105096, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
@@ -19535,10 +19571,10 @@ MonoBehaviour:
   FOV: 90
   roamDistance: 15
   roamPauseTime: 2
-  bullet: {fileID: 8670774205982178191, guid: efd99f98435b7954483a9301185e1148, type: 3}
-  shootRate: 2
-  shootPos: {fileID: 1621175461}
   animTransSpeed: 5
+  waypoints: {fileID: 0}
+  waypointThreshold: 0.5
+  playerDir: {x: 0, y: 0, z: 0}
 --- !u!1 &1759891693
 GameObject:
   m_ObjectHideFlags: 0
@@ -20013,9 +20049,23 @@ MonoBehaviour:
   explKnockMult: 0
   type: 1
   rb: {fileID: 1792859158}
+  maxHits: 0
+  Radius: 0
+  explosiveMaxDamage: 0
+  explosiveMinDamage: 0
+  explosiveForce: 0
+  ParticleSystemPrefab: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  blockDamageLayer:
+    serializedVersion: 2
+    m_Bits: 0
   maxAmmo: 0
   curAmmo: 0
   gun: {fileID: 0}
+  startFull: 1
+  isReloading: 0
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
@@ -22670,9 +22720,23 @@ MonoBehaviour:
   explKnockMult: 3
   type: 0
   rb: {fileID: 1917987540}
+  maxHits: 0
+  Radius: 0
+  explosiveMaxDamage: 0
+  explosiveMinDamage: 0
+  explosiveForce: 0
+  ParticleSystemPrefab: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  blockDamageLayer:
+    serializedVersion: 2
+    m_Bits: 0
   maxAmmo: 0
   curAmmo: 0
   gun: {fileID: 0}
+  startFull: 1
+  isReloading: 0
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
@@ -23098,11 +23162,6 @@ Transform:
 --- !u!1 &1962514756 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 170590, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
-  m_PrefabInstance: {fileID: 1962514745}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1962514757 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 479538, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
   m_PrefabInstance: {fileID: 1962514745}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1962514758 stripped
@@ -25052,9 +25111,23 @@ MonoBehaviour:
   explKnockMult: 0
   type: 1
   rb: {fileID: 2073951854}
+  maxHits: 0
+  Radius: 0
+  explosiveMaxDamage: 0
+  explosiveMinDamage: 0
+  explosiveForce: 0
+  ParticleSystemPrefab: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  blockDamageLayer:
+    serializedVersion: 2
+    m_Bits: 0
   maxAmmo: 0
   curAmmo: 0
   gun: {fileID: 0}
+  startFull: 1
+  isReloading: 0
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
