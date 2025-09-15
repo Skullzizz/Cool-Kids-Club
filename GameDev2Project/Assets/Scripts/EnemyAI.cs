@@ -27,6 +27,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] private float waypointThreshold = 0.5f;
     private Transform currentWaypoint;
 
+    bool isRagdolling = false;
 
 
 
@@ -52,7 +53,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         roamTimer = roamPauseTime;
 
-
+        
 
         if (waypoints != null)
             currentWaypoint = waypoints.GetNextWaypoint(null);
@@ -63,25 +64,27 @@ public class EnemyAI : MonoBehaviour, IDamage
     void Update()
     {
         // setAnimLoco();
-
-        switch (currentState)
+        if (!isRagdolling)
         {
-            case EnemyState.Idle:
-                UpdateIdle();
-                break;
+            switch (currentState)
+            {
+                case EnemyState.Idle:
+                    UpdateIdle();
+                    break;
 
-            case EnemyState.Roaming:
-                UpdateRoam();
-                break;
+                case EnemyState.Roaming:
+                    UpdateRoam();
+                    break;
 
-            case EnemyState.Chasing:
-                UpdateChase();
-                break;
+                case EnemyState.Chasing:
+                    UpdateChase();
+                    break;
 
-            case EnemyState.Attacking:
-                UpdateAttack();
-                break;
+                case EnemyState.Attacking:
+                    UpdateAttack();
+                    break;
 
+            }
         }
 
         if (gamemanager.instance.player.GetComponent<playerController>().GetHP() <= 0)
@@ -277,16 +280,19 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             gamemanager.instance.updateGameGoal(-1);
 
-
-            GetComponent<RagdollController>().ActivateRagdoll();
-
-            Destroy(gameObject, 2f);
-
+            if (GetComponent<RagdollController>() != null)
+            {
+                isRagdolling = true;
+                GetComponent<RagdollController>().ActivateRagdoll();
+                Destroy(gameObject, 5f);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
 
             //Ragdoll Physics
-            GetComponent<RagdollController>().ActivateRagdoll();
             gamemanager.instance.updateEnemyDeaths(1);
-            Destroy(gameObject, 5f);
         }
     }
 

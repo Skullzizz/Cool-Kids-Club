@@ -111,7 +111,8 @@ public class gamemanager : MonoBehaviour
             menuActive.SetActive(false);
             menuActive = null;
         }
-        FindFirstObjectByType<PauseMenuMusic>().StopMusic();
+        if (FindFirstObjectByType<PauseMenuMusic>()!=null)
+            FindFirstObjectByType<PauseMenuMusic>().StopMusic();
     }
 
     public void updateGameGoal(int amount)
