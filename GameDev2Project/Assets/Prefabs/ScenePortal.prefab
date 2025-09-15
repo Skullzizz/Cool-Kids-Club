@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 6838696906932612009}
   m_Layer: 0
   m_Name: PortalCollider
-  m_TagString: ForwardScenePortal
+  m_TagString: BackwardScenePortal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 8058842593747548439}
   m_Layer: 0
   m_Name: ScenePortal
-  m_TagString: Untagged
+  m_TagString: ForwardScenePortal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
