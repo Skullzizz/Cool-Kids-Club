@@ -181,7 +181,10 @@ public class playerController : MonoBehaviour, IDamage
 
         controller.Move(playerVel * Time.deltaTime);
 
-
+        if (Input.GetButtonDown("EnterShowcase"))
+        {
+            EnterShowcaseLevel();
+        }
 
         if (Input.GetButton("Fire1") && shootTimer >= shootRate && equippedWeapon != null)
         {
@@ -438,5 +441,10 @@ public class playerController : MonoBehaviour, IDamage
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         }
+    }
+
+    void EnterShowcaseLevel()
+    {
+        SceneManager.LoadScene("Showcase Level");
     }
 }
