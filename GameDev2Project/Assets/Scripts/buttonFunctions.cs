@@ -16,8 +16,10 @@ public class ButtonFunctions : MonoBehaviour, IPointerEnterHandler
 
     public void restart()
     {
+        //Destroy(gamemanager.instance.playerScript.gameObject);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         gamemanager.instance.stateUnpause();
+        //gamemanager.instance.RefreshUI();
     }
 
     public void Respawn()
@@ -39,6 +41,7 @@ public class ButtonFunctions : MonoBehaviour, IPointerEnterHandler
     public void startGame(string sceneName)
     {
         SceneManager.LoadScene(sceneName); // main game scene needs to be added here
+        gamemanager.instance.stateUnpause();
     }                                      // SEE: QuitToMain below
     public void openOptions()
     {

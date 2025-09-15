@@ -40,7 +40,9 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] public int shootDist;
     float shootTimer;
 
+
     [Header("Throwable Management")]
+
     public throwableDamage equippedWeapon;
 
     [Header("Movement Controls")]
@@ -55,6 +57,7 @@ public class playerController : MonoBehaviour, IDamage
     public bool isSprinting;
     public bool isCrouching;
     public bool isSliding;
+
     public bool isGrappling;
     public bool activeGrapple;
     public bool hasShield;
@@ -104,10 +107,6 @@ public class playerController : MonoBehaviour, IDamage
             crouch();
         }
 
-        if (isGrappling)
-        {
-            rb.angularVelocity = Vector3.zero;
-        }
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
         ShieldRecharge();
@@ -116,7 +115,6 @@ public class playerController : MonoBehaviour, IDamage
 
     void movement()
     {
-        if (activeGrapple) return;
 
         if (controller.isGrounded)
         {
@@ -183,7 +181,10 @@ public class playerController : MonoBehaviour, IDamage
 
         controller.Move(playerVel * Time.deltaTime);
 
-
+        if (Input.GetButtonDown("EnterShowcase"))
+        {
+            EnterShowcaseLevel();
+        }
 
         if (Input.GetButton("Fire1") && shootTimer >= shootRate && equippedWeapon != null)
         {
@@ -344,41 +345,6 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
-
-    private bool enableMovementOnNextTouch;
-    public void JumpToPosition(Vector3 targetPos, float trajectoryHeight)
-    {
-        activeGrapple = true;
-
-        velocityToSet = CalculateGrappleVelocity(transform.position, targetPos, trajectoryHeight);
-
-        Invoke(nameof(SetVelocity), 0.1f);
-
-        Invoke(nameof(ResetRestrictions), 3f);
-    }
-
-    private Vector3 velocityToSet;
-    private void SetVelocity()
-    {
-        enableMovementOnNextTouch = true;
-        rb.linearVelocity = velocityToSet;
-    }
-
-    public void ResetRestrictions()
-    {
-        activeGrapple = false;
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (enableMovementOnNextTouch)
-        {
-            enableMovementOnNextTouch = false;
-            ResetRestrictions();
-
-            GetComponent<Grappling>().StopGrapple();
-        }
-    }
-
     public Vector3 CalculateGrappleVelocity(Vector3 startpoint, Vector3 endPoint, float trajectoryHeight)
     {
 
@@ -465,15 +431,20 @@ public class playerController : MonoBehaviour, IDamage
         return HP;
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("ForwardScenePortal"))
+    //    {
+    //        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    //    }
+    //    else if (other.CompareTag("BackwardScenePortal"))
+    //    {
+    //        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    //    }
+    //}
+
+    void EnterShowcaseLevel()
     {
-        if (other.CompareTag("ForwardScenePortal"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-        else if (other.CompareTag("BackwardScenePortal"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-        }
+        SceneManager.LoadScene("Showcase Level");
     }
 }

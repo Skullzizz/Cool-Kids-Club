@@ -8,11 +8,6 @@ public class DontDestroy : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        if (GetComponent<EventSystem>() != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
 
         if(persObjects[objIndex] == null)
         {

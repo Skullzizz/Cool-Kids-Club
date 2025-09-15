@@ -27,8 +27,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] private float waypointThreshold = 0.5f;
     private Transform currentWaypoint;
 
+    bool isRagdolling = false;
 
-    private RagdollToggle ragdollToggle;
+
 
 
     Color colorOrig;
@@ -50,39 +51,40 @@ public class EnemyAI : MonoBehaviour, IDamage
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
 
-
-        ragdollToggle = GetComponent<RagdollToggle>();
-
         roamTimer = roamPauseTime;
 
+        
 
         if (waypoints != null)
             currentWaypoint = waypoints.GetNextWaypoint(null);
+
     }
 
     // Update is called once per frame
     void Update()
     {
         // setAnimLoco();
-
-        switch (currentState)
+        if (!isRagdolling)
         {
-            case EnemyState.Idle:
-                UpdateIdle();
-                break;
+            switch (currentState)
+            {
+                case EnemyState.Idle:
+                    UpdateIdle();
+                    break;
 
-            case EnemyState.Roaming:
-                UpdateRoam();
-                break;
+                case EnemyState.Roaming:
+                    UpdateRoam();
+                    break;
 
-            case EnemyState.Chasing:
-                UpdateChase();
-                break;
+                case EnemyState.Chasing:
+                    UpdateChase();
+                    break;
 
-            case EnemyState.Attacking:
-                UpdateAttack();
-                break;
+                case EnemyState.Attacking:
+                    UpdateAttack();
+                    break;
 
+            }
         }
 
         if (gamemanager.instance.player.GetComponent<playerController>().GetHP() <= 0)
@@ -278,19 +280,19 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             gamemanager.instance.updateGameGoal(-1);
 
+            if (GetComponent<RagdollController>() != null)
+            {
+                isRagdolling = true;
+                GetComponent<RagdollController>().ActivateRagdoll();
+                Destroy(gameObject, 5f);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
 
             //Ragdoll Physics
-            ragdollToggle.ToggleRagdoll(true);
-            Rigidbody hipsRigidbody = GetComponentInChildren<Rigidbody>();
-            if (hipsRigidbody != null)
-            {
-                hipsRigidbody.AddForce(Vector3.up * 5, ForceMode.Impulse);
-            }
-            Destroy(gameObject, 5f);
-
             gamemanager.instance.updateEnemyDeaths(1);
-            Destroy(gameObject);
-            
         }
     }
 

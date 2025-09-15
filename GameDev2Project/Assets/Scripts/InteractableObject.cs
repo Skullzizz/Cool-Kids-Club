@@ -12,7 +12,6 @@ public class InteractableObject : MonoBehaviour, IInteract
     {
         Debug.Log("Interactable Activated");
         return true;
-  
     }
 
 

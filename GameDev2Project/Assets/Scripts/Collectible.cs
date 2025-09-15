@@ -39,19 +39,20 @@ public class Collectible : MonoBehaviour
                     gamemanager.instance.playerScript.updateStats(playerController.PlayerStats.Health, healAmount);
                     break;
             }
+            collectibleText.text = collectibleType.ToString().Replace("_", " ") + " Aquired";
+
+            pickUpSound.Play();
+            mesh.enabled = false;
+            sphereCollider.enabled = false;
+            StartCoroutine(waitForSound());
         }
-        collectibleText.text = collectibleType.ToString().Replace("_"," ")+" Aquired";
         
-        pickUpSound.Play();
-        mesh.enabled = false;
-        sphereCollider.enabled = false;
-        StartCoroutine(waitForSound());
     }
 
     IEnumerator waitForSound()
     {
         gamemanager.instance.collectiblePopup.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
         gamemanager.instance.collectiblePopup.gameObject.SetActive(false);
         Destroy(gameObject);
     }
