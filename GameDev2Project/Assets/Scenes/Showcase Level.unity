@@ -2891,7 +2891,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 361737542013313868, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
       propertyPath: sceneName
-      value: Armor
+      value: Labs
       objectReference: {fileID: 0}
     - target: {fileID: 7401775839023687723, guid: 14386706043600c40b8758c1904cdd5e, type: 3}
       propertyPath: m_Name
