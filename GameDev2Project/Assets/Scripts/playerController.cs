@@ -181,7 +181,10 @@ public class playerController : MonoBehaviour, IDamage
 
         controller.Move(playerVel * Time.deltaTime);
 
-
+        if (Input.GetButtonDown("EnterShowcase"))
+        {
+            EnterShowcaseLevel();
+        }
 
         if (Input.GetButton("Fire1") && shootTimer >= shootRate && equippedWeapon != null)
         {
@@ -428,15 +431,20 @@ public class playerController : MonoBehaviour, IDamage
         return HP;
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("ForwardScenePortal"))
+    //    {
+    //        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    //    }
+    //    else if (other.CompareTag("BackwardScenePortal"))
+    //    {
+    //        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    //    }
+    //}
+
+    void EnterShowcaseLevel()
     {
-        if (other.CompareTag("ForwardScenePortal"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-        else if (other.CompareTag("BackwardScenePortal"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-        }
+        SceneManager.LoadScene("Showcase Level");
     }
 }
