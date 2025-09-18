@@ -2468,7 +2468,7 @@ GameObject:
   - component: {fileID: 4938339142994635705}
   - component: {fileID: 2140717072025569117}
   m_Layer: 5
-  m_Name: Armor Ability
+  m_Name: Collectible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2521,7 +2521,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Checkpoint Activated
+  m_text: Insert Collectible Popup
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5145,7 +5145,7 @@ GameObject:
   - component: {fileID: 3260631756704080549}
   - component: {fileID: 5796812507331555783}
   m_Layer: 5
-  m_Name: Armor Ability Popup
+  m_Name: Collectible Popup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
