@@ -19,7 +19,9 @@ public class EnemyRanged : EnemyAI
         {
             shootTimer = 0;
 
-            Quaternion rot = Quaternion.LookRotation(this.playerDir);
+            Vector3 dirPlayer = (gamemanager.instance.player.transform.position - shootPos.position).normalized;
+
+            Quaternion rot = Quaternion.LookRotation(dirPlayer);
             anime.SetTrigger("Shoot");
             Instantiate(bullet, shootPos.position, rot);
         }
