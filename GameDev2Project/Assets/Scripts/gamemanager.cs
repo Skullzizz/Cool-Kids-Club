@@ -38,6 +38,7 @@ public class gamemanager : MonoBehaviour
     Camera minimapCam;
 
     [SerializeField] GameObject waterScreen;
+    [SerializeField] GameObject spaceScreen;
 
 
     public bool isPaused;
@@ -170,8 +171,14 @@ public class gamemanager : MonoBehaviour
 
     public void WaterScreen(bool isWater)
     {
-        if(waterScreen!= null)
-            waterScreen.SetActive(isWater);
+        if(spaceScreen!= null)
+            spaceScreen.SetActive(isWater);
+    }
+
+    public void SpaceScreen(bool isSpace)
+    {
+        if (spaceScreen != null)
+            spaceScreen.SetActive(isSpace);
     }
 
     public void RefreshUI()
