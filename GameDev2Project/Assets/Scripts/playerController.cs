@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, IDamage, ISaveable
 {
 
     [SerializeField] LayerMask ignorelayer;
@@ -19,7 +19,7 @@ public class playerController : MonoBehaviour, IDamage
 
     [Header("Player Statistics")]
     [SerializeField] public int HP;
-    [SerializeField] int speed;
+    [SerializeField] public int speed;
     [SerializeField] float crouchSpeed;
     [SerializeField] float crouchHeight;
     [SerializeField] float slideBoost;
@@ -27,7 +27,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float slideFriction;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpSpeed;
-    [SerializeField] int jumpMax;
+    [SerializeField] public int jumpMax;
     [SerializeField] float airControlMod;
     [SerializeField] public float gravity;
     [SerializeField] float coyoteTimeMax;
@@ -78,6 +78,8 @@ public class playerController : MonoBehaviour, IDamage
 
     Camera minimapCam;
 
+    [Header("Save/Load Refs")]
+    GameObject playerSpawnPointRef;
 
 
     public enum PlayerStats
@@ -94,6 +96,7 @@ public class playerController : MonoBehaviour, IDamage
         heightOrig = controller.height;
         gamemanager.instance.updateEnemyDeaths(0);
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
+        playerSpawnPointRef = gamemanager.instance.playerSpawnPos;
         updatePlayerUI();
     }
 
@@ -445,5 +448,73 @@ public class playerController : MonoBehaviour, IDamage
     void EnterShowcaseLevel()
     {
         SceneManager.LoadScene("Showcase Level");
+    }
+
+    //public void SavePlayer()
+    //{
+    //    SaveLoad.SavePlayer(this);
+    //}
+
+    //public void LoadPlayer()
+    //{
+    //    PlayerData data = SaveLoad.LoadPlayer();
+    //    if (data != null) return;
+
+    //    HP = data.HP;
+    //    speed = data.speed;
+    //    jumpMax = data.jumpMax;
+    //    Vector3 position;
+    //    position.x = data.position[0];
+    //    position.y = data.position[1];
+    //    position.z = data.position[2];
+
+    //    transform.position = position;
+
+    //}
+
+    public void LoadState(object state)
+    {
+        var playerData = (PlayerData)state;
+        var player = gamemanager.instance.playerScript;
+        Vector3 position;
+        position.x = playerData.position[0];
+        position.y = playerData.position[1];
+        position.z = playerData.position[2];
+
+        player.playerSpawnPointRef.transform.position = position;
+        SpawnPlayer();
+        player.HP = playerData.HP;
+        player.speed = playerData.speed;
+        player.jumpMax = playerData.jumpMax;
+    }
+
+    public object SaveState()
+    {
+        Debug.Log("Loading player data to save!");
+        playerController player = gamemanager.instance.playerScript;
+        return new PlayerData(player);
+    }
+
+    [System.Serializable]
+    public struct PlayerData
+    {
+        public int HP;
+        public int speed;
+        public int jumpMax;
+        public float[] position;
+
+        public PlayerData(playerController player)
+        {
+            HP = player.HP;
+            speed = player.speed;
+            jumpMax = player.jumpMax;
+            position = new float[3];
+            position[0] = player.transform.position.x;
+            position[1] = player.transform.position.y;
+            position[2] = player.transform.position.z;
+
+        }
+
+
     }
 }

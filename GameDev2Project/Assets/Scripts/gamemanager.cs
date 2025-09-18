@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class gamemanager : MonoBehaviour
 {
     public static gamemanager instance;
+    [SerializeField] public SaveLoad saveLoad;
 
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;

@@ -95,6 +95,11 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     void setAnimLoco()
     {
+        if (anim == null)
+        {
+            Debug.LogWarning("The animator for " + this.gameObject.name + " has not been assigned. If it does not have a model yet, this warning should prevent the game from not working till a model is assigned");
+            return;
+        }
         float agentSpeedCur = agent.velocity.normalized.magnitude;
         float animSpeedCurr = anim.GetFloat("Speed");
 
