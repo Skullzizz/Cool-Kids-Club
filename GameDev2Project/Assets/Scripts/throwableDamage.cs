@@ -4,12 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static playerController;
 
-public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
+public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource, ISaveable
 {
     [Header("Base Throwable Stats")]
     [SerializeField] int throwDamage;
-    [SerializeField] int throwableHP;
+    [SerializeField] public int throwableHP;
     [SerializeField] int damageRate;
     [SerializeField] float minDMGVel;
     [SerializeField] float knockbackForce;
@@ -325,5 +326,60 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
         maxAmmo = Mathf.Max(0, max);
         curAmmo = Mathf.Clamp(current, 0, maxAmmo);
         OnAmmoChanged?.Invoke();
+    }
+
+    public object SaveState()
+    {
+        Debug.Log("Loading throwable data to save!");
+        throwableDamage throwable = this;
+        return new ThrowableData(throwable);
+    }
+
+    public void LoadState(object state)
+    {
+        var throwableData = (ThrowableData)state;
+        throwableHP = throwableData.throwableHP;
+        curAmmo = throwableData.curAmmo;
+
+        Vector3 position;
+        position.x = throwableData.position[0];
+        position.y = throwableData.position[1];
+        position.z = throwableData.position[2];
+
+        Quaternion rotation = Quaternion.Euler(throwableData.rotation[0],throwableData.rotation [1],throwableData.rotation [2]);
+        
+
+        transform.position = position;
+        transform.rotation = rotation;
+
+    }
+
+}
+
+[System.Serializable]
+public struct ThrowableData
+{
+    public int throwableHP;
+    public int curAmmo;
+    public float[] position;
+    public float[] rotation;
+
+
+    public ThrowableData(throwableDamage throwable)
+    {
+        throwableHP = throwable.throwableHP;
+        curAmmo = throwable.curAmmo;
+
+        position = new float[3];
+        rotation = new float[3];
+
+        position[0] = throwable.transform.position.x;
+        position[1] = throwable.transform.position.y;
+        position[2] = throwable.transform.position.z;
+
+        rotation[0] = throwable.transform.rotation.x;
+        rotation[1] = throwable.transform.rotation.y;
+        rotation[2] = throwable.transform.rotation.z;
+
     }
 }
