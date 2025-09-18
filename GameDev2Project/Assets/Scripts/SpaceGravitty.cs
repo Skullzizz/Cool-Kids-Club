@@ -49,7 +49,7 @@ public class SpaceGravitty : MonoBehaviour
         inSpace = true;
         ogGrav = gamemanager.instance.playerScript.gravity;
         gamemanager.instance.playerScript.gravity = spaceGrav;
-        Physics.gravity = new Vector3(0, spaceGrav, 0);
+        //Physics.gravity = new Vector3(0, spaceGrav, 0);
         gamemanager.instance.SpaceScreen(true);
     }
 
