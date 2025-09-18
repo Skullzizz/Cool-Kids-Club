@@ -222,8 +222,13 @@ public class wallrunController : MonoBehaviour
 
     void endWallrun()
     {
-        pController.gravity = gravOrig;
         isWallRunning = false;
+        if (SpaceGravitty.instance != null && SpaceGravitty.instance.inSpace)
+        {
+            pController.gravity = SpaceGravitty.instance.spaceGrav;
+        }
+        else
+            pController.gravity = gravOrig;
     }
 
     // Start Wallclimbing

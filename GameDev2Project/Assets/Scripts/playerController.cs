@@ -382,7 +382,6 @@ public class playerController : MonoBehaviour, IDamage
         isDead = false;
         GetComponent<Animator>().enabled = false;
         GetComponent<Animator>().Rebind();
-        gamemanager.instance.PlayerDeathScreen.gameObject.SetActive(false);
         deathCoroutineRun = false;
         updatePlayerUI();
 
