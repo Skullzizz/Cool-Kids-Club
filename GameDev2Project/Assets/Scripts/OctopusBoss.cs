@@ -42,11 +42,13 @@ public class OctopusBoss : MonoBehaviour, IDamage
     {
         if (!isActing && !isOnCooldown)
         {
-            int choice = Random.Range(0, 2);
+            int choice = Random.Range(0, 3);
             if (choice == 0)
                 StartCoroutine(searchRescueAttack());
-            else
+            else if(choice == 1)
                 StartCoroutine(grapple());
+            else
+                StartCoroutine(EnemySpawner.instance.Summon());
         }
     }
 
