@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 49378409624880823}
   - component: {fileID: 3537520368471901729}
+  - component: {fileID: 8595842983981695056}
   - component: {fileID: 3442321960938805412}
   - component: {fileID: 6606914423858608112}
   - component: {fileID: 6635342354650256937}
@@ -56,12 +57,39 @@ MonoBehaviour:
   explKnockMult: 0
   type: 1
   rb: {fileID: 1489868151600150242}
+  maxHits: 0
+  Radius: 0
+  explosiveMaxDamage: 0
+  explosiveMinDamage: 0
+  explosiveForce: 0
+  ParticleSystemPrefab: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  blockDamageLayer:
+    serializedVersion: 2
+    m_Bits: 0
   maxAmmo: 0
   curAmmo: 0
   gun: {fileID: 0}
+  startFull: 1
+  isReloading: 0
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
+--- !u!114 &8595842983981695056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8103275906718416079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1645aebf4944caa41ac1d8f35ed1bd63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
 --- !u!33 &3442321960938805412
 MeshFilter:
   m_ObjectHideFlags: 0
