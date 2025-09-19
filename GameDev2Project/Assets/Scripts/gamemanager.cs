@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class gamemanager : MonoBehaviour
 {
     public static gamemanager instance;
+    [SerializeField] public SaveLoad saveLoad;
 
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
@@ -38,6 +39,7 @@ public class gamemanager : MonoBehaviour
     Camera minimapCam;
 
     [SerializeField] GameObject waterScreen;
+    [SerializeField] GameObject spaceScreen;
 
 
     public bool isPaused;
@@ -55,6 +57,10 @@ public class gamemanager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        if(Time.timeScale==0f)
+            Time.timeScale = 1f;
+
         timeScaleOrig = Time.timeScale;
 
         player = GameObject.FindWithTag("Player");
@@ -91,7 +97,7 @@ public class gamemanager : MonoBehaviour
 
     public void statePause()
     {
-        isPaused = !isPaused;
+        isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -101,7 +107,7 @@ public class gamemanager : MonoBehaviour
 
     public void stateUnpause()
     {
-        isPaused = !isPaused;
+        isPaused = false;
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -170,8 +176,14 @@ public class gamemanager : MonoBehaviour
 
     public void WaterScreen(bool isWater)
     {
-        if(waterScreen!= null)
-            waterScreen.SetActive(isWater);
+        if(spaceScreen!= null)
+            spaceScreen.SetActive(isWater);
+    }
+
+    public void SpaceScreen(bool isSpace)
+    {
+        if (spaceScreen != null)
+            spaceScreen.SetActive(isSpace);
     }
 
     public void RefreshUI()

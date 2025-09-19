@@ -63,7 +63,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        // setAnimLoco();
+        setAnimLoco();
         if (!isRagdolling)
         {
             switch (currentState)
@@ -95,6 +95,11 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     void setAnimLoco()
     {
+        if (anim == null)
+        {
+            Debug.LogWarning("The animator for " + this.gameObject.name + " has not been assigned. If it does not have a model yet, this warning should prevent the game from not working till a model is assigned");
+            return;
+        }
         float agentSpeedCur = agent.velocity.normalized.magnitude;
         float animSpeedCurr = anim.GetFloat("Speed");
 
@@ -244,7 +249,8 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(playerDir);
+        Vector3 dir = gamemanager.instance.player.transform.position - headPos.position;
+        Quaternion rot = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
         
     }

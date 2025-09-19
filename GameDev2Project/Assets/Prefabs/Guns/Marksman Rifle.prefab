@@ -216,6 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2800546839872710787}
   - component: {fileID: 8783486842981965037}
+  - component: {fileID: 6167952673137536122}
   - component: {fileID: 7422708802125323911}
   - component: {fileID: 6762367379073521839}
   m_Layer: 10
@@ -261,12 +262,39 @@ MonoBehaviour:
   explKnockMult: 0
   type: 1
   rb: {fileID: 6762367379073521839}
+  maxHits: 0
+  Radius: 0
+  explosiveMaxDamage: 0
+  explosiveMinDamage: 0
+  explosiveForce: 0
+  ParticleSystemPrefab: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  blockDamageLayer:
+    serializedVersion: 2
+    m_Bits: 0
   maxAmmo: 10
   curAmmo: 10
   gun: {fileID: 11400000, guid: 1a2042ea8b07b9c41b870bdcff1a272a, type: 2}
+  startFull: 1
+  isReloading: 0
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
+--- !u!114 &6167952673137536122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4008239825719905659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1645aebf4944caa41ac1d8f35ed1bd63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
 --- !u!65 &7422708802125323911
 BoxCollider:
   m_ObjectHideFlags: 0

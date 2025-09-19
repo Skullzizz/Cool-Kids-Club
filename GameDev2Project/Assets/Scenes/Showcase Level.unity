@@ -352,6 +352,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14f608208614e234aaae30ac88dd5fd1, type: 3}
+--- !u!1 &415539980 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3961228103130424275, guid: 07d3954c239ccfd468f7cdd0c31ec6f4, type: 3}
+  m_PrefabInstance: {fileID: 579498790}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &415539983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415539980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1645aebf4944caa41ac1d8f35ed1bd63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 1b432754-f4b6-496e-92a9-4f53b120464f
 --- !u!4 &422952189 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8111696761136890936, guid: 14f608208614e234aaae30ac88dd5fd1, type: 3}
@@ -492,6 +510,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1608161979673269421, guid: 8adcfba80c5de054cb92992832993699, type: 3}
+      propertyPath: id
+      value: a85c4b65-bbac-4535-aed1-1209e29d7a11
+      objectReference: {fileID: 0}
     - target: {fileID: 1913251589615689777, guid: 8adcfba80c5de054cb92992832993699, type: 3}
       propertyPath: m_LocalPosition.x
       value: -22.689734
@@ -764,6 +786,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Marksman Rifle
       objectReference: {fileID: 0}
+    - target: {fileID: 6167952673137536122, guid: 7c44ec7e6f3fb59408c288e0aa5628bf, type: 3}
+      propertyPath: id
+      value: aada09b5-a317-464b-b4be-6c3341a54b5e
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -824,7 +850,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3961228103130424275, guid: 07d3954c239ccfd468f7cdd0c31ec6f4, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 415539983}
   m_SourcePrefab: {fileID: 100100000, guid: 07d3954c239ccfd468f7cdd0c31ec6f4, type: 3}
 --- !u!1001 &585618521
 PrefabInstance:
@@ -1172,6 +1201,10 @@ PrefabInstance:
     - target: {fileID: 352973502254176738, guid: dca0408a2dca5b748bf6f1089224898f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615339878984096225, guid: dca0408a2dca5b748bf6f1089224898f, type: 3}
+      propertyPath: id
+      value: e06997cf-dae0-457b-97a9-e0fb52b73037
       objectReference: {fileID: 0}
     - target: {fileID: 5783463480639523633, guid: dca0408a2dca5b748bf6f1089224898f, type: 3}
       propertyPath: m_Name
@@ -1642,6 +1675,10 @@ PrefabInstance:
     - target: {fileID: 1435341617966567672, guid: 3180568167aa43f41bb2d09e8ca95c33, type: 3}
       propertyPath: m_Name
       value: Rock
+      objectReference: {fileID: 0}
+    - target: {fileID: 8990985404666780171, guid: 3180568167aa43f41bb2d09e8ca95c33, type: 3}
+      propertyPath: id
+      value: 64db5a7d-565f-49d6-83e8-9fd65e143f4a
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2630,6 +2667,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pole
       objectReference: {fileID: 0}
+    - target: {fileID: 8595842983981695056, guid: a8f19be18d016524aa3e5b695f9eb3b8, type: 3}
+      propertyPath: id
+      value: 45d78262-7f6e-45df-a05d-47450a87e5a7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3137,6 +3178,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2964603406668141038, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: id
+      value: d8c34ba0-525f-499c-9a53-ffdfa1b8c711
+      objectReference: {fileID: 0}
     - target: {fileID: 4004669420814659048, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
       propertyPath: m_Name
       value: Barrel
@@ -3413,6 +3458,10 @@ PrefabInstance:
     - target: {fileID: 6822470312373958109, guid: 27e74add93bb9a14b80e9b882832072d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7222927911306122289, guid: 27e74add93bb9a14b80e9b882832072d, type: 3}
+      propertyPath: id
+      value: fb408d7d-58ab-42ed-a6f1-c2cc67a6d96f
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4287,6 +4336,10 @@ PrefabInstance:
     - target: {fileID: 2035213481756897074, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
       propertyPath: m_Name
       value: Pistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 4636512280752310738, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
+      propertyPath: id
+      value: 85581154-57b7-4bde-a8c4-9000d1d01b9a
       objectReference: {fileID: 0}
     - target: {fileID: 6036825262032603641, guid: 112456ffbbf70f145bed975697a6c56f, type: 3}
       propertyPath: m_LocalPosition.x
