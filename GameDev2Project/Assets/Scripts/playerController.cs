@@ -72,7 +72,7 @@ public class playerController : MonoBehaviour, IDamage, ISaveable
     float regenTimer;
     public bool locked = false;
 
-
+ 
     bool deathCoroutineRun = false;
     bool isDead;
 
