@@ -1,9 +1,13 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static List<EnemySpawner> spawners = new List<EnemySpawner>();
+
     [SerializeField] GameObject particles;
     [SerializeField] GameObject[] enemies;
     [SerializeField] int enemyAmt;
@@ -15,6 +19,11 @@ public class EnemySpawner : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        spawners.Add(this);
+    }
+    private void OnDestroy()
+    {
+        spawners.Remove(this);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

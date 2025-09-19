@@ -22,7 +22,7 @@ public class SpaceGravitty : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inSpace && gamemanager.instance.playerScript.locked || gamemanager.instance.isPaused)
+        if (inSpace && gamemanager.instance.playerScript.locked)
         {
             ExitSpace();
         }
@@ -50,13 +50,13 @@ public class SpaceGravitty : MonoBehaviour
         ogGrav = gamemanager.instance.playerScript.gravity;
         gamemanager.instance.playerScript.gravity = spaceGrav;
         //Physics.gravity = new Vector3(0, spaceGrav, 0);
-        gamemanager.instance.SpaceScreen(true);
+        //gamemanager.instance.SpaceScreen(true);
     }
 
     void ExitSpace()
     {
         inSpace = false;
         gamemanager.instance.playerScript.gravity = ogGrav;
-        gamemanager.instance.SpaceScreen(false);
+        //gamemanager.instance.SpaceScreen(false);
     }
 }
