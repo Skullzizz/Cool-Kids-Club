@@ -4134,7 +4134,7 @@ GameObject:
   - component: {fileID: 1627704800750659894}
   m_Layer: 5
   m_Name: EdgeBleed
-  m_TagString: Untagged
+  m_TagString: EdgeBleedUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
