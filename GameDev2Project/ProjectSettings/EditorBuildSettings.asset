@@ -35,6 +35,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Mason Hill.unity
     guid: 6344cb0250c632e459beee449aab5593
+  - enabled: 1
+    path: Assets/Scenes/Space.unity
+    guid: f55d578665df00f4bae2721ed8366723
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

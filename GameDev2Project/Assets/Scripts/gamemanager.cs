@@ -57,6 +57,10 @@ public class gamemanager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        if(Time.timeScale==0f)
+            Time.timeScale = 1f;
+
         timeScaleOrig = Time.timeScale;
 
         player = GameObject.FindWithTag("Player");
@@ -93,7 +97,7 @@ public class gamemanager : MonoBehaviour
 
     public void statePause()
     {
-        isPaused = !isPaused;
+        isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -103,7 +107,7 @@ public class gamemanager : MonoBehaviour
 
     public void stateUnpause()
     {
-        isPaused = !isPaused;
+        isPaused = false;
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
