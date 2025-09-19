@@ -48,7 +48,16 @@ public class OctopusBoss : MonoBehaviour, IDamage
             else if(choice == 1)
                 StartCoroutine(grapple());
             else
-                StartCoroutine(EnemySpawner.instance.Summon());
+            {
+                foreach (var spawner in EnemySpawner.spawners)
+                {
+                    StartCoroutine(spawner.Summon());
+                }
+                foreach (var spawner in ObjectSpawner.spawners)
+                {
+                    StartCoroutine(spawner.SummonObjects());
+                }
+            }
         }
     }
 
@@ -117,18 +126,18 @@ public class OctopusBoss : MonoBehaviour, IDamage
             if (Physics.Raycast(leg.position, grappleDir, out hit, Mathf.Infinity))
             {
                 Vector3 grapplePos = hit.transform.position;
-                if (grapplePos.x > 37)
-                    grapplePos.x = 37;
-                if (grapplePos.x < -17)
-                    grapplePos.x = -17;
-                if (grapplePos.y < 2)
-                    grapplePos.y = 2;
-                if (grapplePos.y > 20)
-                    grapplePos.y = 20;
-                if (grapplePos.z > 120)
-                    grapplePos.z = 120;
-                if (grapplePos.z > 62)
-                    grapplePos.z = 62;
+                if (grapplePos.x > 39)
+                    grapplePos.x = 39;
+                if (grapplePos.x < -40)
+                    grapplePos.x = -40;
+                if (grapplePos.y < 41)
+                    grapplePos.y = 41;
+                if (grapplePos.y > 72)
+                    grapplePos.y = 72;
+                if (grapplePos.z > 363)
+                    grapplePos.z = 363;
+                if (grapplePos.z < 290)
+                    grapplePos.z = 290;
 
                 Debug.DrawRay(leg.position, grappleDir * hit.distance, Color.yellow);
                 Debug.Log(grapplePos);
