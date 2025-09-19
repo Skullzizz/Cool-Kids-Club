@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, IDamage, ISaveable
 {
 
     [SerializeField] LayerMask ignorelayer;
@@ -19,7 +19,7 @@ public class playerController : MonoBehaviour, IDamage
 
     [Header("Player Statistics")]
     [SerializeField] public int HP;
-    [SerializeField] int speed;
+    [SerializeField] public int speed;
     [SerializeField] float crouchSpeed;
     [SerializeField] float crouchHeight;
     [SerializeField] float slideBoost;
@@ -27,7 +27,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float slideFriction;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpSpeed;
-    [SerializeField] int jumpMax;
+    [SerializeField] public int jumpMax;
     [SerializeField] float airControlMod;
     [SerializeField] public float gravity;
     [SerializeField] float coyoteTimeMax;
@@ -40,7 +40,9 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] public int shootDist;
     float shootTimer;
 
+
     [Header("Throwable Management")]
+
     public throwableDamage equippedWeapon;
 
     [Header("Movement Controls")]
@@ -55,6 +57,7 @@ public class playerController : MonoBehaviour, IDamage
     public bool isSprinting;
     public bool isCrouching;
     public bool isSliding;
+
     public bool isGrappling;
     public bool activeGrapple;
     public bool hasShield;
@@ -69,12 +72,14 @@ public class playerController : MonoBehaviour, IDamage
     float regenTimer;
     public bool locked = false;
 
-
+ 
     bool deathCoroutineRun = false;
     bool isDead;
 
     Camera minimapCam;
 
+    [Header("Save/Load Refs")]
+    GameObject playerSpawnPointRef;
 
 
     public enum PlayerStats
@@ -91,6 +96,7 @@ public class playerController : MonoBehaviour, IDamage
         heightOrig = controller.height;
         gamemanager.instance.updateEnemyDeaths(0);
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
+        playerSpawnPointRef = gamemanager.instance.playerSpawnPos;
         updatePlayerUI();
     }
 
@@ -104,10 +110,6 @@ public class playerController : MonoBehaviour, IDamage
             crouch();
         }
 
-        if (isGrappling)
-        {
-            rb.angularVelocity = Vector3.zero;
-        }
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
         ShieldRecharge();
@@ -116,7 +118,6 @@ public class playerController : MonoBehaviour, IDamage
 
     void movement()
     {
-        if (activeGrapple) return;
 
         if (controller.isGrounded)
         {
@@ -183,7 +184,10 @@ public class playerController : MonoBehaviour, IDamage
 
         controller.Move(playerVel * Time.deltaTime);
 
-
+        if (Input.GetButtonDown("EnterShowcase"))
+        {
+            EnterShowcaseLevel();
+        }
 
         if (Input.GetButton("Fire1") && shootTimer >= shootRate && equippedWeapon != null)
         {
@@ -344,41 +348,6 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
-
-    private bool enableMovementOnNextTouch;
-    public void JumpToPosition(Vector3 targetPos, float trajectoryHeight)
-    {
-        activeGrapple = true;
-
-        velocityToSet = CalculateGrappleVelocity(transform.position, targetPos, trajectoryHeight);
-
-        Invoke(nameof(SetVelocity), 0.1f);
-
-        Invoke(nameof(ResetRestrictions), 3f);
-    }
-
-    private Vector3 velocityToSet;
-    private void SetVelocity()
-    {
-        enableMovementOnNextTouch = true;
-        rb.linearVelocity = velocityToSet;
-    }
-
-    public void ResetRestrictions()
-    {
-        activeGrapple = false;
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (enableMovementOnNextTouch)
-        {
-            enableMovementOnNextTouch = false;
-            ResetRestrictions();
-
-            GetComponent<Grappling>().StopGrapple();
-        }
-    }
-
     public Vector3 CalculateGrappleVelocity(Vector3 startpoint, Vector3 endPoint, float trajectoryHeight)
     {
 
@@ -416,7 +385,6 @@ public class playerController : MonoBehaviour, IDamage
         isDead = false;
         GetComponent<Animator>().enabled = false;
         GetComponent<Animator>().Rebind();
-        gamemanager.instance.PlayerDeathScreen.gameObject.SetActive(false);
         deathCoroutineRun = false;
         updatePlayerUI();
 
@@ -465,15 +433,89 @@ public class playerController : MonoBehaviour, IDamage
         return HP;
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("ForwardScenePortal"))
+    //    {
+    //        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    //    }
+    //    else if (other.CompareTag("BackwardScenePortal"))
+    //    {
+    //        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    //    }
+    //}
+
+    void EnterShowcaseLevel()
     {
-        if (other.CompareTag("ForwardScenePortal"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-        else if (other.CompareTag("BackwardScenePortal"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-        }
+        SceneManager.LoadScene("Showcase Level");
     }
+
+    //public void SavePlayer()
+    //{
+    //    SaveLoad.SavePlayer(this);
+    //}
+
+    //public void LoadPlayer()
+    //{
+    //    PlayerData data = SaveLoad.LoadPlayer();
+    //    if (data != null) return;
+
+    //    HP = data.HP;
+    //    speed = data.speed;
+    //    jumpMax = data.jumpMax;
+    //    Vector3 position;
+    //    position.x = data.position[0];
+    //    position.y = data.position[1];
+    //    position.z = data.position[2];
+
+    //    transform.position = position;
+
+    //}
+
+    public void LoadState(object state)
+    {
+        var playerData = (PlayerData)state;
+        var player = gamemanager.instance.playerScript;
+        Vector3 position;
+        position.x = playerData.position[0];
+        position.y = playerData.position[1];
+        position.z = playerData.position[2];
+
+        player.playerSpawnPointRef.transform.position = position;
+        SpawnPlayer();
+        player.HP = playerData.HP;
+        player.speed = playerData.speed;
+        player.jumpMax = playerData.jumpMax;
+    }
+
+    public object SaveState()
+    {
+        Debug.Log("Loading player data to save!");
+        playerController player = gamemanager.instance.playerScript;
+        return new PlayerData(player);
+    }
+
+    
+}
+[System.Serializable]
+public struct PlayerData
+{
+    public int HP;
+    public int speed;
+    public int jumpMax;
+    public float[] position;
+
+    public PlayerData(playerController player)
+    {
+        HP = player.HP;
+        speed = player.speed;
+        jumpMax = player.jumpMax;
+        position = new float[3];
+        position[0] = player.transform.position.x;
+        position[1] = player.transform.position.y;
+        position[2] = player.transform.position.z;
+
+    }
+
+
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class gamemanager : MonoBehaviour
 {
     public static gamemanager instance;
+    [SerializeField] public SaveLoad saveLoad;
 
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
@@ -38,6 +39,7 @@ public class gamemanager : MonoBehaviour
     Camera minimapCam;
 
     [SerializeField] GameObject waterScreen;
+    [SerializeField] GameObject spaceScreen;
 
 
     public bool isPaused;
@@ -55,6 +57,10 @@ public class gamemanager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        if(Time.timeScale==0f)
+            Time.timeScale = 1f;
+
         timeScaleOrig = Time.timeScale;
 
         player = GameObject.FindWithTag("Player");
@@ -91,7 +97,7 @@ public class gamemanager : MonoBehaviour
 
     public void statePause()
     {
-        isPaused = !isPaused;
+        isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -101,7 +107,7 @@ public class gamemanager : MonoBehaviour
 
     public void stateUnpause()
     {
-        isPaused = !isPaused;
+        isPaused = false;
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -111,7 +117,8 @@ public class gamemanager : MonoBehaviour
             menuActive.SetActive(false);
             menuActive = null;
         }
-        FindFirstObjectByType<PauseMenuMusic>().StopMusic();
+        if (FindFirstObjectByType<PauseMenuMusic>()!=null)
+            FindFirstObjectByType<PauseMenuMusic>().StopMusic();
     }
 
     public void updateGameGoal(int amount)
@@ -169,7 +176,37 @@ public class gamemanager : MonoBehaviour
 
     public void WaterScreen(bool isWater)
     {
-        if(waterScreen!= null)
-            waterScreen.SetActive(isWater);
+        if(spaceScreen!= null)
+            spaceScreen.SetActive(isWater);
+    }
+
+    public void SpaceScreen(bool isSpace)
+    {
+        if (spaceScreen != null)
+            spaceScreen.SetActive(isSpace);
+    }
+
+    public void RefreshUI()
+    {
+        if (playerHPBar == null)
+            playerHPBar = GameObject.Find("Player HP").GetComponent<Image>();
+        if (playerXPBar == null)
+            playerXPBar = GameObject.Find("Player XP").GetComponent<Image>();
+        if (playerArmorBar == null)
+            playerArmorBar = GameObject.Find("Armor Fill").GetComponent<Image>();
+        if (PlayerDamageScreen == null)
+            PlayerDamageScreen = GameObject.Find("Player Damage Screen");
+        if (PlayerDeathScreen == null)
+            PlayerDeathScreen = GameObject.Find("Player Death Screen").GetComponent<Image>();
+        if (player == null)
+            player = GameObject.Find("Player");
+        if (playerScript == null)
+            playerScript = GameObject.Find("Player").GetComponent<playerController>();
+        if (throwScript == null)
+            throwScript = GameObject.Find("Player").GetComponent<throwPhysics>();
+        if (playerSpawnPos == null)
+            playerSpawnPos = GameObject.Find("Player Spawn");
+        if (playerInventory == null)
+            playerInventory = GameObject.Find("Player").GetComponent<playerInventory>();
     }
 }
