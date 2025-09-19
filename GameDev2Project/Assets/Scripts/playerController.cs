@@ -495,26 +495,27 @@ public class playerController : MonoBehaviour, IDamage, ISaveable
         return new PlayerData(player);
     }
 
-    [System.Serializable]
-    public struct PlayerData
+    
+}
+[System.Serializable]
+public struct PlayerData
+{
+    public int HP;
+    public int speed;
+    public int jumpMax;
+    public float[] position;
+
+    public PlayerData(playerController player)
     {
-        public int HP;
-        public int speed;
-        public int jumpMax;
-        public float[] position;
-
-        public PlayerData(playerController player)
-        {
-            HP = player.HP;
-            speed = player.speed;
-            jumpMax = player.jumpMax;
-            position = new float[3];
-            position[0] = player.transform.position.x;
-            position[1] = player.transform.position.y;
-            position[2] = player.transform.position.z;
-
-        }
-
+        HP = player.HP;
+        speed = player.speed;
+        jumpMax = player.jumpMax;
+        position = new float[3];
+        position[0] = player.transform.position.x;
+        position[1] = player.transform.position.y;
+        position[2] = player.transform.position.z;
 
     }
+
+
 }
