@@ -102,6 +102,13 @@ public class playerController : MonoBehaviour, IDamage, ISaveable
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
         playerSpawnPointRef = gamemanager.instance.playerSpawnPos;
         updatePlayerUI();
+
+        if (edgeBleedOverlay == null)
+        {
+            var go = GameObject.FindWithTag("EdgeBleedUI");
+            if(go != null) edgeBleedOverlay = go.GetComponent<Image>();
+        }
+
         if (edgeBleedOverlay != null)
         {
             SetBleedAlpha(0f);

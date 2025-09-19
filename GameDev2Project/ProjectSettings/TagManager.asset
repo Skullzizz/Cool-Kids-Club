@@ -13,6 +13,7 @@ TagManager:
   - MinimapCam
   - ForwardScenePortal
   - BackwardScenePortal
+  - EdgeBleedUI
   layers:
   - Default
   - TransparentFX
