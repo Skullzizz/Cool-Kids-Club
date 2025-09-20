@@ -15,7 +15,7 @@ public class gamemanager : MonoBehaviour
 
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] TMP_Text playerLevelText;
- 
+
 
     [SerializeField] private PauseDimmer pauseDimmer;
 
@@ -30,6 +30,8 @@ public class gamemanager : MonoBehaviour
     public GameObject player;
     public playerController playerScript;
     public throwPhysics throwScript;
+    public EnemySpawnManager enemySpawnManager;
+    public ThrowableSpawnManager throwableSpawnManager;
     public GameObject playerSpawnPos;
     public GameObject checkpointPopup;
     public GameObject collectiblePopup;
@@ -58,7 +60,7 @@ public class gamemanager : MonoBehaviour
     {
         instance = this;
 
-        if(Time.timeScale==0f)
+        if (Time.timeScale == 0f)
             Time.timeScale = 1f;
 
         timeScaleOrig = Time.timeScale;
@@ -67,6 +69,10 @@ public class gamemanager : MonoBehaviour
         playerScript = player.GetComponent<playerController>();
         throwScript = player.GetComponent<throwPhysics>();
         playerInventory = player.GetComponent<playerInventory>();
+        if (this.GetComponent<EnemySpawnManager>() != null)
+            enemySpawnManager = this.GetComponent<EnemySpawnManager>();
+        if (this.GetComponent<ThrowableSpawnManager>() != null)
+            throwableSpawnManager = this.GetComponent<ThrowableSpawnManager>();
 
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn");
@@ -93,6 +99,18 @@ public class gamemanager : MonoBehaviour
                 stateUnpause();
             }
         }
+
+        if (Input.GetButtonDown("Save"))
+        {
+            SaveLoad.Save();
+            Debug.Log("Saving Game");
+        }
+
+        if (Input.GetButtonDown("Load"))
+        {
+            SaveLoad.Load();
+            Debug.Log("Loading Game");
+        }
     }
 
     public void statePause()
@@ -117,7 +135,7 @@ public class gamemanager : MonoBehaviour
             menuActive.SetActive(false);
             menuActive = null;
         }
-        if (FindFirstObjectByType<PauseMenuMusic>()!=null)
+        if (FindFirstObjectByType<PauseMenuMusic>() != null)
             FindFirstObjectByType<PauseMenuMusic>().StopMusic();
     }
 
@@ -176,7 +194,7 @@ public class gamemanager : MonoBehaviour
 
     public void WaterScreen(bool isWater)
     {
-        if(spaceScreen!= null)
+        if (spaceScreen != null)
             spaceScreen.SetActive(isWater);
     }
 
@@ -209,4 +227,6 @@ public class gamemanager : MonoBehaviour
         if (playerInventory == null)
             playerInventory = GameObject.Find("Player").GetComponent<playerInventory>();
     }
+
+
 }

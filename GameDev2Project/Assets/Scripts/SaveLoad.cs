@@ -5,74 +5,71 @@ using System.Collections.Generic;
 
 
 
-public class SaveLoad : MonoBehaviour
+public class SaveLoad
 {
-    public static SaveLoad instance;
-    static string saveDataPath => $"{Application.persistentDataPath}/data.sav";
+    private static SaveData saveData = new SaveData();
 
-    private void Awake()
+    [System.Serializable]
+    public struct SaveData
     {
-        instance = this;
+        public PlayerData PlayerData;
+        public PlayerInventoryData InventoryData;
+        public SceneThrowableData ThrowableData;
+        public SceneEnemyData EnemyData;
     }
 
-    [ContextMenu("Save")]
-    public void Save()
+
+    public static string SaveFileName()
     {
-        var state = LoadFile();
-        CaptureState(state);
-        SaveFile(state);
+        string saveFile = Application.persistentDataPath + "/data" + ".sav";
+        return saveFile;
     }
 
-    [ContextMenu("Load")]
-    public void Load()
+    public static void Save()
     {
-        var state = LoadFile();
-        RestoreState(state);
+        HandleSaveData();
+
+        File.WriteAllText(SaveFileName(), JsonUtility.ToJson(saveData, true));
     }
 
-    void SaveFile(object state)
+    private static void HandleSaveData()
     {
-        using (var stream = File.Open(saveDataPath, FileMode.Create))
+        gamemanager.instance.playerScript.Save(ref saveData.PlayerData);
+        //gamemanager.instance.playerInventory.Save(ref saveData.InventoryData);
+        EnemySpawnManager eSpawnManager = gamemanager.instance.enemySpawnManager;
+        if (eSpawnManager != null)
         {
-            var formatter = new BinaryFormatter();
-            formatter.Serialize(stream, state);
+            eSpawnManager.Save(ref saveData.EnemyData);
+        }
+        ThrowableSpawnManager tSpawnManager = gamemanager.instance.throwableSpawnManager;
+        if (tSpawnManager != null)
+        {
+            tSpawnManager.Save(ref saveData.ThrowableData);
         }
     }
 
-    Dictionary<string, object> LoadFile()
+    public static void Load()
     {
-        if (!File.Exists(saveDataPath))
-        {
-            return new Dictionary<string, object>();
-        }
+        string saveFile = File.ReadAllText(SaveFileName());
 
-        using (FileStream stream = File.Open(saveDataPath, FileMode.Open))
-        {
-            var formatter = new BinaryFormatter();
-            return (Dictionary<string, object>)formatter.Deserialize(stream);
-        }
+        saveData = JsonUtility.FromJson<SaveData>(saveFile);
+        HandleLoadData();
     }
 
-    void CaptureState(Dictionary<string, object> state)
+    private static void HandleLoadData()
     {
-        foreach (var saveable in FindObjectsByType<SaveableEntity>(FindObjectsSortMode.None))
+        gamemanager.instance.playerScript.Load(saveData.PlayerData);
+        //gamemanager.instance.playerInventory.Load(saveData.InventoryData);
+
+        EnemySpawnManager spawnManager = gamemanager.instance.enemySpawnManager;
+        if (spawnManager != null)
         {
-            Debug.Log("Saving " + saveable.name + " with ID " + saveable.ID);
-            state[saveable.ID] = saveable.CaptureStates();
+            spawnManager.Load(saveData.EnemyData);
+        }
+        ThrowableSpawnManager tSpawnManager = gamemanager.instance.throwableSpawnManager;
+        if (tSpawnManager != null)
+        {
+            tSpawnManager.Load(saveData.ThrowableData);
         }
     }
-
-    static void RestoreState(Dictionary<string, object> state)
-    {
-        foreach (var saveable in FindObjectsByType<SaveableEntity>(FindObjectsSortMode.None))
-        {
-            if (state.TryGetValue(saveable.ID, out object value))
-            {
-                saveable.RestoreStates(value);
-                Debug.Log("Loading " + saveable.name + " with ID " + saveable.ID);
-            }
-        }
-
-    }
-
 }
