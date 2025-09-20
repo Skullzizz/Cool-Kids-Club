@@ -261,6 +261,8 @@ MonoBehaviour:
   agent: {fileID: 7059059574370922178}
   headPos: {fileID: 5589550650088145632}
   anim: {fileID: 0}
+  basePrefabPath: Assets/Prefabs/Melee Enemy.prefab
+  basePrefab: {fileID: 0}
   HP: 15
   faceTargetSpeed: 60
   FOV: 90

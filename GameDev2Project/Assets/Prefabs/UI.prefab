@@ -5585,7 +5585,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1446476388311211676}
   - component: {fileID: 3691662857549445227}
-  - component: {fileID: 2065705385696883487}
   m_Layer: 5
   m_Name: Gamemanager
   m_TagString: Untagged
@@ -5624,7 +5623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107103f97d846594a9db733e2370f85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveLoad: {fileID: 2065705385696883487}
+  saveLoad: {fileID: 0}
   menuActive: {fileID: 0}
   menuPause: {fileID: 8431914293311544770}
   menuWin: {fileID: 4023363515344705081}
@@ -5651,18 +5650,6 @@ MonoBehaviour:
   spaceScreen: {fileID: 4372745412635180651}
   isPaused: 0
   enemiesKilled: 0
---- !u!114 &2065705385696883487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3989402873062419881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7a4c8a0cddfc1a4a861c0a740704fd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4023363515344705081
 GameObject:
   m_ObjectHideFlags: 0
