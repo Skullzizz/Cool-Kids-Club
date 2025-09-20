@@ -5416,7 +5416,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3989402873062419881, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1426301904}
+    - targetCorrespondingSourceObject: {fileID: 3989402873062419881, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1426301903}
   m_SourcePrefab: {fileID: 100100000, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
 --- !u!1 &631910353
 GameObject:
@@ -13605,6 +13611,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1813018527}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1426301900 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3989402873062419881, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+  m_PrefabInstance: {fileID: 623914169}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1426301903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426301900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e4804861f4b83442a9ef123b95f8fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1426301904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426301900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e8d5c2ee2a989499a8763eb60536c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1427463435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18598,6 +18633,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6442416593798874102, guid: 8adcfba80c5de054cb92992832993699, type: 3}
+      propertyPath: basePrefab
+      value: 
+      objectReference: {fileID: 7570588721920348711, guid: 8adcfba80c5de054cb92992832993699, type: 3}
     - target: {fileID: 7570588721920348711, guid: 8adcfba80c5de054cb92992832993699, type: 3}
       propertyPath: m_Name
       value: Weapon Box
