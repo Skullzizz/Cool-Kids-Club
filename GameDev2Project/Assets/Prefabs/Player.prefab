@@ -72,6 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4903557523860850379}
   - component: {fileID: 8075918143841736608}
+  - component: {fileID: 7393489916680130126}
   - component: {fileID: 9011332293168727660}
   - component: {fileID: 4862857840593933731}
   - component: {fileID: 2666879416117374726}
@@ -159,6 +160,33 @@ MonoBehaviour:
   shieldRegenInterval: 0.5
   shieldChargeCooldown: 5
   locked: 0
+  edgeBleedOverlay: {fileID: 0}
+  lowHealthThreshold: 0.4
+  maxBleed: 0.6
+  pulseSpeed: 2
+--- !u!114 &7393489916680130126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941424058941952304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3883661aae291245aaa0bf97c9b6bab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory:
+  - {fileID: 0}
+  inventoryUIParent: {fileID: 0}
+  inventorySlotPrefab: {fileID: 0}
+  equippedWeaponText: {fileID: 0}
+  weaponIcon: {fileID: 0}
+  noWeaponIcon: {fileID: 21300000, guid: d5ad855c08e83c3409a8053c8f886d54, type: 3}
+  defaultEmptyColor: {r: 1, g: 0, b: 0, a: 0.4627451}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  equippedWeapon: {fileID: 0}
+  equippedWeaponIndex: -1
 --- !u!114 &9011332293168727660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1342,7 +1370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a3f2659a4d88224288695f7e0c02916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sens: 3
+  sens: 10
   lockVertMin: -90
   lockVertMax: 90
   invertY: 0
@@ -1385,7 +1413,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 10207
+    m_Bits: 26591
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
