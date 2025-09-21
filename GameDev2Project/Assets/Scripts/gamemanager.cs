@@ -130,6 +130,9 @@ public class gamemanager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         pauseDimmer.ShowDim();
         FindFirstObjectByType<PauseMenuMusic>().PlayMusic();
+
+        if (Water.instance != null && Water.instance.inWater)
+            WaterScreen(false);
     }
 
     public void stateUnpause()
@@ -146,6 +149,9 @@ public class gamemanager : MonoBehaviour
         }
         if (FindFirstObjectByType<PauseMenuMusic>() != null)
             FindFirstObjectByType<PauseMenuMusic>().StopMusic();
+
+        if (Water.instance != null && Water.instance.inWater)
+            WaterScreen(true);
     }
 
     public void updateGameGoal(int amount)
@@ -203,8 +209,8 @@ public class gamemanager : MonoBehaviour
 
     public void WaterScreen(bool isWater)
     {
-        if (spaceScreen != null)
-            spaceScreen.SetActive(isWater);
+        if (waterScreen != null)
+            waterScreen.SetActive(isWater);
     }
 
     public void SpaceScreen(bool isSpace)
