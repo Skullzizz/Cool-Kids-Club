@@ -10,6 +10,9 @@ public class UIAmmoIndicator : MonoBehaviour
     [SerializeField] private Image barFill;
     [SerializeField] private Image hexOutline;
 
+    [SerializeField] private Image weaponIconImage;
+    [SerializeField] private Sprite fallbackIcon;
+    
     [Header("Thresholds (percent)")]
     [Range(0f, 1f)] public float medCutOff = 0.75f;
     [Range(0f, 1f)] public float lowCutOff = 0.50f;
@@ -77,11 +80,19 @@ public class UIAmmoIndicator : MonoBehaviour
         {
             ammoText.text = showNumbers ? $"{cur}/{max}" : "";
         }
+
+        if (weaponIconImage)
+        {
+            var icon = (td.gun != null) ? td.gun.weaponIcon : null;
+            weaponIconImage.sprite = icon ? icon : fallbackIcon;
+            weaponIconImage.enabled = (weaponIconImage.sprite != null);
+        }
         
     }
     void ClearUI()
     {
         if (ammoText) ammoText.text = "";
+        if (weaponIconImage) weaponIconImage.enabled = false;
         if (barFill) { barFill.fillAmount = 0f; }
         if (hexOutline) hexOutline.color = new Color(hexOutline.color.r, hexOutline.color.g, hexOutline.color.b, 0f);
 
