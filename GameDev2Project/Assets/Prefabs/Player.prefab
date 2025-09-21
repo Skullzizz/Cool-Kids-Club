@@ -146,6 +146,8 @@ MonoBehaviour:
   shootRate: 0
   shootDist: 0
   equippedWeapon: {fileID: 0}
+  isEquipping: 0
+  equipDuration: 0.5
   playerVel: {x: 0, y: 0, z: 0}
   isSprinting: 0
   isCrouching: 0
@@ -163,6 +165,15 @@ MonoBehaviour:
   lowHealthThreshold: 0.4
   maxBleed: 0.6
   pulseSpeed: 2
+  walkAudio: {fileID: 0}
+  playerCamera: {fileID: 0}
+  normalFOV: 60
+  runningFOV: 90
+  fovTransitionSpeed: 5
+  cameraTransform: {fileID: 0}
+  bobFrequency: 1.5
+  bobAmplitude: 0.05
+  bobSpeedMultiplier: 1
 --- !u!114 &7393489916680130126
 MonoBehaviour:
   m_ObjectHideFlags: 0
