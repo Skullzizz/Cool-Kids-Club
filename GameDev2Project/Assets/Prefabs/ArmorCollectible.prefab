@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1170316066543739033}
   - component: {fileID: 3943512904829264035}
   m_Layer: 0
-  m_Name: Collectible
+  m_Name: ArmorCollectible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,6 +125,8 @@ MonoBehaviour:
   healAmount: 20
   pickUpSound: {fileID: 0}
   collectibleText: {fileID: 0}
+  basePrefabPath: Base Prefabs/ArmorCollectible
+  basePrefab: {fileID: 0}
   collectibleType: 0
 --- !u!82 &3943512904829264035
 AudioSource:

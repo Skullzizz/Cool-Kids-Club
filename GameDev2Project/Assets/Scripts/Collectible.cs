@@ -8,13 +8,31 @@ public class Collectible : MonoBehaviour
     MeshRenderer mesh;
     SphereCollider sphereCollider;
     public TextMeshProUGUI collectibleText;
+    [SerializeField] public string basePrefabPath;
+    public GameObject basePrefab;
 
 
-    private void Start()
+    private void Awake()
     {
         pickUpSound=GetComponent<AudioSource>();
         mesh = GetComponent<MeshRenderer>();
         sphereCollider = GetComponent<SphereCollider>();
+        collectibleText = gamemanager.instance.CollectibleText;
+
+    }
+
+    private void Start()
+    {
+        var basePrefabPathCheck = Resources.Load(basePrefabPath, typeof(GameObject));
+        if (basePrefabPathCheck != null)
+        {
+            Debug.Log("Saved base prefab path object as type " + basePrefabPathCheck.GetType());
+        }
+        else
+        {
+            Debug.Log("Saved base prefab path object as null");
+        }
+        basePrefab = basePrefabPathCheck as GameObject;
     }
     public enum Collectibles
     {
