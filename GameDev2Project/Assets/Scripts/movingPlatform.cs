@@ -21,12 +21,6 @@ public class movingPlatform : MonoBehaviour
         StartCoroutine(MovePlatform());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     IEnumerator MovePlatform()
     {
         // makes infinite loop to move the platform back and forth between start and end points

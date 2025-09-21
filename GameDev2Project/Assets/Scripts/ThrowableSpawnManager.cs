@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ThrowableSpawnManager : MonoBehaviour
@@ -28,7 +27,7 @@ public class ThrowableSpawnManager : MonoBehaviour
             if (spawnedThrowables[i] != null)
             {
                 GameObject throwable = spawnedThrowables[i];
-                Debug.Log(throwable.name + " is being saved!");
+                //Debug.Log(throwable.name + " is being saved!");
                 ThrowableSaveData saveData = new ThrowableSaveData
                 {
                     HP = throwable.GetComponent<throwableDamage>().throwableHP,

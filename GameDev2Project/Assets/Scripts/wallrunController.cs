@@ -173,13 +173,11 @@ public class wallrunController : MonoBehaviour
             if (Input.GetButtonDown("Jump") && (wallLeft || wallRight) && !playerMovement.isGrounded && !isWallRunning && !pController.isCrouching)
             {
                 startWallrunAgain(true);
-                Debug.Log("First");
             }
             else if ((wallLeft || wallRight) && !playerMovement.isGrounded && !isWallRunning && !pController.isCrouching && pController.playerVel.y > 0.1f && currentWall != lastWall)
             {
                 startWallrunAgain(false);
                 lastWall = currentWall;
-                Debug.Log("Again");
             }
     }
 
