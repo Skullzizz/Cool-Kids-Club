@@ -140,7 +140,7 @@ public class OctopusBoss : MonoBehaviour, IDamage
                     grapplePos.z = 290;
 
                 Debug.DrawRay(leg.position, grappleDir * hit.distance, Color.yellow);
-                Debug.Log(grapplePos);
+                //Debug.Log(grapplePos);
                 float timeGrapple = 0f;
                 while (timeGrapple < grappleTime)
                 {

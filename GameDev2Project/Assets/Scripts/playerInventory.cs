@@ -41,7 +41,7 @@ public class playerInventory : MonoBehaviour
     public void AddItem(GameObject item)
     {
         inventory.Add(item);
-        Debug.Log("Added item " + item.name);
+        //Debug.Log("Added item " + item.name);
 
         if (inventorySlotPrefab != null && inventoryUIParent != null)
         {
@@ -50,8 +50,7 @@ public class playerInventory : MonoBehaviour
 
             if (textComponent != null)
                 textComponent.text = item.name;
-            else
-                Debug.LogWarning("No component found in inventory slot");
+            
         }
         equippedWeapon = item;
         equippedWeaponIndex = inventory.Count - 1;

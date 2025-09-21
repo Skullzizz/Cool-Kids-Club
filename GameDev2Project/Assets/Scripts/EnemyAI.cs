@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
-using UnityEngine.XR;
-using UnityEditor;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
@@ -56,11 +54,11 @@ public class EnemyAI : MonoBehaviour, IDamage
         var basePrefabPathCheck = Resources.Load(basePrefabPath, typeof(GameObject));
         if (basePrefabPathCheck != null)
         {
-            Debug.Log("Saved base prefab path object as type " + basePrefabPathCheck.GetType());
+            //Debug.Log("Saved base prefab path object as type " + basePrefabPathCheck.GetType());
         }
         else
         {
-            Debug.Log("Saved base prefab path object as null");
+            //Debug.Log("Saved base prefab path object as null");
         }
         basePrefab = basePrefabPathCheck as GameObject;
 
@@ -110,7 +108,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         if (anim == null)
         {
-            Debug.LogWarning("The animator for " + this.gameObject.name + " has not been assigned. If it does not have a model yet, this warning should prevent the game from not working till a model is assigned");
+            //Debug.LogWarning("The animator for " + this.gameObject.name + " has not been assigned. If it does not have a model yet, this warning should prevent the game from not working till a model is assigned");
             return;
         }
         float agentSpeedCur = agent.velocity.normalized.magnitude;

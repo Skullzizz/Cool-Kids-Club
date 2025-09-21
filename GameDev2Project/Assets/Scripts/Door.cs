@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class Door : InteractableObject
 {
@@ -41,7 +40,7 @@ public class Door : InteractableObject
             if (isRotating)
             {
                 float dot = Vector3.Dot(forward, (userPos - transform.position).normalized);
-                Debug.Log($"Dot: {dot.ToString("N3")}");
+                //Debug.Log($"Dot: {dot.ToString("N3")}");
                 AnimationCoroutine = StartCoroutine(RotateOpen(dot));
             }
             else

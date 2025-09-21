@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System.Threading.Tasks;
 
 public class gamemanager : MonoBehaviour
 {
@@ -112,13 +111,13 @@ public class gamemanager : MonoBehaviour
         if (Input.GetButtonDown("Save") && !isSaving)
         {
             SaveAsync();
-            Debug.Log("Saving Game");
+            //Debug.Log("Saving Game");
         }
 
         if (Input.GetButtonDown("Load") && !isLoading)
         {
             LoadAsync();
-            Debug.Log("Loading Game");
+            //Debug.Log("Loading Game");
         }
     }
 
