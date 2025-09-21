@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEditor.SearchService;
 
 public class gamemanager : MonoBehaviour
 {
@@ -69,7 +71,6 @@ public class gamemanager : MonoBehaviour
             Time.timeScale = 1f;
 
         timeScaleOrig = Time.timeScale;
-
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn");
@@ -83,7 +84,7 @@ public class gamemanager : MonoBehaviour
             collectibleSpawnManager = this.GetComponent<CollectibleSpawnManager>();
 
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
-        
+
 
         if (menuPause == null) menuPause = GameObject.Find("Pause Menu");
         if (menuWin == null) menuWin = GameObject.Find("Win Menu");

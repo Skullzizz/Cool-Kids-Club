@@ -55,6 +55,11 @@ public class ButtonFunctions : MonoBehaviour, IPointerEnterHandler
         panelCredits.SetActive(true);
     }
 
+    public async void LoadGame()
+    {
+        await SaveLoad.LoadAsync();
+    }
+
     public void backToMain(GameObject currentPanel)
     {
         if (currentPanel != null && panelMain != null){
