@@ -30,7 +30,14 @@ public class SaveLoad
     {
         HandleSaveData();
 
+#if UNITY_WEBGL
+
+        PlayerPrefs.SetString("Saves",JsonUtility.ToJson(saveData,true));
+        PlayerPrefs.Save();
+
+#else
         File.WriteAllText(SaveFileName(), JsonUtility.ToJson(saveData, true));
+#endif
     }
 
     private static void HandleSaveData()
@@ -65,14 +72,27 @@ public class SaveLoad
     {
         HandleSaveData();
 
-        await File.WriteAllTextAsync(SaveFileName(), JsonUtility.ToJson(saveData, true));
+#if UNITY_WEBGL
+        PlayerPrefs.SetString("Saves", JsonUtility.ToJson(saveData, true));
+        PlayerPrefs.Save();
+        await Task.Yield();
+#else
+    await File.WriteAllTextAsync(SaveFileName(), JsonUtility.ToJson(saveData, true));
+#endif
     }
 
     public static void Load()
     {
+#if UNITY_WEBGL
+
+        saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString("Saves"));
+
+#else
         string saveFile = File.ReadAllText(SaveFileName());
 
         saveData = JsonUtility.FromJson<SaveData>(saveFile);
+#endif
+
         HandleLoadData();
     }
 
@@ -101,10 +121,13 @@ public class SaveLoad
 
     public static async Task LoadAsync()
     {
+#if UNITY_WEBGL
+        saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString("Saves"));
+#else
         string saveContent = File.ReadAllText(SaveFileName());
 
         saveData = JsonUtility.FromJson<SaveData>(saveContent);
-
+#endif
         await HandleLoadDataAsync();
     }
 
@@ -133,5 +156,17 @@ public class SaveLoad
             cSpawnManager.Load(saveData.CollectibleData);
         }
     }
-    
+
+    public static string GetSaveString()
+    {
+        HandleSaveData();
+        return JsonUtility.ToJson(saveData, true);
+    }
+
+    public static void LoadSaveString(string save)
+    {
+        saveData = JsonUtility.FromJson<SaveData>(save);
+        HandleLoadData();
+    }
+
 }
