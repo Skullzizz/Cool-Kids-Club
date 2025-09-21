@@ -72,6 +72,10 @@ public class playerController : MonoBehaviour, IDamage, ISaveable
     float regenTimer;
     public bool locked = false;
 
+    [SerializeField] Image edgeBleedOverlay;
+    [SerializeField] float lowHealthThreshold = 0.40f; //when bleed appears %
+    [SerializeField] float maxBleed = 0.55f;
+    [SerializeField] float pulseSpeed = 2f;
  
     bool deathCoroutineRun = false;
     bool isDead;
@@ -98,6 +102,17 @@ public class playerController : MonoBehaviour, IDamage, ISaveable
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
         playerSpawnPointRef = gamemanager.instance.playerSpawnPos;
         updatePlayerUI();
+
+        if (edgeBleedOverlay == null)
+        {
+            var go = GameObject.FindWithTag("EdgeBleedUI");
+            if(go != null) edgeBleedOverlay = go.GetComponent<Image>();
+        }
+
+        if (edgeBleedOverlay != null)
+        {
+            SetBleedAlpha(0f);
+        }
     }
 
     // Update is called once per frame
@@ -113,6 +128,30 @@ public class playerController : MonoBehaviour, IDamage, ISaveable
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
         ShieldRecharge();
+
+        if(edgeBleedOverlay != null)
+        {
+            float healthPct = Mathf.Clamp01((float)HP / Mathf.Max(1, HPOrig));
+            if (healthPct < lowHealthThreshold)
+            {
+                float baseBleed = Mathf.Lerp(0f, maxBleed, 1f - (healthPct / lowHealthThreshold));
+                float pulse = 0.5f + 0.5f * Mathf.Sin(Time.time * pulseSpeed);
+                float finalBleed = baseBleed * pulse;
+
+                SetBleedAlpha(finalBleed);
+
+            }
+
+            else
+            {
+                SetBleedAlpha(0f);
+            }
+                //float bleed = (healthPct < lowHealthThreshold)
+                   // ? Mathf.Lerp(0f, maxBleed, 1f - (healthPct / lowHealthThreshold))
+                  //  : 0f;
+           // SetBleedAlpha(bleed);
+
+        }
     }
 
 
@@ -431,6 +470,13 @@ public class playerController : MonoBehaviour, IDamage, ISaveable
     public int GetHP()
     {
         return HP;
+    }
+
+    void SetBleedAlpha(float a)
+    {
+        var c = edgeBleedOverlay.color;
+        c.a = Mathf.Clamp01(a);
+        edgeBleedOverlay.color = c;
     }
 
     //private void OnTriggerEnter(Collider other)
