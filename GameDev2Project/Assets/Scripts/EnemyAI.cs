@@ -23,6 +23,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int roamPauseTime;
     [SerializeField] int animTransSpeed;
 
+  //  [Header("Audio")]
+  //  public AudioSource deathAudio;
+
     [Header("Waypoints")]
     [SerializeField] private Waypoint waypoints;
     [SerializeField] private float waypointThreshold = 0.5f;
@@ -40,6 +43,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     float stoppingDistOrig;
 
     bool playerInTrigger;
+    bool isDead = false;
+
 
     public Vector3 playerDir;
     Vector3 startingPos;
@@ -68,6 +73,10 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         if (waypoints != null)
             currentWaypoint = waypoints.GetNextWaypoint(null);
+
+     //   // death audio
+     //   deathAudio = GetComponent<AudioSource>();
+     //   deathAudio.volume = 0.5f; // Set volume between 0.0 and 1.0
 
     }
 
@@ -102,7 +111,33 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             playerInTrigger = false;
         }
+
+     //   if (HP <= 0 && !isDead)
+     //   {
+     //       isDead = true;
+     //       StartCoroutine(Die());
+     //   }
+
+
+     //   if (HP <= 0)
+     //   {
+     //       DeathSound();
+     //   }
+
     }
+
+ //  public void DeathSound()
+ //   {
+ //       if (deathAudio != null && !deathAudio.isPlaying)
+ //       {
+ //           deathAudio.Play();
+ //           Destroy(gameObject, deathAudio.clip.length); // Wait for sound to finish
+ //       }
+ //       else
+ //       {
+ //           Destroy(gameObject); // Fallback
+ //       }
+ //   }
 
     void setAnimLoco()
     {
@@ -313,6 +348,14 @@ public class EnemyAI : MonoBehaviour, IDamage
             }
         }
     }
+  //  IEnumerator Die()
+  //  {
+  //      deathAudio.Play();
+  //      yield return new WaitForSeconds(deathAudio.clip.length);
+  //      Destroy(gameObject);
+  //  }
+
+
 
     IEnumerator flashRed()
     {
