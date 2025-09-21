@@ -12,19 +12,19 @@ public class EnemyMelee : EnemyAI
     IDamage currentTargetDamage;
 
     Transform player;
-    IDamage playerDamage;
+    //IDamage playerDamage;
 
     
 
-    void attackPlayer()
-    {
-        IDamage dmgPlayer = gamemanager.instance.player.GetComponent<IDamage>();
-
-        if (dmgPlayer != null)
-        {
-            dmgPlayer.takeDamage(meleeDamage);
-        }
-    }
+    //void attackPlayer()
+    //{
+    //    IDamage dmgPlayer = gamemanager.instance.player.GetComponent<IDamage>();
+    //
+    //    if (dmgPlayer != null)
+    //    {
+    //        dmgPlayer.takeDamage(meleeDamage);
+    //    }
+    //}
 
     void meleeAttack()
     {

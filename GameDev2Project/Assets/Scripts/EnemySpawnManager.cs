@@ -1,7 +1,5 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class EnemySpawnManager : MonoBehaviour
@@ -36,7 +34,7 @@ public class EnemySpawnManager : MonoBehaviour
             if (spawnedEnemies[i] != null)
             {
                 GameObject enemy = spawnedEnemies[i];
-                Debug.Log(enemy.name + " is being saved!");
+                //Debug.Log(enemy.name + " is being saved!");
                 EnemySaveData saveData = new EnemySaveData
                 {
                     HP = enemy.GetComponent<EnemyAI>().HP,

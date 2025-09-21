@@ -164,11 +164,6 @@ public class throwPhysics : MonoBehaviour
         }
     }
 
-    void StoreItem()
-    {
-
-    }
-
     void UnequipObject()
     {
         if (throwable != null && isEquiped)

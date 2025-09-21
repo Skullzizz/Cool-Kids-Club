@@ -27,7 +27,7 @@ public class CollectibleSpawnManager : MonoBehaviour
             if (spawnedCollectibles[i] != null)
             {
                 GameObject collectible = spawnedCollectibles[i];
-                Debug.Log(collectible.name + " is being saved!");
+                //Debug.Log(collectible.name + " is being saved!");
                 CollectibleSaveData saveData = new CollectibleSaveData
                 {
                     Position = collectible.transform.position,
