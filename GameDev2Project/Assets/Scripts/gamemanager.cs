@@ -46,6 +46,7 @@ public class gamemanager : MonoBehaviour
     public UIMusicManager uiMusicManager;
 
     public playerInventory playerInventory;
+    public GameObject quitToDesktop;
 
     Camera minimapCam;
 
@@ -143,6 +144,9 @@ public class gamemanager : MonoBehaviour
 
     public void statePause()
     {
+#if UNITY_WEBGL
+        quitToDesktop.SetActive(false);
+#endif
         prePauseMenuMusic = UIAudio.clip;
         ChangeMusic(pauseMenuMusic);
         isPaused = true;
