@@ -51,6 +51,7 @@ public class playerController : MonoBehaviour, IDamage
     [Header("Movement Controls")]
     Vector3 moveDir;
     public Vector3 playerVel;
+    private Vector3 lastPosition;
 
     [Header("Originals")]
     int HPOrig;
@@ -60,6 +61,9 @@ public class playerController : MonoBehaviour, IDamage
     public bool isSprinting;
     public bool isCrouching;
     public bool isSliding;
+
+    private bool isMoving;
+    private bool wasMoving;
 
     public bool isGrappling;
     public bool activeGrapple;
@@ -87,6 +91,27 @@ public class playerController : MonoBehaviour, IDamage
 
     [Header("Save/Load Refs")]
     GameObject playerSpawnPointRef;
+
+    [Header("Audio")]
+  //  public AudioSource deathAudio;
+    public AudioSource walkAudio;
+
+    [Header("Running FOV")]
+    public Camera playerCamera;
+    public float normalFOV = 60f;
+    public float runningFOV = 90f;
+    public float fovTransitionSpeed = 5f;
+
+ //   [Header("Head Bob")]
+ //
+ //   public Transform cameraTransform;
+ //   public float bobFrequency = 1.5f;
+ //   public float bobAmplitude = 1f;
+ //   public float bobSpeedMultiplier = 1f;
+ //   private float bobTimer = 0f;
+ //   private Vector3 initialCameraPosition;
+
+
 
 
     public enum PlayerStats
@@ -121,6 +146,17 @@ public class playerController : MonoBehaviour, IDamage
         {
             SetBleedAlpha(0f);
         }
+
+        // Apart of the movement check for audio
+        lastPosition = transform.position;
+
+        // Camera Bob
+        //     initialCameraPosition = cameraTransform.localPosition;
+
+      //  // death audio
+      //  deathAudio = GetComponent<AudioSource>();
+      //  deathAudio.volume = 0.5f; // Set volume between 0.0 and 1.0
+
     }
 
     // Update is called once per frame
@@ -133,7 +169,13 @@ public class playerController : MonoBehaviour, IDamage
             crouch();
         }
 
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
+        // Running FOV
+        float targetFOV = isSprinting ? runningFOV : normalFOV;
+        playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
+
+
+
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
 
         ShieldRecharge();
 
@@ -160,9 +202,71 @@ public class playerController : MonoBehaviour, IDamage
            // SetBleedAlpha(bleed);
 
         }
+
+
+        // check for movement
+        float distanceMoved = Vector3.Distance(transform.position, lastPosition);
+        isMoving = distanceMoved > 0.01f;
+
+        WalkingToggle();
+
+        lastPosition = transform.position;
+
+      //  if (HP <= 0)
+      //  {
+      //      DeathSound();
+      //  }
+
+        //      HeadBob();
+
     }
 
+  //  public void DeathSound()
+  //  {
+  //      if (deathAudio != null && !deathAudio.isPlaying)
+  //      {
+  //          deathAudio.Play();
+  //          Destroy(gameObject, deathAudio.clip.length); // Wait for sound to finish
+  //      }
+  //      else
+  //      {
+  //          Destroy(gameObject); // Fallback
+  //      }
+  //  }
 
+    //  void HeadBob()
+    //  {
+    //      if (isMoving)
+    //      {
+    //          float speedMultiplier = isSprinting ? bobSpeedMultiplier * 1.5f : bobSpeedMultiplier;
+    //          bobTimer += Time.deltaTime * bobFrequency * speedMultiplier;
+    //
+    //          float bobOffsetY = Mathf.Sin(bobTimer) * bobAmplitude;
+    //          float bobOffsetX = Mathf.Cos(bobTimer / 2f) * bobAmplitude * 0.5f;
+    //
+    //          cameraTransform.localPosition = initialCameraPosition + new Vector3(bobOffsetX, bobOffsetY, 0f);
+    //      }
+    //      else
+    //      {
+    //          bobTimer = 0f;
+    //          cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, initialCameraPosition, Time.deltaTime * 5f);
+    //      }
+    //  }
+
+
+    void WalkingToggle()
+    {
+        if (isMoving && !wasMoving)
+        {
+            walkAudio.Play();
+        }
+        else if (!isMoving && wasMoving)
+        {
+            walkAudio.Stop();
+        }
+
+        wasMoving = isMoving;
+    }
     void movement()
     {
 
@@ -231,10 +335,10 @@ public class playerController : MonoBehaviour, IDamage
 
         controller.Move(playerVel * Time.deltaTime);
 
-        if (Input.GetButtonDown("EnterShowcase"))
-        {
-            EnterShowcaseLevel();
-        }
+        //if (Input.GetButtonDown("EnterShowcase"))
+        //{
+        //    EnterShowcaseLevel();
+        //}
 
         if (Input.GetButton("Fire1") && shootTimer >= shootRate && equippedWeapon != null)
         {
@@ -315,15 +419,15 @@ public class playerController : MonoBehaviour, IDamage
                 equippedWeapon.gunAnimator.SetTrigger("Shooting");
             }
 
-            if (equippedWeapon.gunAnimator != null && equippedWeapon.gun.shootRate <= 0.2f)
-            {
-                if (Input.GetButton("Fire1"))
-                {
-                    equippedWeapon.gunAnimator.SetBool("FAShooting", true);
-                }
-                else
-                    equippedWeapon.gunAnimator.SetBool("FAShooting", false);
-            }
+            //if (equippedWeapon.gunAnimator != null && equippedWeapon.gun.shootRate <= 0.2f)
+            //{
+            //    if (Input.GetButton("Fire1"))
+            //    {
+            //        equippedWeapon.gunAnimator.SetBool("FAShooting", true);
+            //    }
+            //    else
+            //        equippedWeapon.gunAnimator.SetBool("FAShooting", false);
+            //}
 
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignorelayer))
             {
@@ -538,10 +642,10 @@ public class playerController : MonoBehaviour, IDamage
     //    }
     //}
 
-    void EnterShowcaseLevel()
-    {
-        SceneManager.LoadScene("Showcase Level");
-    }
+    //void EnterShowcaseLevel()
+    //{
+    //    SceneManager.LoadScene("Showcase Level");
+    //}
 
     public void Save(ref PlayerData data)
     {

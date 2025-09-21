@@ -9,9 +9,15 @@ public class GrapplingGun : MonoBehaviour
     public KeyCode grappleKey = KeyCode.Mouse0;
 
     [Header("References")]
-    public Transform gunTip;        
-    public Transform player;        
-    public Transform holdPoint;     
+    public Transform gunTip;
+    public Transform player;
+    public Transform holdPoint;
+
+    [Header("Audio Sources")]
+    [Tooltip("AudioSource that plays when the grapple is launched")]
+    public AudioSource launchSource;
+    [Tooltip("AudioSource that plays when the grapple latches")]
+    public AudioSource latchSource;
 
     private LineRenderer lr;
     private Vector3 grapplePoint;
@@ -25,6 +31,12 @@ public class GrapplingGun : MonoBehaviour
     {
         lr = GetComponent<LineRenderer>();
         lr.enabled = false;
+
+        // Ensure playOnAwake is off
+        if (launchSource != null)
+            launchSource.playOnAwake = false;
+        if (latchSource != null)
+            latchSource.playOnAwake = false;
     }
 
     void Update()
@@ -43,7 +55,6 @@ public class GrapplingGun : MonoBehaviour
     {
         if (isGrappling)
         {
-            // Smoothly move player toward the hit point
             player.position = Vector3.SmoothDamp(
                 player.position,
                 grapplePoint,
@@ -56,7 +67,6 @@ public class GrapplingGun : MonoBehaviour
         }
         else if (grabbingThrowable && targetThrowable != null)
         {
-            // Smoothly move the throwable toward your holdPoint
             targetThrowable.transform.position = Vector3.SmoothDamp(
                 targetThrowable.transform.position,
                 holdPoint.position,
@@ -69,7 +79,6 @@ public class GrapplingGun : MonoBehaviour
                     holdPoint.position
                 ) < 0.2f)
             {
-                // Finalize pickup
                 targetThrowable.transform.SetParent(holdPoint);
                 grabbingThrowable = false;
                 lr.enabled = false;
@@ -86,11 +95,14 @@ public class GrapplingGun : MonoBehaviour
                 maxGrappleDistance
             ))
         {
+            // Play launch sound
+            if (launchSource != null)
+                launchSource.Play();
+
             grapplePoint = hit.point;
             lr.enabled = true;
             lr.positionCount = 2;
 
-            // If object is tagged "Throwable", grab it instead
             if (hit.collider.CompareTag("throwable"))
             {
                 grabbingThrowable = true;
@@ -99,6 +111,10 @@ public class GrapplingGun : MonoBehaviour
             else
             {
                 isGrappling = true;
+
+                // Play latch sound
+                if (latchSource != null)
+                    latchSource.Play();
             }
         }
     }

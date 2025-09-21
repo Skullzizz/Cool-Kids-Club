@@ -819,10 +819,10 @@ RectTransform:
   - {fileID: 4580445549190711284}
   m_Father: {fileID: 7101365208352088403}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 225, y: -30}
-  m_SizeDelta: {x: 150, y: 60}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6700149080947036603
 MonoBehaviour:
@@ -3729,7 +3729,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -120}
+  m_AnchoredPosition: {x: 0, y: -79.25}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6717041864844742570
@@ -6521,9 +6521,12 @@ MonoBehaviour:
   menuWin: {fileID: 4023363515344705081}
   menuLose: {fileID: 2959234872948238269}
   menuUpgrade: {fileID: 8279448455894550529}
+  UIAudio: {fileID: 2560374948638963428}
   gameGoalCountText: {fileID: 1748092617946791940}
   playerLevelText: {fileID: 3657598851041355884}
   pauseDimmer: {fileID: 322259939768474166}
+  pauseMenuMusic: {fileID: 8300000, guid: 2afb25ee7f99ec04fb4f5d3fdfaca3a2, type: 3}
+  prePauseMenuMusic: {fileID: 0}
   playerHPBar: {fileID: 8929355397930930080}
   playerXPBar: {fileID: 6520352715655648207}
   playerArmorBar: {fileID: 3172018219485058921}
@@ -6543,12 +6546,17 @@ MonoBehaviour:
   playerSpawnPos: {fileID: 0}
   checkpointPopup: {fileID: 5775934828616179143}
   collectiblePopup: {fileID: 3154538365181640923}
+  uiMusicManager: {fileID: 0}
   playerInventory: {fileID: 0}
+  quitToDesktop: {fileID: 5300205302575584502}
   waterScreen: {fileID: 1625526412486035471}
   spaceScreen: {fileID: 4372745412635180651}
   tutorialScreen: {fileID: 2371421089784718153}
   isPaused: 0
   enemiesKilled: 0
+  finalCountDown: 0
+  bossAlive: 1
+  enemyCountText: {fileID: 4986408021545411655}
 --- !u!114 &6583564758502552542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7980,7 +7988,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6450553958178011211}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: Respawn
+        m_MethodName: LoadGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8818,7 +8826,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -80}
+  m_AnchoredPosition: {x: 0, y: -117}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3120487192130968682
@@ -9902,7 +9910,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7791350619527344977, guid: f7e69043c99af1146945edc3171dbdab, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: c8744f1594c91e94aa2bdf6fbc41816b, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
@@ -12533,10 +12541,10 @@ RectTransform:
   - {fileID: 8037726176035113156}
   m_Father: {fileID: 7101365208352088403}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -30}
-  m_SizeDelta: {x: 150, y: 60}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8211575040821370944
 MonoBehaviour:
@@ -12904,9 +12912,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6386102913668007316}
   - component: {fileID: 2560374948638963428}
+  - component: {fileID: 5297877808830172486}
   - component: {fileID: 7935818548691841241}
   m_Layer: 5
-  m_Name: PauseMenuMusic
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13028,7 +13037,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7935818548691841241
+--- !u!114 &5297877808830172486
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13036,6 +13045,18 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9052590722419071118}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51e096570abfb0540af078909d4c564f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7935818548691841241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9052590722419071118}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c246f6d1f898ccd489d2345124c14147, type: 3}
   m_Name: 
