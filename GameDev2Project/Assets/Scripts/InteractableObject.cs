@@ -8,22 +8,10 @@ public class InteractableObject : MonoBehaviour, IInteract
 
     public Transform position => transform;
 
-    public bool ActivateInteract(PlayerInteract interactor)
+    public virtual bool ActivateInteract(PlayerInteract interactor)
     {
         Debug.Log("Interactable Activated");
         return true;
     }
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
