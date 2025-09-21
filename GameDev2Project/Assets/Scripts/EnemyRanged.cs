@@ -7,9 +7,11 @@ public class EnemyRanged : EnemyAI
     [SerializeField] Transform shootPos;
     [SerializeField] Animator anime;
 
+ //   [Header("Audio")]
+ //   public AudioSource deathAudio;
+
     float shootTimer;
 
-    
 
     void shoot()
     {
