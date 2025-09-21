@@ -78,7 +78,6 @@ GameObject:
   - component: {fileID: 2666879416117374726}
   - component: {fileID: 8824879424079709396}
   - component: {fileID: 5535965725801114343}
-  - component: {fileID: 9142417115180720381}
   - component: {fileID: 7738361454935595237}
   - component: {fileID: 5869777212548756593}
   - component: {fileID: 5403592800309561167}
@@ -298,19 +297,6 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   equippedWeapon: {fileID: 0}
   equippedWeaponIndex: -1
---- !u!114 &9142417115180720381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941424058941952304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1645aebf4944caa41ac1d8f35ed1bd63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 77d01dd8-8518-444f-b0dd-f2d730775ab0
 --- !u!143 &7738361454935595237
 CharacterController:
   m_ObjectHideFlags: 0

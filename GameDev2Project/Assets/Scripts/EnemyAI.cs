@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 using UnityEngine.XR;
+using UnityEditor;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
@@ -13,6 +14,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] Transform headPos;
     [SerializeField] Animator anim;
+    [SerializeField] public string basePrefabPath;
+    public GameObject basePrefab;
 
     [Header("Stats")]
     [SerializeField] public int HP;
@@ -50,10 +53,20 @@ public class EnemyAI : MonoBehaviour, IDamage
         gamemanager.instance.updateGameGoal(1);
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
+        var basePrefabPathCheck = Resources.Load(basePrefabPath, typeof(GameObject));
+        if (basePrefabPathCheck != null)
+        {
+            Debug.Log("Saved base prefab path object as type " + basePrefabPathCheck.GetType());
+        }
+        else
+        {
+            Debug.Log("Saved base prefab path object as null");
+        }
+        basePrefab = basePrefabPathCheck as GameObject;
 
         roamTimer = roamPauseTime;
 
-        
+
 
         if (waypoints != null)
             currentWaypoint = waypoints.GetNextWaypoint(null);
@@ -229,8 +242,8 @@ public class EnemyAI : MonoBehaviour, IDamage
             if (hit.collider.CompareTag("Player") && angleToPlayer <= FOV)
             {
                 agent.SetDestination(gamemanager.instance.player.transform.position);
-                    Attack();
-                
+                Attack();
+
 
                 if (agent.remainingDistance <= agent.stoppingDistance)
                 {
@@ -252,7 +265,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         Vector3 dir = gamemanager.instance.player.transform.position - headPos.position;
         Quaternion rot = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
-        
+
     }
 
     public void OnTriggerEnter(Collider other)
@@ -272,7 +285,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-    
+
 
     public virtual void takeDamage(int amount)
     {

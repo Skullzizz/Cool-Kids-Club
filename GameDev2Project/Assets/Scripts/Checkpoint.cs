@@ -12,6 +12,7 @@ public class Checkpoint : MonoBehaviour
             gamemanager.instance.playerSpawnPos.transform.position = transform.position;
             gamemanager.instance.playerSpawnPos.transform.rotation = transform.rotation;
             model.material.color = Color.lightBlue;
+            gamemanager.instance.SaveAsync();
             StartCoroutine(checkpointFeedback());
         }
     }
