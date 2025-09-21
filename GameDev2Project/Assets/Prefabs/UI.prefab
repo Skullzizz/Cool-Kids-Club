@@ -6476,6 +6476,9 @@ MonoBehaviour:
   spaceScreen: {fileID: 4372745412635180651}
   isPaused: 0
   enemiesKilled: 0
+  finalCountDown: 0
+  bossAlive: 1
+  enemyCountText: {fileID: 4986408021545411655}
 --- !u!114 &6583564758502552542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7907,7 +7910,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6450553958178011211}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: Respawn
+        m_MethodName: LoadGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

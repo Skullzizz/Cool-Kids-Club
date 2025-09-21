@@ -295,7 +295,11 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         if (HP <= 0)
         {
-            gamemanager.instance.updateGameGoal(-1);
+            if(!gamemanager.instance.finalCountDown)
+            {
+                gamemanager.instance.updateGameGoal(-1);
+                gamemanager.instance.updateEnemyDeaths(1);
+            }
 
             if (GetComponent<RagdollController>() != null)
             {
@@ -307,9 +311,6 @@ public class EnemyAI : MonoBehaviour, IDamage
             {
                 Destroy(gameObject);
             }
-
-            //Ragdoll Physics
-            gamemanager.instance.updateEnemyDeaths(1);
         }
     }
 
