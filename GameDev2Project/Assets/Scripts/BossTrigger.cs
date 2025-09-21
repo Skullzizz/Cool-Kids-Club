@@ -12,6 +12,7 @@ public class BossTrigger : MonoBehaviour
             if (!bossDoor.activeSelf||!boss.activeSelf){
                 boss.SetActive(true);
                 bossDoor.SetActive(true);
+                gamemanager.instance.enemyCountText.SetActive(true);
                 Destroy(gameObject);
             }
         }
