@@ -83,6 +83,15 @@ public class throwPhysics : MonoBehaviour
                     throwable = gamemanager.instance.playerInventory.equippedWeapon;
                     throwable.SetActive(true);
                     isHolding = true;
+                    throwableRb = throwable.GetComponent<Rigidbody>();
+                    throwableRbDefaultGravity = true;
+
+                    if (throwableRb != null)
+                    {
+                        throwable.transform.SetParent(handPosition);
+                        throwableRb.useGravity = false;
+                        isHolding = true;
+                    }
                     gamemanager.instance.playerInventory.RemoveItem();
                 }
 
