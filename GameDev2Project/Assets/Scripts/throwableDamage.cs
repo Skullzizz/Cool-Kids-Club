@@ -54,6 +54,7 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
 
 
     bool isDamaging;
+    public bool isInInventory;
 
     float impactSpeed;
     float velFactor;
