@@ -233,17 +233,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6979fe391979c6943a447c1a2fb11201, type: 3}
---- !u!114 &103056920 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7565757110448970300, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-  m_PrefabInstance: {fileID: 200117335}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &200117335
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -252,33 +241,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 700308339940029833, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 836591832}
-    - target: {fileID: 1627986587770685476, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-      propertyPath: m_fontStyle
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1627986587770685476, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-      propertyPath: m_fontSizeMax
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1627986587770685476, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332767327717566180, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-      propertyPath: m_PixelPerfect
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6048738974235900180, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
       propertyPath: m_Name
       value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 7990766914163036914, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-      propertyPath: m_fontStyle
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8132743023756339552, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
       propertyPath: m_Pivot.x
@@ -433,17 +398,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c66707c100bbd40b59bee00ff31d5b, type: 3}
---- !u!114 &404897000 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 747839260516541125, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-  m_PrefabInstance: {fileID: 200117335}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &599150593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -501,17 +455,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70f9574e8a384194b9f432a1b19fb665, type: 3}
---- !u!114 &836591832 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7393489916680130126, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
-  m_PrefabInstance: {fileID: 1520053789}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3883661aae291245aaa0bf97c9b6bab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &998262817 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6402943283019371055, guid: d1e29f2d8e46c724682c8e9faebd11f2, type: 3}
@@ -829,11 +772,11 @@ PrefabInstance:
     - target: {fileID: 7393489916680130126, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
       propertyPath: weaponIcon
       value: 
-      objectReference: {fileID: 103056920}
+      objectReference: {fileID: 0}
     - target: {fileID: 7393489916680130126, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
       propertyPath: equippedWeaponText
       value: 
-      objectReference: {fileID: 404897000}
+      objectReference: {fileID: 0}
     - target: {fileID: 8075918143841736608, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
       propertyPath: edgeBleedOverlay
       value: 

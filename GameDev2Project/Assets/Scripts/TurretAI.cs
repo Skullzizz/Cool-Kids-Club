@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.AI;
-using System;
 
 public class TurretAI : MonoBehaviour, IDamage
 {

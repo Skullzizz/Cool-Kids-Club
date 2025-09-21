@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 public class gamemanager : MonoBehaviour
 {
@@ -13,12 +13,16 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuUpgrade;
+    [SerializeField] AudioSource UIAudio;
 
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] TMP_Text playerLevelText;
 
 
     [SerializeField] private PauseDimmer pauseDimmer;
+    [SerializeField] AudioClip pauseMenuMusic;
+
+    public AudioClip prePauseMenuMusic;
 
     public Image playerHPBar;
     public Image playerXPBar;
@@ -39,6 +43,7 @@ public class gamemanager : MonoBehaviour
     public GameObject playerSpawnPos;
     public GameObject checkpointPopup;
     public GameObject collectiblePopup;
+    public UIMusicManager uiMusicManager;
 
     public playerInventory playerInventory;
 
@@ -60,6 +65,10 @@ public class gamemanager : MonoBehaviour
 
     public int enemiesKilled = 0;
 
+    public bool finalCountDown;
+    public bool bossAlive = true;
+    public GameObject enemyCountText;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -70,7 +79,6 @@ public class gamemanager : MonoBehaviour
             Time.timeScale = 1f;
 
         timeScaleOrig = Time.timeScale;
-
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn");
@@ -83,13 +91,24 @@ public class gamemanager : MonoBehaviour
         if (this.GetComponent<CollectibleSpawnManager>() != null)
             collectibleSpawnManager = this.GetComponent<CollectibleSpawnManager>();
 
+        uiMusicManager = UIAudio.GetComponent<UIMusicManager>();
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
-        
 
         if (menuPause == null) menuPause = GameObject.Find("Pause Menu");
         if (menuWin == null) menuWin = GameObject.Find("Win Menu");
         if (menuLose == null) menuLose = GameObject.Find("Lose Menu");
         if (menuUpgrade == null) menuUpgrade = GameObject.Find("Upgrade Menu");
+    }
+
+    private void Start()
+    {
+        finalCountDown = SceneManager.GetActiveScene().name == "Space";
+
+        if(finalCountDown)
+        {
+            enemyCountText.SetActive(false);
+            gameGoalCountText.text = "Boss";
+        }
     }
 
     // Update is called once per frame
@@ -112,24 +131,27 @@ public class gamemanager : MonoBehaviour
         if (Input.GetButtonDown("Save") && !isSaving)
         {
             SaveAsync();
-            Debug.Log("Saving Game");
+            //Debug.Log("Saving Game");
         }
 
         if (Input.GetButtonDown("Load") && !isLoading)
         {
             LoadAsync();
-            Debug.Log("Loading Game");
+            //Debug.Log("Loading Game");
         }
     }
 
     public void statePause()
     {
+        prePauseMenuMusic = UIAudio.clip;
+        ChangeMusic(pauseMenuMusic);
         isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         pauseDimmer.ShowDim();
-        FindFirstObjectByType<PauseMenuMusic>().PlayMusic();
+        //FindFirstObjectByType<PauseMenuMusic>().PlayMusic();
+        
 
         if (Water.instance != null && Water.instance.inWater)
             WaterScreen(false);
@@ -137,6 +159,7 @@ public class gamemanager : MonoBehaviour
 
     public void stateUnpause()
     {
+        ChangeMusic(prePauseMenuMusic);
         isPaused = false;
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
@@ -147,8 +170,9 @@ public class gamemanager : MonoBehaviour
             menuActive.SetActive(false);
             menuActive = null;
         }
-        if (FindFirstObjectByType<PauseMenuMusic>() != null)
-            FindFirstObjectByType<PauseMenuMusic>().StopMusic();
+        //if (FindFirstObjectByType<PauseMenuMusic>() != null)
+        //FindFirstObjectByType<PauseMenuMusic>().StopMusic();
+        
 
         if (Water.instance != null && Water.instance.inWater)
             WaterScreen(true);
@@ -156,13 +180,23 @@ public class gamemanager : MonoBehaviour
 
     public void updateGameGoal(int amount)
     {
-        gameGoalCount += amount;
-
-        gameGoalCountText.text = gameGoalCount.ToString("F0");
-
-        if (gameGoalCount <= 0)
+        if(!finalCountDown)
         {
-            // You Won!
+            gameGoalCount += amount;
+
+            gameGoalCountText.text = gameGoalCount.ToString("F0");
+        }
+
+        if(finalCountDown&&!bossAlive)
+        {
+            statePause();
+            menuActive = menuWin;
+            menuActive.SetActive(true);
+            pauseDimmer.ShowDim();
+        }
+
+        else if (!finalCountDown&&gameGoalCount <= 0)
+        {
             statePause();
             menuActive = menuWin;
             menuActive.SetActive(true);
@@ -243,6 +277,11 @@ public class gamemanager : MonoBehaviour
             playerInventory = GameObject.Find("Player").GetComponent<playerInventory>();
     }
 
+    public void ChangeMusic(AudioClip nextMusic)
+    {
+        uiMusicManager.FadeChange(ref UIAudio, nextMusic);
+    }
+
     public async void SaveAsync()
     {
         isSaving = true;
@@ -250,7 +289,7 @@ public class gamemanager : MonoBehaviour
         isSaving = false;
     }
 
-    private async void LoadAsync()
+    public async void LoadAsync()
     {
         isLoading = true;
         await SaveLoad.LoadAsync();

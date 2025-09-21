@@ -1,10 +1,5 @@
-using NUnit.Framework;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static playerController;
 
 public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
 {
@@ -59,6 +54,7 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
 
 
     bool isDamaging;
+    public bool isInInventory;
 
     float impactSpeed;
     float velFactor;
@@ -78,11 +74,11 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
         var basePrefabPathCheck = Resources.Load(basePrefabPath, typeof(GameObject));
         if (basePrefabPathCheck != null)
         {
-            Debug.Log("Saved base prefab path object as type " + basePrefabPathCheck.GetType());
+            //Debug.Log("Saved base prefab path object as type " + basePrefabPathCheck.GetType());
         }
         else
         {
-            Debug.Log("Saved base prefab path object as null");
+            //Debug.Log("Saved base prefab path object as null");
         }
         basePrefab = basePrefabPathCheck as GameObject;
     }
@@ -204,7 +200,7 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
     void SpawnStoredItems()
     {
         StartCoroutine(spawnItemDelay());
-        Debug.Log("Spawning Started");
+        //Debug.Log("Spawning Started");
         GameObject spawnThis = null;
         GameObject spawnedObject = null;
         Vector3 spawnDirection = Vector3.zero;
@@ -217,14 +213,14 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
             spawnDirection.z = UnityEngine.Random.value;
             spawnedObject = Instantiate(spawnThis, spawnPosition, Quaternion.Euler(0, 0, 0));
             spawnedObject.GetComponent<Rigidbody>().AddForce(spawnDirection * spawnForce, ForceMode.Impulse);
-            Debug.Log("Spawned Item: " + spawnedObject);
+            //Debug.Log("Spawned Item: " + spawnedObject);
         }
     }
 
     IEnumerator spawnItemDelay()
     {
         yield return new WaitForSeconds(0.1f);
-        Debug.Log("Finished Spawn Item Delay");
+        //Debug.Log("Finished Spawn Item Delay");
     }
 
     void VisualClipping()
@@ -267,7 +263,7 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
         {
             if (hitList[i].gameObject != gameObject)
             {
-                Debug.Log(hitList[i].name + " has been hit with explosive");
+                //Debug.Log(hitList[i].name + " has been hit with explosive");
                 if (hitList[i].TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
                 {
                     float distance = Vector3.Distance(transform.position, rigidbody.position);
@@ -282,7 +278,7 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
                 if (hitList[i].TryGetComponent<MonoBehaviour>(out script))
                 {
                     float distance = Vector3.Distance(transform.position, script.gameObject.transform.position);
-                    Debug.Log(script.gameObject.name + " testing damage through " + script + " script");
+                    //Debug.Log(script.gameObject.name + " testing damage through " + script + " script");
                     explodeDmg = script.GetComponent<IDamage>();
                     explodeDmg.takeDamage((Mathf.FloorToInt(Mathf.Lerp(explosiveMaxDamage, explosiveMinDamage, distance / Radius))));
                 }

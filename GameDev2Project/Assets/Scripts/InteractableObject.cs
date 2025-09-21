@@ -10,7 +10,7 @@ public class InteractableObject : MonoBehaviour, IInteract
 
     public virtual bool ActivateInteract(PlayerInteract interactor)
     {
-        Debug.Log("Interactable Activated");
+        //Debug.Log("Interactable Activated");
         return true;
     }
 

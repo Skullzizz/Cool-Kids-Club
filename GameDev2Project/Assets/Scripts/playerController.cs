@@ -431,7 +431,7 @@ public class playerController : MonoBehaviour, IDamage
 
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignorelayer))
             {
-                Debug.Log(hit.collider.name);
+                //Debug.Log(hit.collider.name);
 
                 Instantiate(equippedWeapon.gun.hitEffect, hit.point, Quaternion.identity);
                 equippedWeapon.curAmmo--;
@@ -482,7 +482,7 @@ public class playerController : MonoBehaviour, IDamage
         else
         {
             HP -= amount;
-            Debug.Log("HIT BODY");
+            //Debug.Log("HIT BODY");
         }
         lastHitTime=Time.time;
         updatePlayerUI();

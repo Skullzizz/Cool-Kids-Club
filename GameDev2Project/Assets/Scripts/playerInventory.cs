@@ -1,8 +1,8 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 public class playerInventory : MonoBehaviour
 {
@@ -41,7 +41,7 @@ public class playerInventory : MonoBehaviour
     public void AddItem(GameObject item)
     {
         inventory.Add(item);
-        Debug.Log("Added item " + item.name);
+        //Debug.Log("Added item " + item.name);
 
         if (inventorySlotPrefab != null && inventoryUIParent != null)
         {
@@ -50,11 +50,12 @@ public class playerInventory : MonoBehaviour
 
             if (textComponent != null)
                 textComponent.text = item.name;
-            else
-                Debug.LogWarning("No component found in inventory slot");
+            
         }
         equippedWeapon = item;
         equippedWeaponIndex = inventory.Count - 1;
+        if (item.GetComponent<throwableDamage>() != null)
+        item.GetComponent<throwableDamage>().isInInventory = true;
 
         UpdateWeaponUI();
         RaiseEquippedChanged();
@@ -65,6 +66,8 @@ public class playerInventory : MonoBehaviour
         if (equippedWeapon != null)
         {
             inventory.Remove(equippedWeapon);
+            if (equippedWeapon.GetComponent<throwableDamage>() != null)
+                equippedWeapon.GetComponent<throwableDamage>().isInInventory = false;
             equippedWeaponIndex -= 1;
             UpdateWeaponUI();
             if (inventory[equippedWeaponIndex] != null)
@@ -77,6 +80,7 @@ public class playerInventory : MonoBehaviour
             }
             
         }
+
         UpdateWeaponUI();
         RaiseEquippedChanged();
     }

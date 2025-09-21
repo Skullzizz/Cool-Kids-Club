@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ThrowableSpawnManager : MonoBehaviour
@@ -28,10 +27,11 @@ public class ThrowableSpawnManager : MonoBehaviour
             if (spawnedThrowables[i] != null)
             {
                 GameObject throwable = spawnedThrowables[i];
-                Debug.Log(throwable.name + " is being saved!");
+                //Debug.Log(throwable.name + " is being saved!");
                 ThrowableSaveData saveData = new ThrowableSaveData
                 {
                     HP = throwable.GetComponent<throwableDamage>().throwableHP,
+                    isInInventory = throwable.GetComponent<throwableDamage>().isInInventory,
                     Position = throwable.transform.position,
                     rotation = throwable.transform.rotation,
                     ThrowablePrefab = throwableToPrefabMap[throwable]
@@ -69,6 +69,21 @@ public class ThrowableSpawnManager : MonoBehaviour
                 GameObject spawnedThrowable = Instantiate(throwable.ThrowablePrefab, throwable.Position, throwable.rotation);
                 spawnedThrowables.Add(spawnedThrowable);
                 throwableToPrefabMap[spawnedThrowable] = throwable.ThrowablePrefab;
+                spawnedThrowable.GetComponent<throwableDamage>().throwableHP = throwable.HP;
+                if (throwable.isInInventory)
+                {
+                    playerInventory playerInv = gamemanager.instance.playerInventory;
+                    if (playerInv != null)
+                    {
+                        playerInv.AddItem(spawnedThrowable);
+
+                        playerInv.equippedWeapon = spawnedThrowable;
+                        playerInv.equippedWeaponIndex = playerInv.inventory.IndexOf(spawnedThrowable);
+                        spawnedThrowable.GetComponent<Rigidbody>().useGravity = false;
+                        spawnedThrowable.SetActive(false);
+                        playerInv.UpdateWeaponUI();
+                    }
+                }
             }
         }
     }
@@ -83,6 +98,7 @@ public struct SceneThrowableData
 [System.Serializable]
 public struct ThrowableSaveData
 {
+    public bool isInInventory;
     public int HP;
     public Vector3 Position;
     public Quaternion rotation;

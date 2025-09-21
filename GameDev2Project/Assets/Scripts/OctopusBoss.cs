@@ -22,9 +22,12 @@ public class OctopusBoss : MonoBehaviour, IDamage
     [SerializeField] float actionCooldown = 2f;
     bool isOnCooldown = false;
     bool isActing = false;
+    bool firstAction = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        gamemanager.instance.bossAlive = true;
         colorOrig = model.material.color;
         gamemanager.instance.updateGameGoal(1);
         
@@ -36,6 +39,8 @@ public class OctopusBoss : MonoBehaviour, IDamage
         canSeePlayer();
 
         octoAction();
+
+
     }
 
     void octoAction()
@@ -43,9 +48,9 @@ public class OctopusBoss : MonoBehaviour, IDamage
         if (!isActing && !isOnCooldown)
         {
             int choice = Random.Range(0, 3);
-            if (choice == 0)
+            if (choice == 0&&!firstAction)
                 StartCoroutine(searchRescueAttack());
-            else if(choice == 1)
+            else if(choice == 1&!firstAction)
                 StartCoroutine(grapple());
             else
             {
@@ -57,6 +62,7 @@ public class OctopusBoss : MonoBehaviour, IDamage
                 {
                     StartCoroutine(spawner.SummonObjects());
                 }
+                firstAction = false;
             }
         }
     }
@@ -77,8 +83,8 @@ public class OctopusBoss : MonoBehaviour, IDamage
         }
         if (HP <= 0)
         {
-            gamemanager.instance.updateGameGoal(-1);
-            gamemanager.instance.updateEnemyDeaths(1);
+            gamemanager.instance.bossAlive = false;
+            gamemanager.instance.updateGameGoal(1);
             Destroy(gameObject);
         }
     }
@@ -140,7 +146,7 @@ public class OctopusBoss : MonoBehaviour, IDamage
                     grapplePos.z = 290;
 
                 Debug.DrawRay(leg.position, grappleDir * hit.distance, Color.yellow);
-                Debug.Log(grapplePos);
+                //Debug.Log(grapplePos);
                 float timeGrapple = 0f;
                 while (timeGrapple < grappleTime)
                 {
