@@ -55,10 +55,15 @@ public class ButtonFunctions : MonoBehaviour, IPointerEnterHandler
         panelCredits.SetActive(true);
     }
 
-    public async void LoadGame()
+    public void LoadGame()
     {
-        await SaveLoad.LoadAsync();
+        gamemanager.instance.LoadAsync();
     }
+
+    public void SaveGame()
+    {
+        gamemanager.instance.SaveAsync();
+    }    
 
     public void backToMain(GameObject currentPanel)
     {

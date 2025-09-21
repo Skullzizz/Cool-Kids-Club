@@ -250,7 +250,7 @@ public class gamemanager : MonoBehaviour
         isSaving = false;
     }
 
-    private async void LoadAsync()
+    public async void LoadAsync()
     {
         isLoading = true;
         await SaveLoad.LoadAsync();
