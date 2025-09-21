@@ -93,14 +93,19 @@ public class playerController : MonoBehaviour, IDamage
         JumpMax
     }
 
+    void Awake()
+    {
+        playerSpawnPointRef = gamemanager.instance.playerSpawnPos;
+        HPOrig = HP;
+        heightOrig = controller.height;
+        minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        HPOrig = HP;
-        heightOrig = controller.height;
+        
         gamemanager.instance.updateEnemyDeaths(0);
-        minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
-        playerSpawnPointRef = gamemanager.instance.playerSpawnPos;
+        
         updatePlayerUI();
 
         if (edgeBleedOverlay == null)
@@ -416,7 +421,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         controller.enabled = false;
         controller.transform.position = gamemanager.instance.playerSpawnPos.transform.position;
-        controller.transform.rotation = gamemanager.instance.playerSpawnPos.transform.rotation;
+        transform.rotation = gamemanager.instance.playerSpawnPos.transform.rotation;
         controller.enabled = true;
         minimapCam.enabled = true;
         playerVel = Vector3.zero;
@@ -499,18 +504,25 @@ public class playerController : MonoBehaviour, IDamage
     public void Save(ref PlayerData data)
     {
         data.position = transform.position;
+        data.rotation = transform.rotation;
         data.HP = HP;
         data.speed = speed;
         data.jumpMax = jumpMax;
+        data.hasShield = hasShield;
     }
 
     public void Load(PlayerData data)
     {
         playerSpawnPointRef.transform.position = data.position;
+        playerSpawnPointRef.transform.rotation = data.rotation;
         SpawnPlayer();
+        controller.enabled = false;
+        transform.rotation = data.rotation;
+        controller.enabled = true;
         HP = data.HP;
         speed = data.speed;
         jumpMax = data.jumpMax;
+        hasShield = data.hasShield;
     }
 }
 
@@ -522,5 +534,7 @@ public struct PlayerData
     public int speed;
     public int jumpMax;
     public Vector3 position;
+    public Quaternion rotation;
+    public bool hasShield;
 
 }

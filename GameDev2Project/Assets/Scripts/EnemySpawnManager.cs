@@ -11,7 +11,7 @@ public class EnemySpawnManager : MonoBehaviour
     private List<GameObject> spawnedEnemies = new List<GameObject>();
     private Dictionary<GameObject,GameObject> enemyToPrefabMap = new Dictionary<GameObject,GameObject>();
 
-    void Start()
+    void Awake()
     {
         EnemyAI[] EnemiesOnLoad = Object.FindObjectsByType<EnemyAI>(FindObjectsSortMode.None);
         EnemyAI[] RangedEnemiesOnLoad = Object.FindObjectsByType<EnemyRanged>(FindObjectsSortMode.None);
