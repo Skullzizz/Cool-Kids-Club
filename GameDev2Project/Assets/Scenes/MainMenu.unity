@@ -4775,7 +4775,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246942453}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 946.64417, y: 0, z: 1026.8394}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6285,6 +6285,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3691662857549445227, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      propertyPath: UIAudio
+      value: 
+      objectReference: {fileID: 1570867609}
+    - target: {fileID: 3691662857549445227, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      propertyPath: AudioPlaylist.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3691662857549445227, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+      propertyPath: 'AudioPlaylist.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d87812a72fc9df0448d58dd627df8896, type: 3}
     - target: {fileID: 4590901218521912669, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -6406,6 +6418,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+--- !u!82 &1570867609 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7990291116032001416, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
+  m_PrefabInstance: {fileID: 1570867608}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1657230944
 GameObject:
   m_ObjectHideFlags: 0
@@ -7950,7 +7967,7 @@ SceneRoots:
   - {fileID: 1570867608}
   - {fileID: 1459397325}
   - {fileID: 350153260}
-  - {fileID: 218081064}
   - {fileID: 1246942455}
+  - {fileID: 218081064}
   - {fileID: 830963919}
   - {fileID: 1208104178}

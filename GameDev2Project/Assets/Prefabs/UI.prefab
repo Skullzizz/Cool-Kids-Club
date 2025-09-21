@@ -6445,9 +6445,12 @@ MonoBehaviour:
   menuWin: {fileID: 4023363515344705081}
   menuLose: {fileID: 2959234872948238269}
   menuUpgrade: {fileID: 8279448455894550529}
+  UIAudio: {fileID: 2560374948638963428}
   gameGoalCountText: {fileID: 1748092617946791940}
   playerLevelText: {fileID: 3657598851041355884}
   pauseDimmer: {fileID: 322259939768474166}
+  pauseMenuMusic: {fileID: 8300000, guid: 2afb25ee7f99ec04fb4f5d3fdfaca3a2, type: 3}
+  prePauseMenuMusic: {fileID: 0}
   playerHPBar: {fileID: 8929355397930930080}
   playerXPBar: {fileID: 6520352715655648207}
   playerArmorBar: {fileID: 3172018219485058921}
@@ -6467,6 +6470,7 @@ MonoBehaviour:
   playerSpawnPos: {fileID: 0}
   checkpointPopup: {fileID: 5775934828616179143}
   collectiblePopup: {fileID: 3154538365181640923}
+  uiMusicManager: {fileID: 0}
   playerInventory: {fileID: 0}
   waterScreen: {fileID: 1625526412486035471}
   spaceScreen: {fileID: 4372745412635180651}
@@ -9824,7 +9828,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7791350619527344977, guid: f7e69043c99af1146945edc3171dbdab, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: c8744f1594c91e94aa2bdf6fbc41816b, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
@@ -12826,9 +12830,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6386102913668007316}
   - component: {fileID: 2560374948638963428}
+  - component: {fileID: 5297877808830172486}
   - component: {fileID: 7935818548691841241}
   m_Layer: 5
-  m_Name: PauseMenuMusic
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12950,7 +12955,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7935818548691841241
+--- !u!114 &5297877808830172486
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12958,6 +12963,18 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9052590722419071118}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51e096570abfb0540af078909d4c564f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7935818548691841241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9052590722419071118}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c246f6d1f898ccd489d2345124c14147, type: 3}
   m_Name: 

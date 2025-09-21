@@ -14,12 +14,16 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuUpgrade;
+    [SerializeField] AudioSource UIAudio;
 
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] TMP_Text playerLevelText;
 
 
     [SerializeField] private PauseDimmer pauseDimmer;
+    [SerializeField] AudioClip pauseMenuMusic;
+
+    public AudioClip prePauseMenuMusic;
 
     public Image playerHPBar;
     public Image playerXPBar;
@@ -40,6 +44,7 @@ public class gamemanager : MonoBehaviour
     public GameObject playerSpawnPos;
     public GameObject checkpointPopup;
     public GameObject collectiblePopup;
+    public UIMusicManager uiMusicManager;
 
     public playerInventory playerInventory;
 
@@ -83,8 +88,8 @@ public class gamemanager : MonoBehaviour
         if (this.GetComponent<CollectibleSpawnManager>() != null)
             collectibleSpawnManager = this.GetComponent<CollectibleSpawnManager>();
 
+        uiMusicManager = UIAudio.GetComponent<UIMusicManager>();
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
-
 
         if (menuPause == null) menuPause = GameObject.Find("Pause Menu");
         if (menuWin == null) menuWin = GameObject.Find("Win Menu");
@@ -124,12 +129,15 @@ public class gamemanager : MonoBehaviour
 
     public void statePause()
     {
+        prePauseMenuMusic = UIAudio.clip;
+        ChangeMusic(pauseMenuMusic);
         isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         pauseDimmer.ShowDim();
-        FindFirstObjectByType<PauseMenuMusic>().PlayMusic();
+        //FindFirstObjectByType<PauseMenuMusic>().PlayMusic();
+        
 
         if (Water.instance != null && Water.instance.inWater)
             WaterScreen(false);
@@ -137,6 +145,7 @@ public class gamemanager : MonoBehaviour
 
     public void stateUnpause()
     {
+        ChangeMusic(prePauseMenuMusic);
         isPaused = false;
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
@@ -147,8 +156,9 @@ public class gamemanager : MonoBehaviour
             menuActive.SetActive(false);
             menuActive = null;
         }
-        if (FindFirstObjectByType<PauseMenuMusic>() != null)
-            FindFirstObjectByType<PauseMenuMusic>().StopMusic();
+        //if (FindFirstObjectByType<PauseMenuMusic>() != null)
+        //FindFirstObjectByType<PauseMenuMusic>().StopMusic();
+        
 
         if (Water.instance != null && Water.instance.inWater)
             WaterScreen(true);
@@ -241,6 +251,11 @@ public class gamemanager : MonoBehaviour
             playerSpawnPos = GameObject.Find("Player Spawn");
         if (playerInventory == null)
             playerInventory = GameObject.Find("Player").GetComponent<playerInventory>();
+    }
+
+    public void ChangeMusic(AudioClip nextMusic)
+    {
+        uiMusicManager.FadeChange(ref UIAudio, nextMusic);
     }
 
     public async void SaveAsync()
