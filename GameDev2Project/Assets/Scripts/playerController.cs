@@ -15,6 +15,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] CharacterController controller;
     [SerializeField] wallrunController wallrunController;
     public Rigidbody rb;
+   
 
 
     [Header("Player Statistics")]
@@ -44,6 +45,8 @@ public class playerController : MonoBehaviour, IDamage
     [Header("Throwable Management")]
 
     public throwableDamage equippedWeapon;
+    public bool isEquipping = false;
+    public float equipDuration = 0.5f;
 
     [Header("Movement Controls")]
     Vector3 moveDir;
@@ -299,11 +302,29 @@ public class playerController : MonoBehaviour, IDamage
 
     void shoot()
     {
+        if (isEquipping)
+            return;
+
         RaycastHit hit;
 
         shootTimer = 0;
         if (equippedWeapon.curAmmo > 0)
         {
+            if (equippedWeapon.gunAnimator != null)
+            {
+                equippedWeapon.gunAnimator.SetTrigger("Shooting");
+            }
+
+            if (equippedWeapon.gunAnimator != null && equippedWeapon.gun.shootRate <= 0.2f)
+            {
+                if (Input.GetButton("Fire1"))
+                {
+                    equippedWeapon.gunAnimator.SetBool("FAShooting", true);
+                }
+                else
+                    equippedWeapon.gunAnimator.SetBool("FAShooting", false);
+            }
+
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignorelayer))
             {
                 Debug.Log(hit.collider.name);
@@ -319,6 +340,27 @@ public class playerController : MonoBehaviour, IDamage
                 }
             }
         }
+    }
+
+    void EquipWeapon(throwableDamage newWeapon)
+    {
+        equippedWeapon = newWeapon;
+
+        if (Input.GetButton("Equip"))
+        {
+            if (equippedWeapon.gunAnimator != null)
+                equippedWeapon.gunAnimator.SetTrigger("Equip");
+
+            isEquipping = true;
+
+            StartCoroutine(EquipCooldown(equipDuration));
+        }
+    }
+
+    private IEnumerator EquipCooldown(float howLong)
+    {
+        yield return new WaitForSeconds(howLong);
+        isEquipping = false;
     }
 
     public void takeDamage(int amount)

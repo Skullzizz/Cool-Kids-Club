@@ -18,6 +18,9 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
     [SerializeField] public string basePrefabPath;
     public GameObject basePrefab;
 
+    // animator
+    [SerializeField] public Animator gunAnimator;
+
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
     enum damageType { Explosive, RAW }

@@ -43,7 +43,7 @@ public class throwPhysics : MonoBehaviour
                 }
             }
 
-            if (Input.GetMouseButtonDown(1) && isHolding)
+            if (Input.GetMouseButtonDown(1) && isHolding|| Input.GetKeyDown(KeyCode.B) && isHolding)
             {
                 ThrowObject();
             }
