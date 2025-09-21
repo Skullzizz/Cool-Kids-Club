@@ -315,6 +315,16 @@ public class playerController : MonoBehaviour, IDamage
                 equippedWeapon.gunAnimator.SetTrigger("Shooting");
             }
 
+            if (equippedWeapon.gunAnimator != null && equippedWeapon.gun.shootRate <= 0.2f)
+            {
+                if (Input.GetButton("Fire1"))
+                {
+                    equippedWeapon.gunAnimator.SetBool("FAShooting", true);
+                }
+                else
+                    equippedWeapon.gunAnimator.SetBool("FAShooting", false);
+            }
+
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignorelayer))
             {
                 Debug.Log(hit.collider.name);
