@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static playerController;
 
-public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource, ISaveable
+public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
 {
     [Header("Base Throwable Stats")]
     [SerializeField] int throwDamage;
@@ -15,6 +15,8 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource, 
     [SerializeField] float minDMGVel;
     [SerializeField] float knockbackForce;
     [SerializeField] float explKnockMult;
+    [SerializeField] public string basePrefabPath;
+    public GameObject basePrefab;
 
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
@@ -70,7 +72,16 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource, 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        var basePrefabPathCheck = Resources.Load(basePrefabPath, typeof(GameObject));
+        if (basePrefabPathCheck != null)
+        {
+            Debug.Log("Saved base prefab path object as type " + basePrefabPathCheck.GetType());
+        }
+        else
+        {
+            Debug.Log("Saved base prefab path object as null");
+        }
+        basePrefab = basePrefabPathCheck as GameObject;
     }
 
     // Update is called once per frame
@@ -328,31 +339,6 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource, 
         OnAmmoChanged?.Invoke();
     }
 
-    public object SaveState()
-    {
-        Debug.Log("Loading throwable data to save!");
-        throwableDamage throwable = this;
-        return new ThrowableData(throwable);
-    }
-
-    public void LoadState(object state)
-    {
-        var throwableData = (ThrowableData)state;
-        throwableHP = throwableData.throwableHP;
-        curAmmo = throwableData.curAmmo;
-
-        Vector3 position;
-        position.x = throwableData.position[0];
-        position.y = throwableData.position[1];
-        position.z = throwableData.position[2];
-
-        Quaternion rotation = Quaternion.Euler(throwableData.rotation[0],throwableData.rotation [1],throwableData.rotation [2]);
-        
-
-        transform.position = position;
-        transform.rotation = rotation;
-
-    }
 
 }
 

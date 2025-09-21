@@ -2,77 +2,138 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 
 
-public class SaveLoad : MonoBehaviour
+public class SaveLoad
 {
-    public static SaveLoad instance;
-    static string saveDataPath => $"{Application.persistentDataPath}/data.sav";
+    private static SaveData saveData = new SaveData();
 
-    private void Awake()
+    [System.Serializable]
+    public struct SaveData
     {
-        instance = this;
+        public PlayerData PlayerData;
+        public PlayerInventoryData InventoryData;
+        public SceneThrowableData ThrowableData;
+        public SceneEnemyData EnemyData;
+        public SceneSaveData sceneData;
+        public SceneCollectibleData CollectibleData;
     }
 
-    [ContextMenu("Save")]
-    public void Save()
+
+    public static string SaveFileName()
     {
-        var state = LoadFile();
-        CaptureState(state);
-        SaveFile(state);
+        string saveFile = Application.persistentDataPath + "/data" + ".sav";
+        return saveFile;
     }
 
-    [ContextMenu("Load")]
-    public void Load()
+    public static void Save()
     {
-        var state = LoadFile();
-        RestoreState(state);
+        HandleSaveData();
+
+        File.WriteAllText(SaveFileName(), JsonUtility.ToJson(saveData, true));
     }
 
-    void SaveFile(object state)
+    private static void HandleSaveData()
     {
-        using (var stream = File.Open(saveDataPath, FileMode.Create))
+        
+        gamemanager.instance.playerScript.Save(ref saveData.PlayerData);
+        //gamemanager.instance.playerInventory.Save(ref saveData.InventoryData);
+        EnemySpawnManager eSpawnManager = gamemanager.instance.enemySpawnManager;
+        if (eSpawnManager != null)
         {
-            var formatter = new BinaryFormatter();
-            formatter.Serialize(stream, state);
+            eSpawnManager.Save(ref saveData.EnemyData);
+        }
+        ThrowableSpawnManager tSpawnManager = gamemanager.instance.throwableSpawnManager;
+        if (tSpawnManager != null)
+        {
+            tSpawnManager.Save(ref saveData.ThrowableData);
+        }
+        CollectibleSpawnManager cSpawnManager = gamemanager.instance.collectibleSpawnManager;
+        if (cSpawnManager != null)
+        {
+            cSpawnManager.Save(ref saveData.CollectibleData);
+        }
+        gamemanager.instance.sceneData.Save(ref saveData.sceneData);
+    }
+
+    public static async Task SaveAsynchronously()
+    {
+        await SaveAsync();
+    }
+
+    private static async Task SaveAsync()
+    {
+        HandleSaveData();
+
+        await File.WriteAllTextAsync(SaveFileName(), JsonUtility.ToJson(saveData, true));
+    }
+
+    public static void Load()
+    {
+        string saveFile = File.ReadAllText(SaveFileName());
+
+        saveData = JsonUtility.FromJson<SaveData>(saveFile);
+        HandleLoadData();
+    }
+
+    private static void HandleLoadData()
+    {
+        gamemanager.instance.sceneData.Load(saveData.sceneData);
+        gamemanager.instance.playerScript.Load(saveData.PlayerData);
+        //gamemanager.instance.playerInventory.Load(saveData.InventoryData);
+
+        EnemySpawnManager spawnManager = gamemanager.instance.enemySpawnManager;
+        if (spawnManager != null)
+        {
+            spawnManager.Load(saveData.EnemyData);
+        }
+        ThrowableSpawnManager tSpawnManager = gamemanager.instance.throwableSpawnManager;
+        if (tSpawnManager != null)
+        {
+            tSpawnManager.Load(saveData.ThrowableData);
+        }
+        CollectibleSpawnManager cSpawnManager = gamemanager.instance.collectibleSpawnManager;
+        if (cSpawnManager != null)
+        {
+            cSpawnManager.Load(saveData.CollectibleData);
         }
     }
 
-    Dictionary<string, object> LoadFile()
+    public static async Task LoadAsync()
     {
-        if (!File.Exists(saveDataPath))
-        {
-            return new Dictionary<string, object>();
-        }
+        string saveContent = File.ReadAllText(SaveFileName());
 
-        using (FileStream stream = File.Open(saveDataPath, FileMode.Open))
-        {
-            var formatter = new BinaryFormatter();
-            return (Dictionary<string, object>)formatter.Deserialize(stream);
-        }
+        saveData = JsonUtility.FromJson<SaveData>(saveContent);
+
+        await HandleLoadDataAsync();
     }
 
-    void CaptureState(Dictionary<string, object> state)
+    private static async Task HandleLoadDataAsync()
     {
-        foreach (var saveable in FindObjectsByType<SaveableEntity>(FindObjectsSortMode.None))
+        await gamemanager.instance.sceneData.LoadAsync(saveData.sceneData);
+
+        await gamemanager.instance.sceneData.WaitForSceneToBeFullyLoaded();
+
+        gamemanager.instance.playerScript.Load(saveData.PlayerData);
+        //gamemanager.instance.playerInventory.Load(saveData.InventoryData);
+
+        EnemySpawnManager spawnManager = gamemanager.instance.enemySpawnManager;
+        if (spawnManager != null)
         {
-            Debug.Log("Saving " + saveable.name + " with ID " + saveable.ID);
-            state[saveable.ID] = saveable.CaptureStates();
+            spawnManager.Load(saveData.EnemyData);
+        }
+        ThrowableSpawnManager tSpawnManager = gamemanager.instance.throwableSpawnManager;
+        if (tSpawnManager != null)
+        {
+            tSpawnManager.Load(saveData.ThrowableData);
+        }
+        CollectibleSpawnManager cSpawnManager = gamemanager.instance.collectibleSpawnManager;
+        if (cSpawnManager != null)
+        {
+            cSpawnManager.Load(saveData.CollectibleData);
         }
     }
-
-    static void RestoreState(Dictionary<string, object> state)
-    {
-        foreach (var saveable in FindObjectsByType<SaveableEntity>(FindObjectsSortMode.None))
-        {
-            if (state.TryGetValue(saveable.ID, out object value))
-            {
-                saveable.RestoreStates(value);
-                Debug.Log("Loading " + saveable.name + " with ID " + saveable.ID);
-            }
-        }
-
-    }
-
+    
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class playerController : MonoBehaviour, IDamage, ISaveable
+public class playerController : MonoBehaviour, IDamage
 {
 
     [SerializeField] LayerMask ignorelayer;
@@ -93,14 +93,19 @@ public class playerController : MonoBehaviour, IDamage, ISaveable
         JumpMax
     }
 
+    void Awake()
+    {
+        playerSpawnPointRef = gamemanager.instance.playerSpawnPos;
+        HPOrig = HP;
+        heightOrig = controller.height;
+        minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        HPOrig = HP;
-        heightOrig = controller.height;
+        
         gamemanager.instance.updateEnemyDeaths(0);
-        minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
-        playerSpawnPointRef = gamemanager.instance.playerSpawnPos;
+        
         updatePlayerUI();
 
         if (edgeBleedOverlay == null)
@@ -416,7 +421,7 @@ public class playerController : MonoBehaviour, IDamage, ISaveable
     {
         controller.enabled = false;
         controller.transform.position = gamemanager.instance.playerSpawnPos.transform.position;
-        controller.transform.rotation = gamemanager.instance.playerSpawnPos.transform.rotation;
+        transform.rotation = gamemanager.instance.playerSpawnPos.transform.rotation;
         controller.enabled = true;
         minimapCam.enabled = true;
         playerVel = Vector3.zero;
@@ -496,72 +501,40 @@ public class playerController : MonoBehaviour, IDamage, ISaveable
         SceneManager.LoadScene("Showcase Level");
     }
 
-    //public void SavePlayer()
-    //{
-    //    SaveLoad.SavePlayer(this);
-    //}
-
-    //public void LoadPlayer()
-    //{
-    //    PlayerData data = SaveLoad.LoadPlayer();
-    //    if (data != null) return;
-
-    //    HP = data.HP;
-    //    speed = data.speed;
-    //    jumpMax = data.jumpMax;
-    //    Vector3 position;
-    //    position.x = data.position[0];
-    //    position.y = data.position[1];
-    //    position.z = data.position[2];
-
-    //    transform.position = position;
-
-    //}
-
-    public void LoadState(object state)
+    public void Save(ref PlayerData data)
     {
-        var playerData = (PlayerData)state;
-        var player = gamemanager.instance.playerScript;
-        Vector3 position;
-        position.x = playerData.position[0];
-        position.y = playerData.position[1];
-        position.z = playerData.position[2];
+        data.position = transform.position;
+        data.rotation = transform.rotation;
+        data.HP = HP;
+        data.speed = speed;
+        data.jumpMax = jumpMax;
+        data.hasShield = hasShield;
+    }
 
-        player.playerSpawnPointRef.transform.position = position;
+    public void Load(PlayerData data)
+    {
+        playerSpawnPointRef.transform.position = data.position;
+        playerSpawnPointRef.transform.rotation = data.rotation;
         SpawnPlayer();
-        player.HP = playerData.HP;
-        player.speed = playerData.speed;
-        player.jumpMax = playerData.jumpMax;
+        controller.enabled = false;
+        transform.rotation = data.rotation;
+        controller.enabled = true;
+        HP = data.HP;
+        speed = data.speed;
+        jumpMax = data.jumpMax;
+        hasShield = data.hasShield;
     }
-
-    public object SaveState()
-    {
-        Debug.Log("Loading player data to save!");
-        playerController player = gamemanager.instance.playerScript;
-        return new PlayerData(player);
-    }
-
-    
 }
+
+
 [System.Serializable]
 public struct PlayerData
 {
     public int HP;
     public int speed;
     public int jumpMax;
-    public float[] position;
-
-    public PlayerData(playerController player)
-    {
-        HP = player.HP;
-        speed = player.speed;
-        jumpMax = player.jumpMax;
-        position = new float[3];
-        position[0] = player.transform.position.x;
-        position[1] = player.transform.position.y;
-        position[2] = player.transform.position.z;
-
-    }
-
+    public Vector3 position;
+    public Quaternion rotation;
+    public bool hasShield;
 
 }

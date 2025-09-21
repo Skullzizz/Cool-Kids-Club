@@ -148,4 +148,19 @@ public class playerInventory : MonoBehaviour
     {
         OnEquippedWeaponChanged?.Invoke(equippedWeapon);
     }
+
+    public void Save(ref PlayerInventoryData data)
+    {
+        data.inventory = inventory;
+    }
+
+    public void Load(PlayerInventoryData data)
+    {
+        inventory = data.inventory;
+    }
+}
+[System.Serializable]
+public struct PlayerInventoryData
+{
+    public List<GameObject> inventory;
 }
