@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class gamemanager : MonoBehaviour
 {
@@ -26,12 +27,15 @@ public class gamemanager : MonoBehaviour
     public GameObject PlayerDamageScreen;
     public Image PlayerDeathScreen;
     public TextMeshProUGUI storedWeaponText;
-
+    public TextMeshProUGUI CollectibleText;
     public GameObject player;
     public playerController playerScript;
     public throwPhysics throwScript;
     public EnemySpawnManager enemySpawnManager;
     public ThrowableSpawnManager throwableSpawnManager;
+    public CollectibleSpawnManager collectibleSpawnManager;
+    public SceneData sceneData;
+    public SceneLoader sceneLoader;
     public GameObject playerSpawnPos;
     public GameObject checkpointPopup;
     public GameObject collectiblePopup;
@@ -45,6 +49,8 @@ public class gamemanager : MonoBehaviour
 
 
     public bool isPaused;
+    private bool isSaving;
+    private bool isLoading;
 
     float timeScaleOrig;
 
@@ -67,15 +73,18 @@ public class gamemanager : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerController>();
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn");
         throwScript = player.GetComponent<throwPhysics>();
         playerInventory = player.GetComponent<playerInventory>();
         if (this.GetComponent<EnemySpawnManager>() != null)
             enemySpawnManager = this.GetComponent<EnemySpawnManager>();
         if (this.GetComponent<ThrowableSpawnManager>() != null)
             throwableSpawnManager = this.GetComponent<ThrowableSpawnManager>();
+        if (this.GetComponent<CollectibleSpawnManager>() != null)
+            collectibleSpawnManager = this.GetComponent<CollectibleSpawnManager>();
 
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
-        playerSpawnPos = GameObject.FindWithTag("Player Spawn");
+        
 
         if (menuPause == null) menuPause = GameObject.Find("Pause Menu");
         if (menuWin == null) menuWin = GameObject.Find("Win Menu");
@@ -100,15 +109,15 @@ public class gamemanager : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Save"))
+        if (Input.GetButtonDown("Save") && !isSaving)
         {
-            SaveLoad.Save();
+            SaveAsync();
             Debug.Log("Saving Game");
         }
 
-        if (Input.GetButtonDown("Load"))
+        if (Input.GetButtonDown("Load") && !isLoading)
         {
-            SaveLoad.Load();
+            LoadAsync();
             Debug.Log("Loading Game");
         }
     }
@@ -228,5 +237,17 @@ public class gamemanager : MonoBehaviour
             playerInventory = GameObject.Find("Player").GetComponent<playerInventory>();
     }
 
+    public async void SaveAsync()
+    {
+        isSaving = true;
+        await SaveLoad.SaveAsynchronously();
+        isSaving = false;
+    }
 
+    private async void LoadAsync()
+    {
+        isLoading = true;
+        await SaveLoad.LoadAsync();
+        isLoading = false;
+    }
 }
