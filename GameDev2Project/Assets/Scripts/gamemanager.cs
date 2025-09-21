@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor.SearchService;
+using System.Collections;
 
 public class gamemanager : MonoBehaviour
 {
@@ -52,7 +54,7 @@ public class gamemanager : MonoBehaviour
 
     [SerializeField] GameObject waterScreen;
     [SerializeField] GameObject spaceScreen;
-
+    [SerializeField] GameObject tutorialScreen;
 
     public bool isPaused;
     private bool isSaving;
@@ -94,6 +96,7 @@ public class gamemanager : MonoBehaviour
 
         uiMusicManager = UIAudio.GetComponent<UIMusicManager>();
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
+        StartCoroutine(ShowTutorial());
 
         if (menuPause == null) menuPause = GameObject.Find("Pause Menu");
         if (menuWin == null) menuWin = GameObject.Find("Win Menu");
@@ -298,5 +301,12 @@ public class gamemanager : MonoBehaviour
         isLoading = true;
         await SaveLoad.LoadAsync();
         isLoading = false;
+    }
+
+    public IEnumerator ShowTutorial()
+    {
+        tutorialScreen.SetActive(true);
+        yield return new WaitForSeconds(30f);
+        tutorialScreen.SetActive(false);
     }
 }

@@ -14,6 +14,7 @@ TagManager:
   - ForwardScenePortal
   - BackwardScenePortal
   - EdgeBleedUI
+  - TutorialScreen
   layers:
   - Default
   - TransparentFX
