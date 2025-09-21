@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor.SearchService;
 
 public class gamemanager : MonoBehaviour
 {
@@ -61,6 +60,10 @@ public class gamemanager : MonoBehaviour
 
     public int enemiesKilled = 0;
 
+    public bool finalCountDown;
+    public bool bossAlive = true;
+    public GameObject enemyCountText;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -90,6 +93,17 @@ public class gamemanager : MonoBehaviour
         if (menuWin == null) menuWin = GameObject.Find("Win Menu");
         if (menuLose == null) menuLose = GameObject.Find("Lose Menu");
         if (menuUpgrade == null) menuUpgrade = GameObject.Find("Upgrade Menu");
+    }
+
+    private void Start()
+    {
+        finalCountDown = SceneManager.GetActiveScene().name == "Space";
+
+        if(finalCountDown)
+        {
+            enemyCountText.SetActive(false);
+            gameGoalCountText.text = "Boss";
+        }
     }
 
     // Update is called once per frame
@@ -156,13 +170,23 @@ public class gamemanager : MonoBehaviour
 
     public void updateGameGoal(int amount)
     {
-        gameGoalCount += amount;
-
-        gameGoalCountText.text = gameGoalCount.ToString("F0");
-
-        if (gameGoalCount <= 0)
+        if(!finalCountDown)
         {
-            // You Won!
+            gameGoalCount += amount;
+
+            gameGoalCountText.text = gameGoalCount.ToString("F0");
+        }
+
+        if(finalCountDown&&!bossAlive)
+        {
+            statePause();
+            menuActive = menuWin;
+            menuActive.SetActive(true);
+            pauseDimmer.ShowDim();
+        }
+
+        else if (!finalCountDown&&gameGoalCount <= 0)
+        {
             statePause();
             menuActive = menuWin;
             menuActive.SetActive(true);
