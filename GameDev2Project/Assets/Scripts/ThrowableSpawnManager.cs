@@ -7,7 +7,7 @@ public class ThrowableSpawnManager : MonoBehaviour
     private List<GameObject> spawnedThrowables = new List<GameObject>();
     private Dictionary<GameObject, GameObject> throwableToPrefabMap = new Dictionary<GameObject, GameObject>();
 
-    void Start()
+    void Awake()
     {
         throwableDamage[] ThrowablesOnLoad = Object.FindObjectsByType<throwableDamage>(FindObjectsSortMode.None);
         foreach (throwableDamage Throwable in ThrowablesOnLoad)
