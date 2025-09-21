@@ -73,7 +73,7 @@ Material:
     - _CustomColor: 1
     - _DstBlend: 0
     - _Metallic: 0
-    - _Normal_Strength: 1
+    - _Normal_Strength: 1.32
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -90,7 +90,7 @@ Material:
     - _Emission_Color: {r: 1, g: 1, b: 1, a: 0}
     - _Green_Area_Color: {r: 1, g: 1, b: 1, a: 0}
     - _Red_Area_Color: {r: 1, g: 1, b: 1, a: 0}
-    - _UV_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _UV_Tiling: {r: 5, g: 1, b: 0, a: 0}
     - _White_Area_Color: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
