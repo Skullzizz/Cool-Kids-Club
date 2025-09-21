@@ -143,6 +143,16 @@ PlayerSettings:
   bundleVersion: 0.1.0
   preloadedAssets:
   - {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  - {fileID: 2100000, guid: 689ac9da7241afa4f8bbfa708b5e61e8, type: 2}
+  - {fileID: 2100000, guid: 1a59f929c391c2e42b377b6ee93ac33d, type: 2}
+  - {fileID: 2100000, guid: 5f7ef2ab11f02514d81e739d58b01928, type: 2}
+  - {fileID: 2100000, guid: f45816b3c3857b84b8241a2b96a712d2, type: 2}
+  - {fileID: 2100000, guid: ebfc695cc01406c42b6c356c1577fb6f, type: 2}
+  - {fileID: 2100000, guid: 6841452fcee359a409fcb7f9e2175166, type: 2}
+  - {fileID: 2100000, guid: fa6b36bb7caf20146884e259d78d0c59, type: 2}
+  - {fileID: 2100000, guid: f54cd4b4f727e4740a59ea72c6091e8a, type: 2}
+  - {fileID: 2100000, guid: eab569f38658eb1458ccc8da23a4c6b2, type: 2}
+  - {fileID: 2100000, guid: 8fe940013ef6fa84aa5521ad3e8feab8, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -561,10 +571,16 @@ PlayerSettings:
   - serializedVersion: 2
     m_BuildTarget: WebGL
     m_EncodingQuality: 0
+  - serializedVersion: 2
+    m_BuildTarget: Standalone
+    m_EncodingQuality: 1
   m_BuildTargetGroupHDRCubemapEncodingQuality:
   - serializedVersion: 2
     m_BuildTarget: WebGL
     m_EncodingQuality: 0
+  - serializedVersion: 2
+    m_BuildTarget: Standalone
+    m_EncodingQuality: 1
   m_BuildTargetGroupLightmapSettings: []
   m_BuildTargetGroupLoadStoreDebugModeSettings: []
   m_BuildTargetNormalMapEncoding:
