@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor.SearchService;
 using System.Collections;
 
 public class gamemanager : MonoBehaviour
@@ -62,7 +61,6 @@ public class gamemanager : MonoBehaviour
 
     float timeScaleOrig;
 
-    int gameGoalCount;
 
     int playerLevelCount = 1;
 
