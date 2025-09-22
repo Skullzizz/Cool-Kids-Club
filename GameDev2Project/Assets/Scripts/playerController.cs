@@ -1,9 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 
 public class playerController : MonoBehaviour, IDamage
