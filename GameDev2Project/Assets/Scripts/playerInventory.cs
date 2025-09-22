@@ -29,7 +29,7 @@ public class playerInventory : MonoBehaviour
     private void Start()
     {
         weaponIcon = gamemanager.instance.WeaponIcon;
-        equippedWeaponText = gamemanager.instance.storedWeaponText;
+        equippedWeaponText = inventorySlotPrefab.GetComponentInChildren<TextMeshProUGUI>();
         UpdateWeaponUI();
         OnEquippedWeaponChanged?.Invoke(equippedWeapon);
     }
