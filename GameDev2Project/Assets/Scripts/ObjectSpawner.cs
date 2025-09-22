@@ -33,8 +33,7 @@ public class ObjectSpawner : MonoBehaviour
             particles.SetActive(true);
             int random = Random.Range(0, objects.Length);
             Vector3 posObj = objectSpawn.position + transform.forward * 3f;
-            Quaternion rotObj = objectSpawn.rotation;
-            Instantiate(objects[random], posObj, rotObj);
+            Instantiate(objects[random], posObj, Quaternion.identity);
             yield return new WaitForSeconds(1);
         }
         particles.SetActive(false);

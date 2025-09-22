@@ -1,9 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 
 public class playerController : MonoBehaviour, IDamage
@@ -335,10 +332,10 @@ public class playerController : MonoBehaviour, IDamage
 
         controller.Move(playerVel * Time.deltaTime);
 
-        if (Input.GetButtonDown("EnterShowcase"))
-        {
-            EnterShowcaseLevel();
-        }
+        //if (Input.GetButtonDown("EnterShowcase"))
+        //{
+        //    EnterShowcaseLevel();
+        //}
 
         if (Input.GetButton("Fire1") && shootTimer >= shootRate && equippedWeapon != null)
         {
@@ -419,15 +416,15 @@ public class playerController : MonoBehaviour, IDamage
                 equippedWeapon.gunAnimator.SetTrigger("Shooting");
             }
 
-            if (equippedWeapon.gunAnimator != null && equippedWeapon.gun.shootRate <= 0.2f)
-            {
-                if (Input.GetButton("Fire1"))
-                {
-                    equippedWeapon.gunAnimator.SetBool("FAShooting", true);
-                }
-                else
-                    equippedWeapon.gunAnimator.SetBool("FAShooting", false);
-            }
+            //if (equippedWeapon.gunAnimator != null && equippedWeapon.gun.shootRate <= 0.2f)
+            //{
+            //    if (Input.GetButton("Fire1"))
+            //    {
+            //        equippedWeapon.gunAnimator.SetBool("FAShooting", true);
+            //    }
+            //    else
+            //        equippedWeapon.gunAnimator.SetBool("FAShooting", false);
+            //}
 
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignorelayer))
             {
@@ -642,10 +639,10 @@ public class playerController : MonoBehaviour, IDamage
     //    }
     //}
 
-    void EnterShowcaseLevel()
-    {
-        SceneManager.LoadScene("Showcase Level");
-    }
+    //void EnterShowcaseLevel()
+    //{
+    //    SceneManager.LoadScene("Showcase Level");
+    //}
 
     public void Save(ref PlayerData data)
     {

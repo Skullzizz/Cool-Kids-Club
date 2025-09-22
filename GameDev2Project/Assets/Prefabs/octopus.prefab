@@ -1051,7 +1051,7 @@ MonoBehaviour:
   - {fileID: 5311516672874311390}
   - {fileID: 9046708405793148058}
   - {fileID: 581496505031473282}
-  HP: 100
+  HP: 750
   faceTargetSpeed: 1
   model: {fileID: 3483998695373148793}
   headPos: {fileID: 6957206928414838380}
