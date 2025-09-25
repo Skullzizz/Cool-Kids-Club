@@ -357,7 +357,34 @@ public class playerController : MonoBehaviour, IDamage
 
     void crouch()
     {
+#if UNITY_WEBGL
 
+        if (Input.GetKey(KeyCode.C))
+        {   
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                if (isSprinting && (controller.isGrounded || Time.time - lastGroundedTime <= coyoteTimeMax))
+                {
+                    isSliding = true;
+                    playerVel.x += moveDir.x * slideBoost;
+                    playerVel.z += moveDir.z * slideBoost;
+                }
+            }
+            isCrouching = true;
+            controller.height = Mathf.MoveTowards(controller.height, crouchHeight, crouchSpeed * Time.deltaTime);
+
+        }
+        else
+        {
+            isCrouching = false;
+            controller.height = Mathf.MoveTowards(controller.height, heightOrig, crouchSpeed * Time.deltaTime);
+            if (isSliding)
+            {
+                isSliding = false;
+            }
+        }
+
+#else
 
         if (Input.GetButton("Crouch"))
         {
@@ -384,7 +411,7 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
 
-
+#endif
     }
 
     void sprint()

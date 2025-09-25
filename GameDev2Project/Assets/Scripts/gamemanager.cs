@@ -54,6 +54,7 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject waterScreen;
     [SerializeField] GameObject spaceScreen;
     [SerializeField] GameObject tutorialScreen;
+    [SerializeField] GameObject tutorialScreenWebGL;
 
     public bool isPaused;
     private bool isSaving;
@@ -307,9 +308,15 @@ public class gamemanager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Armor")
         {
+#if UNITY_WEBGL
+            tutorialScreenWebGL.SetActive(true);
+            yield return new WaitForSeconds(30f);
+            tutorialScreenWebGL.SetActive(false);
+#else
             tutorialScreen.SetActive(true);
             yield return new WaitForSeconds(30f);
             tutorialScreen.SetActive(false);
+#endif
         }
     }
 }
