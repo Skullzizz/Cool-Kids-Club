@@ -27,7 +27,7 @@ public class Water : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !gamemanager.instance.playerScript.locked)
+        if (other.CompareTag("PlayerHead") && !gamemanager.instance.playerScript.locked)
         {
             EnterWater();
         }
@@ -35,7 +35,7 @@ public class Water : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("PlayerHead"))
         {
             ExitWater();
         }

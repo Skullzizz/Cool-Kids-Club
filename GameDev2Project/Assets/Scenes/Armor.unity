@@ -52903,6 +52903,7 @@ MonoBehaviour:
   damageRate: 3
   speed: 0
   destroyTime: 0
+  actuallyWaterTime: 0
 --- !u!1 &5497698720132337100
 GameObject:
   m_ObjectHideFlags: 0
@@ -71867,6 +71868,7 @@ MonoBehaviour:
   damageRate: 3
   speed: 0
   destroyTime: 0
+  actuallyWaterTime: 1
 --- !u!33 &9079084764558919003
 MeshFilter:
   m_ObjectHideFlags: 0
