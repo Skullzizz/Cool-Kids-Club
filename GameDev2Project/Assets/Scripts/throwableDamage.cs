@@ -279,8 +279,13 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
                 {
                     float distance = Vector3.Distance(transform.position, script.gameObject.transform.position);
                     //Debug.Log(script.gameObject.name + " testing damage through " + script + " script");
-                    explodeDmg = script.GetComponent<IDamage>();
-                    explodeDmg.takeDamage((Mathf.FloorToInt(Mathf.Lerp(explosiveMaxDamage, explosiveMinDamage, distance / Radius))));
+
+                    if (!Physics.Raycast(transform.position, (script.gameObject.transform.position - transform.position).normalized, distance, blockDamageLayer.value))
+                    {
+                        explodeDmg = script.GetComponent<IDamage>();
+                        explodeDmg.takeDamage((Mathf.FloorToInt(Mathf.Lerp(explosiveMaxDamage, explosiveMinDamage, distance / Radius))));
+
+                    }
                 }
             }
         }

@@ -15,6 +15,7 @@ TagManager:
   - BackwardScenePortal
   - EdgeBleedUI
   - TutorialScreen
+  - PlayerHead
   layers:
   - Default
   - TransparentFX
