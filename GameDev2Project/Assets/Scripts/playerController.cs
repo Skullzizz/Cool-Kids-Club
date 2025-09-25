@@ -82,7 +82,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float pulseSpeed = 2f;
  
     bool deathCoroutineRun = false;
-    bool isDead;
+    public bool isDead;
 
     Camera minimapCam;
 
@@ -506,7 +506,6 @@ public class playerController : MonoBehaviour, IDamage
         else
         {
             HP -= amount;
-            //Debug.Log("HIT BODY");
         }
         lastHitTime=Time.time;
         updatePlayerUI();

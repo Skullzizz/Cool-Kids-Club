@@ -70,6 +70,8 @@ public class gamemanager : MonoBehaviour
     public bool finalCountDown;
     public bool bossAlive = true;
     public GameObject enemyCountText;
+    [SerializeField] GameObject levelUpReady;
+    public int amtUpgrades = 0;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -143,6 +145,10 @@ public class gamemanager : MonoBehaviour
         {
             LoadAsync();
             //Debug.Log("Loading Game");
+        }
+        if (amtUpgrades > 0&&Input.GetKeyDown(KeyCode.U))
+        {
+            upgradeMenu();
         }
     }
 
@@ -225,12 +231,9 @@ public class gamemanager : MonoBehaviour
             {
                 playerLevelCount++;
                 enemiesKilled = 0;
-                //Show Upgrades
                 UpgradeManager.instance.soulsNeeded = Mathf.CeilToInt((float)(UpgradeManager.instance.soulsNeeded * 1.5));
-                statePause();
-                menuActive = menuUpgrade;
-                menuActive.SetActive(true);
-                UpgradeManager.instance.ShowRandomUpgrades();
+                amtUpgrades++;
+                levelUpReady.SetActive(true);
             }
             playerLevelText.text = playerLevelCount.ToString("F0");
         }
@@ -317,6 +320,20 @@ public class gamemanager : MonoBehaviour
             yield return new WaitForSeconds(30f);
             tutorialScreen.SetActive(false);
 #endif
+        }
+    }
+
+    public void upgradeMenu()
+    {
+        if(menuActive == null && !playerScript.isDead&&amtUpgrades>0)
+    {
+            statePause();
+            menuActive = menuUpgrade;
+            menuActive.SetActive(true);
+            UpgradeManager.instance.ShowRandomUpgrades();
+            amtUpgrades--;
+            if(amtUpgrades<=0)
+                levelUpReady.SetActive(false);
         }
     }
 }
