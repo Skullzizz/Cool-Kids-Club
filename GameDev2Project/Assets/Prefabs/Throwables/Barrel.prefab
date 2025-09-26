@@ -57,6 +57,7 @@ MonoBehaviour:
   explKnockMult: 0
   basePrefabPath: Throwables/Barrel
   basePrefab: {fileID: 0}
+  gunAnimator: {fileID: 0}
   type: 0
   rb: {fileID: 1287557129109141754}
   maxHits: 25
@@ -70,7 +71,7 @@ MonoBehaviour:
     m_Bits: 1096
   blockDamageLayer:
     serializedVersion: 2
-    m_Bits: 8193
+    m_Bits: 8705
   maxAmmo: 0
   curAmmo: 0
   gun: {fileID: 0}
@@ -79,6 +80,7 @@ MonoBehaviour:
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
+  isInInventory: 0
 --- !u!33 &57441071391013865
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -77,7 +77,6 @@ GameObject:
   - component: {fileID: 4862857840593933731}
   - component: {fileID: 2666879416117374726}
   - component: {fileID: 8824879424079709396}
-  - component: {fileID: 5535965725801114343}
   - component: {fileID: 7738361454935595237}
   - component: {fileID: 5869777212548756593}
   - component: {fileID: 5403592800309561167}
@@ -108,6 +107,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 9029201019072581265}
   - {fileID: 7958822008438920210}
   - {fileID: 7113021936306309756}
   - {fileID: 7718928257150308312}
@@ -168,6 +168,7 @@ MonoBehaviour:
   lowHealthThreshold: 0.4
   maxBleed: 0.6
   pulseSpeed: 2
+  isDead: 0
   walkAudio: {fileID: 8821498289066796853}
   playerCamera: {fileID: 4164850193571722880}
   normalFOV: 60
@@ -286,29 +287,6 @@ MonoBehaviour:
   holdPoint: {fileID: 6996980749641330269}
   launchSource: {fileID: 1926372955814628451}
   latchSource: {fileID: 0}
---- !u!114 &5535965725801114343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941424058941952304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3883661aae291245aaa0bf97c9b6bab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventory:
-  - {fileID: 0}
-  inventoryUIParent: {fileID: 0}
-  inventorySlotPrefab: {fileID: 0}
-  equippedWeaponText: {fileID: 0}
-  weaponIcon: {fileID: 0}
-  noWeaponIcon: {fileID: 0}
-  defaultEmptyColor: {r: 1, g: 0, b: 0, a: 1}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  equippedWeapon: {fileID: 0}
-  equippedWeaponIndex: -1
 --- !u!143 &7738361454935595237
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1800,6 +1778,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6230854613497657470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4740552677109865282
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9029201019072581265}
+  - component: {fileID: 8948739306552142131}
+  m_Layer: 3
+  m_Name: PlayerHead
+  m_TagString: PlayerHead
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9029201019072581265
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4740552677109865282}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4903557523860850379}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8948739306552142131
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4740552677109865282}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.25, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5612060628740043793
 GameObject:
   m_ObjectHideFlags: 0

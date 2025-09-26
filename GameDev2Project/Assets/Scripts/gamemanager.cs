@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class gamemanager : MonoBehaviour
 {
@@ -52,7 +53,8 @@ public class gamemanager : MonoBehaviour
 
     [SerializeField] GameObject waterScreen;
     [SerializeField] GameObject spaceScreen;
-
+    [SerializeField] GameObject tutorialScreen;
+    [SerializeField] GameObject tutorialScreenWebGL;
 
     public bool isPaused;
     private bool isSaving;
@@ -60,7 +62,6 @@ public class gamemanager : MonoBehaviour
 
     float timeScaleOrig;
 
-    int gameGoalCount;
 
     int playerLevelCount = 1;
 
@@ -69,6 +70,8 @@ public class gamemanager : MonoBehaviour
     public bool finalCountDown;
     public bool bossAlive = true;
     public GameObject enemyCountText;
+    [SerializeField] GameObject levelUpReady;
+    public int amtUpgrades = 0;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -94,6 +97,7 @@ public class gamemanager : MonoBehaviour
 
         uiMusicManager = UIAudio.GetComponent<UIMusicManager>();
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
+        StartCoroutine(ShowTutorial());
 
         if (menuPause == null) menuPause = GameObject.Find("Pause Menu");
         if (menuWin == null) menuWin = GameObject.Find("Win Menu");
@@ -105,11 +109,13 @@ public class gamemanager : MonoBehaviour
     {
         finalCountDown = SceneManager.GetActiveScene().name == "Space";
 
-        if(finalCountDown)
+        if (finalCountDown)
         {
             enemyCountText.SetActive(false);
             gameGoalCountText.text = "Boss";
         }
+        else
+            enemyCountText.SetActive(false);
     }
 
     // Update is called once per frame
@@ -139,6 +145,10 @@ public class gamemanager : MonoBehaviour
         {
             LoadAsync();
             //Debug.Log("Loading Game");
+        }
+        if (amtUpgrades > 0&&Input.GetKeyDown(KeyCode.U))
+        {
+            upgradeMenu();
         }
     }
 
@@ -184,12 +194,12 @@ public class gamemanager : MonoBehaviour
 
     public void updateGameGoal(int amount)
     {
-        if(!finalCountDown)
-        {
-            gameGoalCount += amount;
-
-            gameGoalCountText.text = gameGoalCount.ToString("F0");
-        }
+        //if(!finalCountDown)
+        //{
+        //    gameGoalCount += amount;
+        //
+        //    gameGoalCountText.text = gameGoalCount.ToString("F0");
+        //}
 
         if(finalCountDown&&!bossAlive)
         {
@@ -199,13 +209,13 @@ public class gamemanager : MonoBehaviour
             pauseDimmer.ShowDim();
         }
 
-        else if (!finalCountDown&&gameGoalCount <= 0)
-        {
-            statePause();
-            menuActive = menuWin;
-            menuActive.SetActive(true);
-            pauseDimmer.ShowDim();
-        }
+        //else if (!finalCountDown&&gameGoalCount <= 0)
+        //{
+        //    statePause();
+        //    menuActive = menuWin;
+        //    menuActive.SetActive(true);
+        //    pauseDimmer.ShowDim();
+        //}
     }
 
     public void updateEnemyDeaths(int amt)
@@ -221,12 +231,9 @@ public class gamemanager : MonoBehaviour
             {
                 playerLevelCount++;
                 enemiesKilled = 0;
-                //Show Upgrades
                 UpgradeManager.instance.soulsNeeded = Mathf.CeilToInt((float)(UpgradeManager.instance.soulsNeeded * 1.5));
-                statePause();
-                menuActive = menuUpgrade;
-                menuActive.SetActive(true);
-                UpgradeManager.instance.ShowRandomUpgrades();
+                amtUpgrades++;
+                levelUpReady.SetActive(true);
             }
             playerLevelText.text = playerLevelCount.ToString("F0");
         }
@@ -298,5 +305,35 @@ public class gamemanager : MonoBehaviour
         isLoading = true;
         await SaveLoad.LoadAsync();
         isLoading = false;
+    }
+
+    public IEnumerator ShowTutorial()
+    {
+        if (SceneManager.GetActiveScene().name == "Armor")
+        {
+#if UNITY_WEBGL
+            tutorialScreenWebGL.SetActive(true);
+            yield return new WaitForSeconds(30f);
+            tutorialScreenWebGL.SetActive(false);
+#else
+            tutorialScreen.SetActive(true);
+            yield return new WaitForSeconds(30f);
+            tutorialScreen.SetActive(false);
+#endif
+        }
+    }
+
+    public void upgradeMenu()
+    {
+        if(menuActive == null && !playerScript.isDead&&amtUpgrades>0)
+    {
+            statePause();
+            menuActive = menuUpgrade;
+            menuActive.SetActive(true);
+            UpgradeManager.instance.ShowRandomUpgrades();
+            amtUpgrades--;
+            if(amtUpgrades<=0)
+                levelUpReady.SetActive(false);
+        }
     }
 }

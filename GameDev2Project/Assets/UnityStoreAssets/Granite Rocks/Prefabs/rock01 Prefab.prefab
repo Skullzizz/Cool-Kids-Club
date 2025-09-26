@@ -9,10 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8469330543617264012}
+  - component: {fileID: 2062935308546207658}
   - component: {fileID: 2161866075996299368}
-  m_Layer: 0
+  - component: {fileID: 7649383755310077273}
+  - component: {fileID: 6446555983047134393}
+  m_Layer: 10
   m_Name: rock01 Prefab
-  m_TagString: Untagged
+  m_TagString: throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,6 +39,50 @@ Transform:
   - {fileID: 7998587065248105168}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2062935308546207658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2544658040455675144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6629e7c94dbf3ac4ba4ed57084791547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throwDamage: 10
+  throwableHP: 100
+  damageRate: 0
+  minDMGVel: 5
+  knockbackForce: 10
+  explKnockMult: 0
+  basePrefabPath: 
+  basePrefab: {fileID: 0}
+  gunAnimator: {fileID: 0}
+  type: 1
+  rb: {fileID: 0}
+  maxHits: 0
+  Radius: 0
+  explosiveMaxDamage: 0
+  explosiveMinDamage: 0
+  explosiveForce: 0
+  ParticleSystemPrefab: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  blockDamageLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  maxAmmo: 0
+  curAmmo: 0
+  gun: {fileID: 0}
+  startFull: 1
+  isReloading: 0
+  storedObjectList: []
+  storedAmount: 0
+  spawnForce: 0
+  isInInventory: 0
 --- !u!205 &2161866075996299368
 LODGroup:
   m_ObjectHideFlags: 0
@@ -67,6 +114,54 @@ LODGroup:
     renderers:
     - renderer: {fileID: 9172596942427535807}
   m_Enabled: 1
+--- !u!135 &7649383755310077273
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2544658040455675144}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &6446555983047134393
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2544658040455675144}
+  serializedVersion: 5
+  m_Mass: 100
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1001 &3229931455825151228
 PrefabInstance:
   m_ObjectHideFlags: 0

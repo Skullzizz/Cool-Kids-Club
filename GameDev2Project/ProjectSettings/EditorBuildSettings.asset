@@ -32,7 +32,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Showcase Level.unity
     guid: fe67077e6e1512d43bf2561aaa4ae55a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Mason Hill.unity
     guid: 6344cb0250c632e459beee449aab5593
   - enabled: 1
@@ -47,13 +47,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Prototpye1.unity
     guid: 4043ac2ffa261b04fbb203659f1abbb6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Prototype2/Prototype2.unity
     guid: a8bfb798c8ac48c488647e8764f464eb
   - enabled: 0
     path: Assets/Scenes/Ryan Nelson.unity
     guid: 9284efd781721e74fa77fd0348419a18
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Showcase Level.unity
     guid: fe67077e6e1512d43bf2561aaa4ae55a
   m_configObjects:

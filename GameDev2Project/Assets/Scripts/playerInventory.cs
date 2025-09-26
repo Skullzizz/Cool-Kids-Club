@@ -29,7 +29,7 @@ public class playerInventory : MonoBehaviour
     private void Start()
     {
         weaponIcon = gamemanager.instance.WeaponIcon;
-        equippedWeaponText = gamemanager.instance.storedWeaponText;
+        equippedWeaponText = inventorySlotPrefab.GetComponentInChildren<TextMeshProUGUI>();
         UpdateWeaponUI();
         OnEquippedWeaponChanged?.Invoke(equippedWeapon);
     }
@@ -45,8 +45,7 @@ public class playerInventory : MonoBehaviour
 
         if (inventorySlotPrefab != null && inventoryUIParent != null)
         {
-            GameObject slot = Instantiate(inventorySlotPrefab, inventoryUIParent);
-            TextMeshProUGUI textComponent = slot.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI textComponent = inventorySlotPrefab.GetComponentInChildren<TextMeshProUGUI>();
 
             if (textComponent != null)
                 textComponent.text = item.name;
