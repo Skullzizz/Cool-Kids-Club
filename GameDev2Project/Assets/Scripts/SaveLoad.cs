@@ -160,6 +160,21 @@ public class SaveLoad
         }
     }
 
+    public static void DeleteSaveData()
+    {
+        File.Delete(SaveFileName());
+        UnityEditor.AssetDatabase.Refresh();
+    }
+
+    public static bool CheckSaveData()
+    {
+        if (File.Exists(SaveFileName()))
+        {
+            return true;
+        }
+        return false;
+    }
+
     public static string GetSaveString()
     {
         HandleSaveData();
