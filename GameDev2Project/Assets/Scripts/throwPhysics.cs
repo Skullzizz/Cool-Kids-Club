@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class throwPhysics : MonoBehaviour
 {
-    [SerializeField] Transform handPosition;
+    [SerializeField] public Transform handPosition;
     [SerializeField] Transform throwPosition;
     [SerializeField] int pickUpDis;
     [SerializeField] int throwForce;
@@ -14,14 +14,14 @@ public class throwPhysics : MonoBehaviour
     // ---
 
     public GameObject throwable;
-    Rigidbody throwableRb;
-    bool throwableRbDefaultGravity;
-    bool isHolding = false;
+    public Rigidbody throwableRb;
+    public bool throwableRbDefaultGravity;
+    public bool isHolding = false;
 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         throwable = null;
     }
@@ -132,8 +132,28 @@ public class throwPhysics : MonoBehaviour
                     throwable.transform.SetParent(handPosition);
                     throwableRb.useGravity = false;
                     isHolding = true;
+                    throwable.GetComponent<throwableDamage>().isHeld = true;
                 }
             }
+        }
+    }
+
+    public void TryPickup(GameObject setThrowable)
+    {
+        throwable = setThrowable;
+        throwableRb = throwable.GetComponent<Rigidbody>();
+        throwableRbDefaultGravity = throwableRb.useGravity;
+
+        if (throwableRb != null)
+        {
+            if (throwable.GetComponent<throwableDamage>().type == throwableDamage.damageType.Explosive)
+            {
+                throwable.transform.localScale = Vector3.one / 2;
+            }
+            throwable.transform.SetParent(handPosition);
+            throwableRb.useGravity = false;
+            isHolding = true;
+            throwable.GetComponent<throwableDamage>().isHeld = true;
         }
     }
 
@@ -142,6 +162,7 @@ public class throwPhysics : MonoBehaviour
         if (throwable != null)
         {
             isHolding = false;
+            throwable.GetComponent<throwableDamage>().isHeld = false;
             if (throwable.GetComponent<throwableDamage>().type == throwableDamage.damageType.Explosive)
             {
                 throwable.transform.localScale = Vector3.one;

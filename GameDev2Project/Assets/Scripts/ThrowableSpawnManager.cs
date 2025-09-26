@@ -32,6 +32,7 @@ public class ThrowableSpawnManager : MonoBehaviour
                 {
                     HP = throwable.GetComponent<throwableDamage>().throwableHP,
                     isInInventory = throwable.GetComponent<throwableDamage>().isInInventory,
+                    isHeld = throwable.GetComponent<throwableDamage>().isHeld,
                     Position = throwable.transform.position,
                     rotation = throwable.transform.rotation,
                     ThrowablePrefab = throwableToPrefabMap[throwable]
@@ -84,6 +85,10 @@ public class ThrowableSpawnManager : MonoBehaviour
                         playerInv.UpdateWeaponUI();
                     }
                 }
+                if (throwable.isHeld)
+                {
+                    gamemanager.instance.throwScript.TryPickup(spawnedThrowable);
+                }
             }
         }
     }
@@ -99,6 +104,7 @@ public struct SceneThrowableData
 public struct ThrowableSaveData
 {
     public bool isInInventory;
+    public bool isHeld;
     public int HP;
     public Vector3 Position;
     public Quaternion rotation;

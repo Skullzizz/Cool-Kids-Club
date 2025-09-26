@@ -17,6 +17,7 @@ public class SaveLoad
         public SceneEnemyData EnemyData;
         public SceneSaveData sceneData;
         public SceneCollectibleData CollectibleData;
+        public GameData GameData;
     }
 
 
@@ -42,7 +43,7 @@ public class SaveLoad
 
     private static void HandleSaveData()
     {
-        
+        gamemanager.instance.Save(ref saveData.GameData);
         gamemanager.instance.playerScript.Save(ref saveData.PlayerData);
         //gamemanager.instance.playerInventory.Save(ref saveData.InventoryData);
         EnemySpawnManager eSpawnManager = gamemanager.instance.enemySpawnManager;
@@ -98,7 +99,9 @@ public class SaveLoad
 
     private static void HandleLoadData()
     {
+
         gamemanager.instance.sceneData.Load(saveData.sceneData);
+        gamemanager.instance.Load(saveData.GameData);
         gamemanager.instance.playerScript.Load(saveData.PlayerData);
         //gamemanager.instance.playerInventory.Load(saveData.InventoryData);
 
@@ -139,7 +142,7 @@ public class SaveLoad
 
         gamemanager.instance.playerScript.Load(saveData.PlayerData);
         //gamemanager.instance.playerInventory.Load(saveData.InventoryData);
-
+        gamemanager.instance.Load(saveData.GameData);
         EnemySpawnManager spawnManager = gamemanager.instance.enemySpawnManager;
         if (spawnManager != null)
         {
