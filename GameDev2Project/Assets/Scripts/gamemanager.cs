@@ -15,6 +15,7 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuUpgrade;
     [SerializeField] AudioSource UIAudio;
+    [SerializeField] public GameObject loadingScreen;
 
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] TMP_Text playerLevelText;
