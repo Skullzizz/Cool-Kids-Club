@@ -3098,7 +3098,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The talented team at The R&D Department would like to thank you for playing
+  m_text: The talented team at R&D Department would like to thank you for playing
     Crush!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3835,7 +3835,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.4862745, g: 0.4627451, b: 0.84313726, a: 1}
+    m_NormalColor: {r: 0.4, g: 0.37254903, b: 0.81960785, a: 1}
     m_HighlightedColor: {r: 0.8, g: 0.8, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.8, g: 0.8, b: 1, a: 1}
