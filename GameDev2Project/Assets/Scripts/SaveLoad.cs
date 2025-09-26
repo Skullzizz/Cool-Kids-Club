@@ -136,10 +136,12 @@ public class SaveLoad
 
     private static async Task HandleLoadDataAsync()
     {
+        gamemanager.instance.loadingScreen.SetActive(true);
         await gamemanager.instance.sceneData.LoadAsync(saveData.sceneData);
+        
 
         await gamemanager.instance.sceneData.WaitForSceneToBeFullyLoaded();
-
+        
         gamemanager.instance.playerScript.Load(saveData.PlayerData);
         //gamemanager.instance.playerInventory.Load(saveData.InventoryData);
         gamemanager.instance.Load(saveData.GameData);
@@ -158,6 +160,7 @@ public class SaveLoad
         {
             cSpawnManager.Load(saveData.CollectibleData);
         }
+        gamemanager.instance.loadingScreen.SetActive(false);
     }
 
     public static void DeleteSaveData()
