@@ -83,11 +83,15 @@ public class gamemanager : MonoBehaviour
             Time.timeScale = 1f;
 
         timeScaleOrig = Time.timeScale;
+        if (GameObject.FindWithTag("Player") != null)
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<playerController>();
-        playerSpawnPos = GameObject.FindWithTag("Player Spawn");
-        throwScript = player.GetComponent<throwPhysics>();
-        playerInventory = player.GetComponent<playerInventory>();
+        if (player != null)
+        {
+            playerScript = player.GetComponent<playerController>();
+            playerSpawnPos = GameObject.FindWithTag("Player Spawn");
+            throwScript = player.GetComponent<throwPhysics>();
+            playerInventory = player.GetComponent<playerInventory>();
+        }
         if (this.GetComponent<EnemySpawnManager>() != null)
             enemySpawnManager = this.GetComponent<EnemySpawnManager>();
         if (this.GetComponent<ThrowableSpawnManager>() != null)
@@ -96,6 +100,7 @@ public class gamemanager : MonoBehaviour
             collectibleSpawnManager = this.GetComponent<CollectibleSpawnManager>();
 
         uiMusicManager = UIAudio.GetComponent<UIMusicManager>();
+        if (GameObject.FindWithTag("MinimapCam") != null)
         minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
         StartCoroutine(ShowTutorial());
 
@@ -108,6 +113,11 @@ public class gamemanager : MonoBehaviour
     private void Start()
     {
         finalCountDown = SceneManager.GetActiveScene().name == "Space";
+        if (SaveLoad.CheckSaveData() == false)
+        {
+            SaveAsync();
+        }
+
 
         playerLevelText.text = playerLevelCount.ToString("F0");
 
@@ -175,6 +185,7 @@ public class gamemanager : MonoBehaviour
 
     public void stateUnpause()
     {
+        if (prePauseMenuMusic != null)
         ChangeMusic(prePauseMenuMusic);
         isPaused = false;
         Time.timeScale = timeScaleOrig;

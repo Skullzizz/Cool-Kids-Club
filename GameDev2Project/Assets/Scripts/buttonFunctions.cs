@@ -40,6 +40,7 @@ public class ButtonFunctions : MonoBehaviour, IPointerEnterHandler
 
     public void startGame(string sceneName)
     {
+        SaveLoad.DeleteSaveData();
         SceneManager.LoadScene(sceneName); // main game scene needs to be added here
         gamemanager.instance.stateUnpause();
     }                                      // SEE: QuitToMain below
