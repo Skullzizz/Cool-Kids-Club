@@ -109,6 +109,8 @@ public class gamemanager : MonoBehaviour
     {
         finalCountDown = SceneManager.GetActiveScene().name == "Space";
 
+        playerLevelText.text = playerLevelCount.ToString("F0");
+
         if (finalCountDown)
         {
             enemyCountText.SetActive(false);
@@ -336,4 +338,29 @@ public class gamemanager : MonoBehaviour
                 levelUpReady.SetActive(false);
         }
     }
+
+    public void Save(ref GameData gameData)
+    {
+        gameData.playerLevelCount = playerLevelCount;
+        gameData.healthLvl = UpgradeManager.instance.healthLvl;
+        gameData.speedLvl = UpgradeManager.instance.speedLvl;
+        gameData.jumpLvl = UpgradeManager.instance.jumpLvl;
+    }
+
+    public void Load(GameData gameData)
+    {
+        playerLevelCount = gameData.playerLevelCount;
+        UpgradeManager.instance.healthLvl = gameData.healthLvl;
+        UpgradeManager.instance.speedLvl = gameData.speedLvl;
+        UpgradeManager.instance.jumpLvl = gameData.jumpLvl;
+    }
+}
+
+[System.Serializable]
+public struct GameData
+{
+    public int playerLevelCount;
+    public int healthLvl;
+    public int speedLvl;
+    public int jumpLvl;
 }
