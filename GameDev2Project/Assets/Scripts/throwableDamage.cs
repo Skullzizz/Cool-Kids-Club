@@ -16,9 +16,9 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
     // animator
     [SerializeField] public Animator gunAnimator;
 
-    [SerializeField] damageType type;
+    public damageType type;
     [SerializeField] Rigidbody rb;
-    enum damageType { Explosive, RAW }
+    public enum damageType { Explosive, RAW }
 
     [Header("Explosive Stats")]
     [SerializeField] public int maxHits;
