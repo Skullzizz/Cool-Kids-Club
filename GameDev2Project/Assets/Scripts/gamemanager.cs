@@ -13,6 +13,8 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject loseMenuRespawn;
+    [SerializeField] GameObject loseMenuNoSaveRespawn;
     [SerializeField] GameObject menuUpgrade;
     [SerializeField] AudioSource UIAudio;
     [SerializeField] public GameObject loadingScreen;
@@ -262,6 +264,16 @@ public class gamemanager : MonoBehaviour
             statePause();
             menuActive = menuLose;
             menuActive.SetActive(true);
+            if (SaveLoad.CheckSaveData() == false)
+            {
+                loseMenuRespawn.SetActive(false);
+                loseMenuNoSaveRespawn.SetActive(true);
+            }
+            else
+            {
+                loseMenuRespawn.SetActive(true);
+                loseMenuNoSaveRespawn.SetActive(false);
+            }
             pauseDimmer.ShowDim();
         }
     }
