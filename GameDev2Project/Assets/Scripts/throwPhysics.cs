@@ -125,6 +125,10 @@ public class throwPhysics : MonoBehaviour
 
                 if (throwableRb != null)
                 {
+                    if (throwable.GetComponent<throwableDamage>().type == throwableDamage.damageType.Explosive)
+                    {
+                        throwable.transform.localScale = Vector3.one / 2;
+                    }
                     throwable.transform.SetParent(handPosition);
                     throwableRb.useGravity = false;
                     isHolding = true;
@@ -138,7 +142,10 @@ public class throwPhysics : MonoBehaviour
         if (throwable != null)
         {
             isHolding = false;
-
+            if (throwable.GetComponent<throwableDamage>().type == throwableDamage.damageType.Explosive)
+            {
+                throwable.transform.localScale = Vector3.one;
+            }
             throwable.transform.SetParent(null);
             throwable.transform.position = throwPosition.position;
             throwable = null;
