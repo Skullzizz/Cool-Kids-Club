@@ -261,6 +261,7 @@ MonoBehaviour:
   explKnockMult: 0
   basePrefabPath: Guns/Marksman Rifle
   basePrefab: {fileID: 0}
+  gunAnimator: {fileID: 0}
   type: 1
   rb: {fileID: 6762367379073521839}
   maxHits: 0
@@ -283,6 +284,8 @@ MonoBehaviour:
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
+  gunBreak: {fileID: 8300000, guid: 13e3a2155588a244e82dbeb35c8ffe2c, type: 3}
+  isInInventory: 0
 --- !u!65 &7422708802125323911
 BoxCollider:
   m_ObjectHideFlags: 0
