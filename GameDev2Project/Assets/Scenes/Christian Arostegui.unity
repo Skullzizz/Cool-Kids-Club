@@ -482,6 +482,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SMG
       objectReference: {fileID: 0}
+    - target: {fileID: 9192473855115368836, guid: dca0408a2dca5b748bf6f1089224898f, type: 3}
+      propertyPath: gunBreak
+      value: 
+      objectReference: {fileID: 8300000, guid: 13e3a2155588a244e82dbeb35c8ffe2c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
