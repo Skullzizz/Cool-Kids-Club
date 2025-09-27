@@ -52,6 +52,10 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
     [SerializeField] int spawnForce;
     // ---
 
+    // Gun audio - Chris
+    [Header("Audio")]
+    [SerializeField] private AudioClip gunBreak;
+    private AudioSource gunIsBroken;
 
     bool isDamaging;
     public bool isInInventory;
@@ -65,6 +69,8 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
     {
         hitList = new Collider[maxHits];
 
+        gunIsBroken = gameObject.AddComponent<AudioSource>();
+        gunIsBroken.spatialBlend = 1f;
         if (startFull && maxAmmo > 0 && curAmmo <= 0) 
             curAmmo = maxAmmo;
     }
@@ -130,6 +136,7 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
                 {
                     SpawnStoredItems();
                 }
+                PlayBreakSound();
                 Destroy(gameObject);
             }
 
@@ -290,6 +297,7 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
                 }
             }
         }
+        PlayBreakSound();
         Destroy(gameObject);
     }
 
@@ -303,6 +311,8 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
             {
                 SpawnStoredItems();
             }
+
+            PlayBreakSound();
 
             if (type == damageType.Explosive)
             {
@@ -342,6 +352,12 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
         maxAmmo = Mathf.Max(0, max);
         curAmmo = Mathf.Clamp(current, 0, maxAmmo);
         OnAmmoChanged?.Invoke();
+    }
+
+    private void PlayBreakSound()
+    {
+        if (gun != null && gunBreak != null)
+            AudioSource.PlayClipAtPoint(gunBreak, transform.position);
     }
 
 
