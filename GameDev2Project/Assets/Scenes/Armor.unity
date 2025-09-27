@@ -137,17 +137,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1813018527}
     m_Modifications:
-    - target: {fileID: 2858317417921579375, guid: 9f89b817276d1664593687882aa5b710, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
     - target: {fileID: 7137596968480836898, guid: 9f89b817276d1664593687882aa5b710, type: 3}
       propertyPath: m_Name
       value: Checkpoint (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7137596968480836898, guid: 9f89b817276d1664593687882aa5b710, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 9025762893852042776, guid: 9f89b817276d1664593687882aa5b710, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10435,11 +10427,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3180568167aa43f41bb2d09e8ca95c33, type: 3}
---- !u!4 &1084024396 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7958822008438920210, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
-  m_PrefabInstance: {fileID: 1466288592}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1085493814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15477,18 +15464,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4862857840593933731, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
-      propertyPath: pickupPos
-      value: 
-      objectReference: {fileID: 1882561470}
-    - target: {fileID: 4862857840593933731, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
-      propertyPath: pickupRadius
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4862857840593933731, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
-      propertyPath: pickupAccuracy
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 4903557523860850379, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -15547,10 +15522,7 @@ PrefabInstance:
       objectReference: {fileID: 1529365464}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7958822008438920210, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 1882561470}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
 --- !u!1001 &1472322666
@@ -19934,37 +19906,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90ec5796e247a3d4c94b24f3251aa44e, type: 3}
---- !u!1 &1882561469
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1882561470}
-  m_Layer: 3
-  m_Name: PickupPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1882561470
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882561469}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.26, y: 0, z: 1.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1084024396}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1893065908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52858,7 +52799,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4796518729892011702}
   - component: {fileID: 993941297511405919}
-  - component: {fileID: 5497698720872800023}
   m_Layer: 0
   m_Name: MovingPlatform
   m_TagString: Untagged
@@ -52866,33 +52806,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!54 &5497698720872800023
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5497698720872800022}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!23 &5530103133325557031
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -66836,6 +66749,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1813018527}
     m_Modifications:
+    - target: {fileID: 3666156968104504278, guid: 3faa03629203b6a4abb8ab8a97a3a41c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10.01
+      objectReference: {fileID: 0}
     - target: {fileID: 5608284062514313205, guid: 3faa03629203b6a4abb8ab8a97a3a41c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 53.8691
@@ -71289,6 +71206,7 @@ GameObject:
   - component: {fileID: 2830615252678238529}
   - component: {fileID: 2177889972358763865}
   - component: {fileID: 5098725277986997591}
+  - component: {fileID: 8863333712340737779}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Untagged
@@ -71296,6 +71214,33 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!54 &8863333712340737779
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8863333712340737778}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8918455023632957967
 GameObject:
   m_ObjectHideFlags: 0
