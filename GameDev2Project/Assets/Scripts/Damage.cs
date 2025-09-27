@@ -11,8 +11,10 @@ public class Damage : MonoBehaviour
     [SerializeField] float damageRate;
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
+    [SerializeField] bool actuallyWaterTime;
 
     bool isDamaging;
+    bool isDrowning;
 
 
 
@@ -51,6 +53,12 @@ public class Damage : MonoBehaviour
             dmg.takeDamage(damageAmount);
         }
 
+        if (type == damageType.DOT && actuallyWaterTime && Water.instance != null && Water.instance.inWater)
+        {
+            if (!isDrowning)
+                StartCoroutine(drowning());
+        }
+
         if (type == damageType.moving || type == damageType.homing) 
         {
             Destroy(gameObject); 
@@ -66,11 +74,24 @@ public class Damage : MonoBehaviour
 
         if(dmg != null && type == damageType.DOT)
         {
-            if(!isDamaging)
+            if (actuallyWaterTime && Water.instance != null && Water.instance.inWater && !isDrowning)
             {
-                StartCoroutine(damageOther(dmg));
+                StartCoroutine(drowning());
+            }
+
+            if (!actuallyWaterTime || isDrowning)
+            {
+                if (!isDamaging)
+                    StartCoroutine(damageOther(dmg));
             }
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        StopAllCoroutines();
+        isDrowning = false;
+        isDamaging = false;
     }
 
     IEnumerator damageOther(IDamage d)
@@ -79,5 +100,10 @@ public class Damage : MonoBehaviour
         d.takeDamage(damageAmount);
         yield return new WaitForSeconds(damageRate);
         isDamaging = false;
+    }
+    IEnumerator drowning()
+    {
+        yield return new WaitForSeconds(2);
+        isDrowning = true;
     }
 }

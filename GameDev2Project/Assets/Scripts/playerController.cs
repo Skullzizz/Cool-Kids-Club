@@ -1,9 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 
 public class playerController : MonoBehaviour, IDamage
@@ -85,7 +82,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float pulseSpeed = 2f;
  
     bool deathCoroutineRun = false;
-    bool isDead;
+    public bool isDead;
 
     Camera minimapCam;
 
@@ -360,7 +357,34 @@ public class playerController : MonoBehaviour, IDamage
 
     void crouch()
     {
+#if UNITY_WEBGL
 
+        if (Input.GetKey(KeyCode.C))
+        {   
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                if (isSprinting && (controller.isGrounded || Time.time - lastGroundedTime <= coyoteTimeMax))
+                {
+                    isSliding = true;
+                    playerVel.x += moveDir.x * slideBoost;
+                    playerVel.z += moveDir.z * slideBoost;
+                }
+            }
+            isCrouching = true;
+            controller.height = Mathf.MoveTowards(controller.height, crouchHeight, crouchSpeed * Time.deltaTime);
+
+        }
+        else
+        {
+            isCrouching = false;
+            controller.height = Mathf.MoveTowards(controller.height, heightOrig, crouchSpeed * Time.deltaTime);
+            if (isSliding)
+            {
+                isSliding = false;
+            }
+        }
+
+#else
 
         if (Input.GetButton("Crouch"))
         {
@@ -387,7 +411,7 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
 
-
+#endif
     }
 
     void sprint()
@@ -482,7 +506,6 @@ public class playerController : MonoBehaviour, IDamage
         else
         {
             HP -= amount;
-            //Debug.Log("HIT BODY");
         }
         lastHitTime=Time.time;
         updatePlayerUI();
