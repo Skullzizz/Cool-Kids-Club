@@ -8061,6 +8061,10 @@ PrefabInstance:
       propertyPath: inventorySlotPrefab
       value: 
       objectReference: {fileID: 1961791793}
+    - target: {fileID: 8075918143841736608, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
+      propertyPath: jumpSpeed
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -72758,6 +72762,7 @@ GameObject:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1419424985}
   - {fileID: 1009599863}
   - {fileID: 1619439015}
   - {fileID: 106429319}
@@ -72765,7 +72770,6 @@ SceneRoots:
   - {fileID: 1475571295}
   - {fileID: 1811570187}
   - {fileID: 1783038950}
-  - {fileID: 1419424985}
   - {fileID: 1748498316}
   - {fileID: 2062426559}
   - {fileID: 360345477}
