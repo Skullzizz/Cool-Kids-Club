@@ -235,6 +235,10 @@ public class throwPhysics : MonoBehaviour
             isEquiped = true;
             //throwable.GetComponent<throwableDamage>().isEquipped = true;
             //throwable.GetComponent<throwableDamage>().isHeld = false;
+            Animator animator;
+            throwable.TryGetComponent<Animator>(out animator);
+            if (animator != null)
+                animator.enabled = true;
 
             gamemanager.instance.playerScript.equippedWeapon = throwable.GetComponent<throwableDamage>();
             gamemanager.instance.playerScript.shootDamage = throwable.GetComponent<throwableDamage>().gun.shootDamage;
@@ -251,6 +255,10 @@ public class throwPhysics : MonoBehaviour
             throwable.transform.SetParent(handPosition);
             isHolding = true;
             isEquiped = false;
+            Animator animator;
+            throwable.TryGetComponent<Animator>(out animator);
+            if (animator != null)
+                animator.enabled = false;
             //throwable.GetComponent<throwableDamage>().isEquipped = false;
             //throwable.GetComponent<throwableDamage>().isHeld = true;
             gamemanager.instance.playerScript.shootDamage = 0;

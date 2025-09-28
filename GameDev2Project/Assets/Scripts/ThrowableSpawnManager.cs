@@ -66,7 +66,35 @@ public class ThrowableSpawnManager : MonoBehaviour
 
         foreach (var throwable in data.Throwables)
         {
-            if (throwable.ThrowablePrefab != null)
+            if (throwable.ThrowablePrefab != null && throwable.isInInventory == false && throwable.isHeld == false)
+            {
+                GameObject spawnedThrowable = Instantiate(throwable.ThrowablePrefab, throwable.Position, throwable.rotation);
+                spawnedThrowables.Add(spawnedThrowable);
+                throwableToPrefabMap[spawnedThrowable] = throwable.ThrowablePrefab;
+                spawnedThrowable.GetComponent<throwableDamage>().throwableHP = throwable.HP;
+            }
+        }
+    }
+
+    public void LoadInventoryAndHeld(SceneThrowableData data)
+    {
+        foreach (var throwable in spawnedThrowables)
+        {
+            if (throwable != null)
+            {
+                throwableDamage testInvOrHeld;
+                throwable.TryGetComponent<throwableDamage>(out testInvOrHeld);
+                if (testInvOrHeld != null)
+                {
+                    if (testInvOrHeld.isHeld == true || testInvOrHeld.isInInventory == true || testInvOrHeld.isEquipped == true)
+                        Destroy(throwable);
+                }
+            }
+        }
+
+        foreach (var throwable in data.Throwables)
+        {
+            if (throwable.ThrowablePrefab != null && (throwable.isInInventory == true || throwable.isHeld == true || throwable.isEquipped == true))
             {
                 GameObject spawnedThrowable = Instantiate(throwable.ThrowablePrefab, throwable.Position, throwable.rotation);
                 spawnedThrowables.Add(spawnedThrowable);
@@ -74,8 +102,8 @@ public class ThrowableSpawnManager : MonoBehaviour
                 spawnedThrowable.GetComponent<throwableDamage>().throwableHP = throwable.HP;
                 if (throwable.isInInventory)
                 {
-                    spawnedThrowable.transform.position = Vector3.zero;
-                    spawnedThrowable.transform.rotation = Quaternion.identity;
+                    spawnedThrowable.transform.localPosition = Vector3.zero;
+                    spawnedThrowable.transform.localRotation = Quaternion.identity;
                     playerInventory playerInv = gamemanager.instance.playerInventory;
                     if (playerInv != null)
                     {
@@ -90,8 +118,8 @@ public class ThrowableSpawnManager : MonoBehaviour
                 }
                 if (throwable.isHeld)
                 {
-                    //spawnedThrowable.transform.position = gamemanager.instance.throwScript.handPosition.position;
-                    //spawnedThrowable.transform.rotation = Quaternion.identity;
+                    spawnedThrowable.transform.localPosition = gamemanager.instance.throwScript.handPosition.position;
+                    spawnedThrowable.transform.localRotation = Quaternion.identity;
                     gamemanager.instance.throwScript.TryPickup(spawnedThrowable);
                 }
                 //if(throwable.isEquipped)
@@ -101,50 +129,6 @@ public class ThrowableSpawnManager : MonoBehaviour
                 //    gamemanager.instance.throwScript.TryPickup(spawnedThrowable);
                 //    gamemanager.instance.throwScript.TryEquipObject();
                 //}
-            }
-        }
-    }
-
-    public void LoadParial(SceneThrowableData data)
-    {
-        foreach (var throwable in data.Throwables)
-        {
-            if (throwable.isHeld == true || throwable.isInInventory == true)
-            {
-                if (throwable.ThrowablePrefab != null)
-                {
-                    GameObject spawnedThrowable = Instantiate(throwable.ThrowablePrefab, throwable.Position, throwable.rotation);
-                    spawnedThrowables.Add(spawnedThrowable);
-                    throwableToPrefabMap[spawnedThrowable] = throwable.ThrowablePrefab;
-                    spawnedThrowable.GetComponent<throwableDamage>().throwableHP = throwable.HP;
-                    if (throwable.isInInventory)
-                    {
-                        playerInventory playerInv = gamemanager.instance.playerInventory;
-                        if (playerInv != null)
-                        {
-                            playerInv.AddItem(spawnedThrowable);
-
-                            playerInv.equippedWeapon = spawnedThrowable;
-                            playerInv.equippedWeaponIndex = playerInv.inventory.IndexOf(spawnedThrowable);
-                            spawnedThrowable.GetComponent<Rigidbody>().useGravity = false;
-                            spawnedThrowable.SetActive(false);
-                            //playerInv.UpdateWeaponUI();
-                        }
-                    }
-                    if (throwable.isHeld == true)
-                    {
-                        spawnedThrowable.transform.position = gamemanager.instance.throwScript.handPosition.position;
-                        spawnedThrowable.transform.rotation = Quaternion.identity;
-                        gamemanager.instance.throwScript.TryPickup(spawnedThrowable);
-                    }
-                    if (throwable.isEquipped == true)
-                    {
-                        spawnedThrowable.transform.position = gamemanager.instance.throwScript.equipPosition.position;
-                        spawnedThrowable.transform.rotation = Quaternion.identity;
-                        gamemanager.instance.throwScript.TryPickup(spawnedThrowable);
-                        gamemanager.instance.throwScript.TryEquipObject();
-                    }
-                }
             }
         }
     }

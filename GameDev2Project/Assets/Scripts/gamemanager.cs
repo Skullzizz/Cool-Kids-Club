@@ -66,6 +66,7 @@ public class gamemanager : MonoBehaviour
 
     float timeScaleOrig;
 
+    public bool doParialLoad = false;
 
     int playerLevelCount = 1;
 
@@ -122,9 +123,10 @@ public class gamemanager : MonoBehaviour
             SaveAsync();
         }
 
-        if (player != null)
+        if (player != null && doParialLoad == true)
         {
             LoadParial();
+            doParialLoad = false;
         }
 
 
