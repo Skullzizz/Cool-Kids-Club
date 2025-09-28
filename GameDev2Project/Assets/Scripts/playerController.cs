@@ -589,7 +589,9 @@ public class playerController : MonoBehaviour, IDamage
     public void SpawnPlayer()
     {
         controller.enabled = false;
-        controller.transform.position = gamemanager.instance.playerSpawnPos.transform.position;
+        Vector3 spawnPos = gamemanager.instance.playerSpawnPos.transform.position;
+        spawnPos.y += 1;
+        controller.transform.position = spawnPos;
         transform.rotation = gamemanager.instance.playerSpawnPos.transform.rotation;
         controller.enabled = true;
         minimapCam.enabled = true;
