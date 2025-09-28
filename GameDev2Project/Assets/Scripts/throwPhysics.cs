@@ -12,7 +12,7 @@ public class throwPhysics : MonoBehaviour
     [SerializeField] float pickupRadius;
 
     // Fields for Equiping Gun - Deven
-    [SerializeField] Transform equipPosition;
+    [SerializeField] public Transform equipPosition;
 
     public bool isEquiped = false;
     // ---
@@ -226,13 +226,15 @@ public class throwPhysics : MonoBehaviour
     }
 
 
-    void TryEquipObject()
+    public void TryEquipObject()
     {
         if (throwable != null && throwable.GetComponent<throwableDamage>().gun != null && !isEquiped)
         {
             throwable.transform.SetParent(equipPosition);
             isHolding = false;
             isEquiped = true;
+            //throwable.GetComponent<throwableDamage>().isEquipped = true;
+            //throwable.GetComponent<throwableDamage>().isHeld = false;
 
             gamemanager.instance.playerScript.equippedWeapon = throwable.GetComponent<throwableDamage>();
             gamemanager.instance.playerScript.shootDamage = throwable.GetComponent<throwableDamage>().gun.shootDamage;
@@ -249,7 +251,8 @@ public class throwPhysics : MonoBehaviour
             throwable.transform.SetParent(handPosition);
             isHolding = true;
             isEquiped = false;
-
+            //throwable.GetComponent<throwableDamage>().isEquipped = false;
+            //throwable.GetComponent<throwableDamage>().isHeld = true;
             gamemanager.instance.playerScript.shootDamage = 0;
             gamemanager.instance.playerScript.shootRate = 0;
             gamemanager.instance.playerScript.shootDist = 0;

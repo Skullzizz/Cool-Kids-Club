@@ -698,6 +698,14 @@ public class playerController : MonoBehaviour, IDamage
         jumpMax = data.jumpMax;
         hasShield = data.hasShield;
     }
+
+    public void LoadParial(PlayerData data)
+    {
+        HP = data.HP;
+        speed = data.speed;
+        jumpMax = data.jumpMax;
+        hasShield = data.hasShield;
+    }
 }
 
 

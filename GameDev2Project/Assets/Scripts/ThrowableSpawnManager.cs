@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ThrowableSpawnManager : MonoBehaviour
 {
-    private List<GameObject> spawnedThrowables = new List<GameObject>();
-    private Dictionary<GameObject, GameObject> throwableToPrefabMap = new Dictionary<GameObject, GameObject>();
+    public List<GameObject> spawnedThrowables = new List<GameObject>();
+    public Dictionary<GameObject, GameObject> throwableToPrefabMap = new Dictionary<GameObject, GameObject>();
 
     void Awake()
     {
@@ -33,6 +33,7 @@ public class ThrowableSpawnManager : MonoBehaviour
                     HP = throwable.GetComponent<throwableDamage>().throwableHP,
                     isInInventory = throwable.GetComponent<throwableDamage>().isInInventory,
                     isHeld = throwable.GetComponent<throwableDamage>().isHeld,
+                    isEquipped = throwable.GetComponent<throwableDamage>().isEquipped,
                     Position = throwable.transform.position,
                     rotation = throwable.transform.rotation,
                     ThrowablePrefab = throwableToPrefabMap[throwable]
@@ -73,6 +74,8 @@ public class ThrowableSpawnManager : MonoBehaviour
                 spawnedThrowable.GetComponent<throwableDamage>().throwableHP = throwable.HP;
                 if (throwable.isInInventory)
                 {
+                    spawnedThrowable.transform.position = Vector3.zero;
+                    spawnedThrowable.transform.rotation = Quaternion.identity;
                     playerInventory playerInv = gamemanager.instance.playerInventory;
                     if (playerInv != null)
                     {
@@ -87,7 +90,60 @@ public class ThrowableSpawnManager : MonoBehaviour
                 }
                 if (throwable.isHeld)
                 {
+                    //spawnedThrowable.transform.position = gamemanager.instance.throwScript.handPosition.position;
+                    //spawnedThrowable.transform.rotation = Quaternion.identity;
                     gamemanager.instance.throwScript.TryPickup(spawnedThrowable);
+                }
+                //if(throwable.isEquipped)
+                //{
+                //    spawnedThrowable.transform.position = gamemanager.instance.throwScript.equipPosition.position;
+                //    spawnedThrowable.transform.rotation = Quaternion.identity;
+                //    gamemanager.instance.throwScript.TryPickup(spawnedThrowable);
+                //    gamemanager.instance.throwScript.TryEquipObject();
+                //}
+            }
+        }
+    }
+
+    public void LoadParial(SceneThrowableData data)
+    {
+        foreach (var throwable in data.Throwables)
+        {
+            if (throwable.isHeld == true || throwable.isInInventory == true)
+            {
+                if (throwable.ThrowablePrefab != null)
+                {
+                    GameObject spawnedThrowable = Instantiate(throwable.ThrowablePrefab, throwable.Position, throwable.rotation);
+                    spawnedThrowables.Add(spawnedThrowable);
+                    throwableToPrefabMap[spawnedThrowable] = throwable.ThrowablePrefab;
+                    spawnedThrowable.GetComponent<throwableDamage>().throwableHP = throwable.HP;
+                    if (throwable.isInInventory)
+                    {
+                        playerInventory playerInv = gamemanager.instance.playerInventory;
+                        if (playerInv != null)
+                        {
+                            playerInv.AddItem(spawnedThrowable);
+
+                            playerInv.equippedWeapon = spawnedThrowable;
+                            playerInv.equippedWeaponIndex = playerInv.inventory.IndexOf(spawnedThrowable);
+                            spawnedThrowable.GetComponent<Rigidbody>().useGravity = false;
+                            spawnedThrowable.SetActive(false);
+                            playerInv.UpdateWeaponUI();
+                        }
+                    }
+                    if (throwable.isHeld == true)
+                    {
+                        spawnedThrowable.transform.position = gamemanager.instance.throwScript.handPosition.position;
+                        spawnedThrowable.transform.rotation = Quaternion.identity;
+                        gamemanager.instance.throwScript.TryPickup(spawnedThrowable);
+                    }
+                    if (throwable.isEquipped == true)
+                    {
+                        spawnedThrowable.transform.position = gamemanager.instance.throwScript.equipPosition.position;
+                        spawnedThrowable.transform.rotation = Quaternion.identity;
+                        gamemanager.instance.throwScript.TryPickup(spawnedThrowable);
+                        gamemanager.instance.throwScript.TryEquipObject();
+                    }
                 }
             }
         }
@@ -105,6 +161,7 @@ public struct ThrowableSaveData
 {
     public bool isInInventory;
     public bool isHeld;
+    public bool isEquipped;
     public int HP;
     public Vector3 Position;
     public Quaternion rotation;
