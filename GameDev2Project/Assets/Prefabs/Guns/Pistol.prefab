@@ -167,6 +167,8 @@ MonoBehaviour:
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
+  gunBreak: {fileID: 8300000, guid: 13e3a2155588a244e82dbeb35c8ffe2c, type: 3}
+  isInInventory: 0
 --- !u!54 &3038170056333486636
 Rigidbody:
   m_ObjectHideFlags: 0

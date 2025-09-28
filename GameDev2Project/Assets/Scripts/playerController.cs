@@ -675,7 +675,12 @@ public class playerController : MonoBehaviour, IDamage
         data.position = transform.position;
         data.rotation = transform.rotation;
         data.HP = HP;
+
+        if (isSprinting)
+        data.speed = speed / sprintMod;
+        else
         data.speed = speed;
+
         data.jumpMax = jumpMax;
         data.hasShield = hasShield;
     }
@@ -688,6 +693,14 @@ public class playerController : MonoBehaviour, IDamage
         controller.enabled = false;
         transform.rotation = data.rotation;
         controller.enabled = true;
+        HP = data.HP;
+        speed = data.speed;
+        jumpMax = data.jumpMax;
+        hasShield = data.hasShield;
+    }
+
+    public void LoadParial(PlayerData data)
+    {
         HP = data.HP;
         speed = data.speed;
         jumpMax = data.jumpMax;
