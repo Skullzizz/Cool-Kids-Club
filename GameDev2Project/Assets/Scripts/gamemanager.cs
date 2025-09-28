@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEditor.Rendering.Universal;
 
 public class gamemanager : MonoBehaviour
 {
@@ -376,6 +377,9 @@ public class gamemanager : MonoBehaviour
     public void Save(ref GameData gameData)
     {
         gameData.playerLevelCount = playerLevelCount;
+        gameData.soulsNeeded = UpgradeManager.instance.soulsNeeded;
+        gameData.enemiesKilled = enemiesKilled;
+        gameData.amtUpgrades = amtUpgrades;
         gameData.healthLvl = UpgradeManager.instance.healthLvl;
         gameData.speedLvl = UpgradeManager.instance.speedLvl;
         gameData.jumpLvl = UpgradeManager.instance.jumpLvl;
@@ -384,9 +388,16 @@ public class gamemanager : MonoBehaviour
     public void Load(GameData gameData)
     {
         playerLevelCount = gameData.playerLevelCount;
+        enemiesKilled = gameData.enemiesKilled;
+        amtUpgrades = gameData.amtUpgrades;
+        if (amtUpgrades > 0)
+        {
+            levelUpReady.SetActive(true);
+        }
         UpgradeManager.instance.healthLvl = gameData.healthLvl;
         UpgradeManager.instance.speedLvl = gameData.speedLvl;
         UpgradeManager.instance.jumpLvl = gameData.jumpLvl;
+        UpgradeManager.instance.soulsNeeded = gameData.soulsNeeded;
     }
 }
 
@@ -394,6 +405,9 @@ public class gamemanager : MonoBehaviour
 public struct GameData
 {
     public int playerLevelCount;
+    public float soulsNeeded;
+    public int enemiesKilled;
+    public int amtUpgrades;
     public int healthLvl;
     public int speedLvl;
     public int jumpLvl;
