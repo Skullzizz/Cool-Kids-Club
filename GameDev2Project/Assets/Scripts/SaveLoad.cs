@@ -108,7 +108,7 @@ public class SaveLoad
 
         saveData = JsonUtility.FromJson<SaveData>(saveFile);
 #endif
-
+        
         HandleLoadParialData();
     }
 
@@ -169,6 +169,7 @@ public class SaveLoad
         if (tSpawnManager != null)
         {
             tSpawnManager.Load(saveData.ThrowableData);
+            tSpawnManager.LoadInventoryAndHeld(saveData.ThrowableData);
         }
         CollectibleSpawnManager cSpawnManager = gamemanager.instance.collectibleSpawnManager;
         if (cSpawnManager != null)
@@ -184,7 +185,7 @@ public class SaveLoad
         ThrowableSpawnManager tSpawnManager = gamemanager.instance.throwableSpawnManager;
         if (tSpawnManager != null)
         {
-            tSpawnManager.LoadParial(saveData.ThrowableData);
+            tSpawnManager.LoadInventoryAndHeld(saveData.ThrowableData);
         }
 
     }
