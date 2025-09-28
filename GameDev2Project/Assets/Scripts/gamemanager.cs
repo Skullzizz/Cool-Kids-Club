@@ -87,7 +87,7 @@ public class gamemanager : MonoBehaviour
 
         timeScaleOrig = Time.timeScale;
         if (GameObject.FindWithTag("Player") != null)
-        player = GameObject.FindWithTag("Player");
+            player = GameObject.FindWithTag("Player");
         if (player != null)
         {
             playerScript = player.GetComponent<playerController>();
@@ -104,7 +104,7 @@ public class gamemanager : MonoBehaviour
 
         uiMusicManager = UIAudio.GetComponent<UIMusicManager>();
         if (GameObject.FindWithTag("MinimapCam") != null)
-        minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
+            minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
         StartCoroutine(ShowTutorial());
 
         if (menuPause == null) menuPause = GameObject.Find("Pause Menu");
@@ -119,6 +119,11 @@ public class gamemanager : MonoBehaviour
         if (SaveLoad.CheckSaveData() == false)
         {
             SaveAsync();
+        }
+
+        if (player != null)
+        {
+            LoadParial();
         }
 
 
@@ -161,7 +166,7 @@ public class gamemanager : MonoBehaviour
             LoadAsync();
             //Debug.Log("Loading Game");
         }
-        if (amtUpgrades > 0&&Input.GetKeyDown(KeyCode.U))
+        if (amtUpgrades > 0 && Input.GetKeyDown(KeyCode.U))
         {
             upgradeMenu();
         }
@@ -180,7 +185,7 @@ public class gamemanager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         pauseDimmer.ShowDim();
         //FindFirstObjectByType<PauseMenuMusic>().PlayMusic();
-        
+
 
         if (Water.instance != null && Water.instance.inWater)
             WaterScreen(false);
@@ -189,7 +194,7 @@ public class gamemanager : MonoBehaviour
     public void stateUnpause()
     {
         if (prePauseMenuMusic != null)
-        ChangeMusic(prePauseMenuMusic);
+            ChangeMusic(prePauseMenuMusic);
         isPaused = false;
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
@@ -202,7 +207,7 @@ public class gamemanager : MonoBehaviour
         }
         //if (FindFirstObjectByType<PauseMenuMusic>() != null)
         //FindFirstObjectByType<PauseMenuMusic>().StopMusic();
-        
+
 
         if (Water.instance != null && Water.instance.inWater)
             WaterScreen(true);
@@ -217,7 +222,7 @@ public class gamemanager : MonoBehaviour
         //    gameGoalCountText.text = gameGoalCount.ToString("F0");
         //}
 
-        if(finalCountDown&&!bossAlive)
+        if (finalCountDown && !bossAlive)
         {
             statePause();
             menuActive = menuWin;
@@ -351,16 +356,21 @@ public class gamemanager : MonoBehaviour
 
     public void upgradeMenu()
     {
-        if(menuActive == null && !playerScript.isDead&&amtUpgrades>0)
-    {
+        if (menuActive == null && !playerScript.isDead && amtUpgrades > 0)
+        {
             statePause();
             menuActive = menuUpgrade;
             menuActive.SetActive(true);
             UpgradeManager.instance.ShowRandomUpgrades();
             amtUpgrades--;
-            if(amtUpgrades<=0)
+            if (amtUpgrades <= 0)
                 levelUpReady.SetActive(false);
         }
+    }
+
+    public void LoadParial()
+    {
+        SaveLoad.LoadParial();
     }
 
     public void Save(ref GameData gameData)

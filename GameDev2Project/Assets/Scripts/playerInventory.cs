@@ -49,12 +49,16 @@ public class playerInventory : MonoBehaviour
 
             if (textComponent != null)
                 textComponent.text = item.name;
-            
+
         }
         equippedWeapon = item;
         equippedWeaponIndex = inventory.Count - 1;
         if (item.GetComponent<throwableDamage>() != null)
-        item.GetComponent<throwableDamage>().isInInventory = true;
+        {
+            item.GetComponent<throwableDamage>().isInInventory = true;
+            item.GetComponent<throwableDamage>().isHeld = false;
+            item.transform.SetParent(null);
+        }
 
         UpdateWeaponUI();
         RaiseEquippedChanged();
@@ -66,7 +70,12 @@ public class playerInventory : MonoBehaviour
         {
             inventory.Remove(equippedWeapon);
             if (equippedWeapon.GetComponent<throwableDamage>() != null)
+            {
                 equippedWeapon.GetComponent<throwableDamage>().isInInventory = false;
+                equippedWeapon.GetComponent<throwableDamage>().isHeld = true;
+                equippedWeapon.transform.SetParent(gamemanager.instance.throwScript.handPosition);
+            }
+
             equippedWeaponIndex -= 1;
             UpdateWeaponUI();
             if (inventory[equippedWeaponIndex] != null)
@@ -77,7 +86,7 @@ public class playerInventory : MonoBehaviour
             {
                 equippedWeapon = null;
             }
-            
+
         }
 
         UpdateWeaponUI();

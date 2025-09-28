@@ -97,6 +97,21 @@ public class SaveLoad
         HandleLoadData();
     }
 
+    public static void LoadParial()
+    {
+#if UNITY_WEBGL
+
+        saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString("Saves"));
+
+#else
+        string saveFile = File.ReadAllText(SaveFileName());
+
+        saveData = JsonUtility.FromJson<SaveData>(saveFile);
+#endif
+
+        HandleLoadParialData();
+    }
+
     private static void HandleLoadData()
     {
 
@@ -161,6 +176,17 @@ public class SaveLoad
             cSpawnManager.Load(saveData.CollectibleData);
         }
         gamemanager.instance.loadingScreen.SetActive(false);
+    }
+
+    public static void HandleLoadParialData()
+    {
+        gamemanager.instance.playerScript.LoadParial(saveData.PlayerData);
+        ThrowableSpawnManager tSpawnManager = gamemanager.instance.throwableSpawnManager;
+        if (tSpawnManager != null)
+        {
+            tSpawnManager.LoadParial(saveData.ThrowableData);
+        }
+
     }
 
     public static void DeleteSaveData()

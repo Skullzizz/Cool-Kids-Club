@@ -60,6 +60,7 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
     bool isDamaging;
     public bool isInInventory;
     public bool isHeld;
+    public bool isEquipped;
 
     float impactSpeed;
     float velFactor;
@@ -220,6 +221,8 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
             spawnDirection.x = UnityEngine.Random.value;
             spawnDirection.z = UnityEngine.Random.value;
             spawnedObject = Instantiate(spawnThis, spawnPosition, Quaternion.Euler(0, 0, 0));
+            gamemanager.instance.throwableSpawnManager.spawnedThrowables.Add(spawnedObject);
+            gamemanager.instance.throwableSpawnManager.throwableToPrefabMap[spawnedObject] = Resources.Load(spawnedObject.GetComponent<throwableDamage>().basePrefabPath, typeof(GameObject)) as GameObject;
             spawnedObject.GetComponent<Rigidbody>().AddForce(spawnDirection * spawnForce, ForceMode.Impulse);
             //Debug.Log("Spawned Item: " + spawnedObject);
         }

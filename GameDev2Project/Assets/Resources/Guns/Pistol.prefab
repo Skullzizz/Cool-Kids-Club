@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 749642422562136206}
   - component: {fileID: 3038170056333486636}
   - component: {fileID: 1023793792925829919}
+  - component: {fileID: 5228150723146543959}
   m_Layer: 10
   m_Name: Pistol
   m_TagString: throwable
@@ -143,6 +144,7 @@ MonoBehaviour:
   explKnockMult: 0
   basePrefabPath: Guns/Pistol
   basePrefab: {fileID: 0}
+  gunAnimator: {fileID: 5228150723146543959}
   type: 1
   rb: {fileID: 3038170056333486636}
   maxHits: 0
@@ -165,6 +167,8 @@ MonoBehaviour:
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
+  gunBreak: {fileID: 8300000, guid: 13e3a2155588a244e82dbeb35c8ffe2c, type: 3}
+  isInInventory: 0
 --- !u!54 &3038170056333486636
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -213,6 +217,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.4, z: 0.6}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &5228150723146543959
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035213481756897074}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 39701a7433df0214d85763ec69545fc2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2426016788947554937
 GameObject:
   m_ObjectHideFlags: 0
