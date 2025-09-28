@@ -192,7 +192,7 @@ public class SaveLoad
     public static void DeleteSaveData()
     {
         File.Delete(SaveFileName());
-        UnityEditor.AssetDatabase.Refresh();
+        //UnityEditor.AssetDatabase.Refresh();
     }
 
     public static bool CheckSaveData()
