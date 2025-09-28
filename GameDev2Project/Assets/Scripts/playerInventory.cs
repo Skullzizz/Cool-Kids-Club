@@ -19,7 +19,6 @@ public class playerInventory : MonoBehaviour
     public Sprite noWeaponIcon;
 
     [Header("UI Colors")]
-    public Color defaultEmptyColor = Color.red;
     public Color normalColor = Color.white;
 
     public GameObject equippedWeapon;
@@ -125,7 +124,7 @@ public class playerInventory : MonoBehaviour
                 equippedWeaponText.text = equippedWeapon.name;
 
 
-            if (weaponIcon != null)
+            /*if (weaponIcon != null)
             {
                 var td = equippedWeapon.GetComponent<throwableDamage>();
                 if (td != null && td.gun != null && td.gun.weaponIcon != null)
@@ -137,22 +136,22 @@ public class playerInventory : MonoBehaviour
                 else
                 {
                     weaponIcon.sprite = noWeaponIcon;
-                    weaponIcon.color = defaultEmptyColor;
                     weaponIcon.enabled = true;
+                    weaponIcon.color = Color.clear;
                 }
-            }
+            }*/
         }
         else
         {
             if (equippedWeaponText != null)
                 equippedWeaponText.text = "No Weapon";
 
-            if (weaponIcon != null)
+            /*if (weaponIcon != null)
             {
                 weaponIcon.sprite = noWeaponIcon;
-                weaponIcon.color = defaultEmptyColor;
                 weaponIcon.enabled = true;
-            }
+                weaponIcon.color = Color.clear;
+            }*/
         }
     }
 

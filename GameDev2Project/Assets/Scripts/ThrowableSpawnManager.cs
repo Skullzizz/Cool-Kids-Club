@@ -85,7 +85,7 @@ public class ThrowableSpawnManager : MonoBehaviour
                         playerInv.equippedWeaponIndex = playerInv.inventory.IndexOf(spawnedThrowable);
                         spawnedThrowable.GetComponent<Rigidbody>().useGravity = false;
                         spawnedThrowable.SetActive(false);
-                        playerInv.UpdateWeaponUI();
+                        //playerInv.UpdateWeaponUI();
                     }
                 }
                 if (throwable.isHeld)
@@ -128,7 +128,7 @@ public class ThrowableSpawnManager : MonoBehaviour
                             playerInv.equippedWeaponIndex = playerInv.inventory.IndexOf(spawnedThrowable);
                             spawnedThrowable.GetComponent<Rigidbody>().useGravity = false;
                             spawnedThrowable.SetActive(false);
-                            playerInv.UpdateWeaponUI();
+                            //playerInv.UpdateWeaponUI();
                         }
                     }
                     if (throwable.isHeld == true)
