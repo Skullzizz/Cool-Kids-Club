@@ -192,17 +192,26 @@ public class SaveLoad
 
     public static void DeleteSaveData()
     {
+#if UNITY_WEBGL
+        PlayerPrefs.DeleteKey("Saves");
+        PlayerPrefs.Save();
+#else
         File.Delete(SaveFileName());
         //UnityEditor.AssetDatabase.Refresh();
+#endif
     }
 
     public static bool CheckSaveData()
     {
+#if UNITY_WEBGL
+        return PlayerPrefs.HasKey("Saves");
+#else
         if (File.Exists(SaveFileName()))
         {
             return true;
         }
         return false;
+#endif
     }
 
     public static string GetSaveString()
