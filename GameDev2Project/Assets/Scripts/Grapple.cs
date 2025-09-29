@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -26,6 +27,8 @@ public class GrapplingGun : MonoBehaviour
     private GameObject targetThrowable;
     private Vector3 playerVelocity;
     private Vector3 throwableVelocity;
+    [SerializeField] float grappleCooldown;
+    [SerializeField] bool canGrapple = true;
 
     void Start()
     {
@@ -41,14 +44,17 @@ public class GrapplingGun : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(grappleKey))
-            TryStartGrapple();
+        if (!gamemanager.instance.playerScript.isDead&&canGrapple)
+        {
+            if (Input.GetKeyDown(grappleKey))
+                TryStartGrapple();
 
-        if (Input.GetKeyUp(grappleKey))
-            StopAllActions();
+            if (Input.GetKeyUp(grappleKey))
+                StopAllActions();
 
-        if (isGrappling || grabbingThrowable)
-            DrawRope();
+            if (isGrappling || grabbingThrowable)
+                DrawRope();
+        }
     }
 
     void FixedUpdate()
@@ -121,6 +127,7 @@ public class GrapplingGun : MonoBehaviour
 
     public void StopAllActions()
     {
+        StartCoroutine(GrappleCooldown());
         isGrappling = false;
         grabbingThrowable = false;
         targetThrowable = null;
@@ -138,5 +145,12 @@ public class GrapplingGun : MonoBehaviour
             lr.SetPosition(1, targetThrowable.transform.position);
         else
             lr.SetPosition(1, grapplePoint);
+    }
+
+    IEnumerator GrappleCooldown()
+    {
+        canGrapple = false;
+        yield return new WaitForSeconds(grappleCooldown);
+        canGrapple=true;
     }
 }
