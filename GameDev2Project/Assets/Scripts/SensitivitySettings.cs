@@ -9,24 +9,26 @@ public class SensitivitySettings : MonoBehaviour
     [SerializeField] TMP_Text sensitivityValueText;
     const string SensKey = "Sensitivity";
 
-    
-
-    void OnEnable()
+    public void Update()
     {
-        if (sensitivitySlider)
+        void OnEnable()
         {
-            sensitivitySlider.wholeNumbers = true;
-            sensitivitySlider.minValue = 1;
-            sensitivitySlider.maxValue = 10;
+            if (sensitivitySlider)
+            {
+                sensitivitySlider.wholeNumbers = true;
+                sensitivitySlider.minValue = 1;
+                sensitivitySlider.maxValue = 10;
 
-            int saved = PlayerPrefs.GetInt(SensKey, 3);
-            sensitivitySlider.SetValueWithoutNotify(saved);
+                int saved = PlayerPrefs.GetInt(SensKey, 3);
+                sensitivitySlider.SetValueWithoutNotify(saved);
 
-            sensitivitySlider.onValueChanged.AddListener(OnSensitivityChange);
+                sensitivitySlider.onValueChanged.AddListener(OnSensitivityChange);
 
-            if(cam) cam.SetSensitivity(saved);
-            UpdateLabel(saved);
+                if (cam) cam.SetSensitivity(saved);
+                UpdateLabel(saved);
+            }
         }
+
     }
     public void OnSensitivityChange (float value)
     {
@@ -44,4 +46,5 @@ public class SensitivitySettings : MonoBehaviour
             
         
     }
+
 }

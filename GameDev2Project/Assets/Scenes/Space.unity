@@ -6466,6 +6466,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barrel (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveMaxDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveMinDamage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8667754127020678484, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15.23754
@@ -6545,6 +6557,18 @@ PrefabInstance:
     - target: {fileID: 4004669420814659048, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
       propertyPath: m_Name
       value: Barrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveMaxDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveMinDamage
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8667754127020678484, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7233,6 +7257,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barrel (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveMaxDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveMinDamage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8667754127020678484, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.48754
@@ -7604,6 +7640,18 @@ PrefabInstance:
     - target: {fileID: 4004669420814659048, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
       propertyPath: m_Name
       value: Barrel (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveMaxDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveMinDamage
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8667754127020678484, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13336,6 +13384,18 @@ PrefabInstance:
     - target: {fileID: 4004669420814659048, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
       propertyPath: m_Name
       value: Barrel (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveMaxDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741673462023426712, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
+      propertyPath: explosiveMinDamage
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8667754127020678484, guid: 6e258a9f492c5784ca316fa029528e51, type: 3}
       propertyPath: m_LocalPosition.x

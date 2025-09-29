@@ -20,7 +20,7 @@ public class AudioSettings : MonoBehaviour
     private const float MinLinear = 0.0001f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Update()
     {
         float music = PlayerPrefs.GetFloat(KeyMusic, 0.8f);
         float sfx = PlayerPrefs.GetFloat(KeySFX, 0.8f);
