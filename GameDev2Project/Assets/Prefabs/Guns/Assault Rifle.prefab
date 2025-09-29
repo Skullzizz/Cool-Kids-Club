@@ -251,6 +251,10 @@ MonoBehaviour:
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
+  gunBreak: {fileID: 8300000, guid: 13e3a2155588a244e82dbeb35c8ffe2c, type: 3}
+  isInInventory: 0
+  isHeld: 0
+  isEquipped: 0
 --- !u!54 &6126634877194102485
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -307,7 +311,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3240376109079195783}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 681a72ea9b9a55643b3669e63f58ee06, type: 2}
   m_CullingMode: 0

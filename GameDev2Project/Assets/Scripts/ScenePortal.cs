@@ -9,6 +9,7 @@ public class ScenePortal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            gamemanager.instance.SaveAsync();
             SceneManager.LoadScene(sceneName);
         }
     }

@@ -11,6 +11,11 @@ public class UpgradeManager : MonoBehaviour
 
     public Button[] upgradeButtons;
     public TextMeshProUGUI[] upgradeTexts;
+    public TextMeshProUGUI[] upgradeLvlTexts;
+    public int healthLvl=0;
+    public int speedLvl=0;
+    public int jumpLvl=0;
+    public int maxLevel = 5;
 
     //type of upgrades
     public enum Upgrades
@@ -24,6 +29,7 @@ public class UpgradeManager : MonoBehaviour
         Upgrades.Health, Upgrades.Speed, Upgrades.JumpCount
     };
 
+
     private void Awake()
     {
         instance = this;
@@ -32,17 +38,32 @@ public class UpgradeManager : MonoBehaviour
     //updating stats based on upgrade chosen
     public void UpgradeHealth(int health)
     {
+        if (healthLvl >= maxLevel)
+        {
+            return;
+        }
         gamemanager.instance.playerScript.updateStats(playerController.PlayerStats.Health, health);
+        healthLvl++;
     }
 
     public void UpgradeSpeed(int speed) 
     {
+        if (speedLvl >= maxLevel)
+        {
+            return;
+        }
         gamemanager.instance.playerScript.updateStats(playerController.PlayerStats.Speed, speed);
+        speedLvl++;
     }
 
     public void UpgradeJumpCount(int jumpCount)
     {
+        if (jumpLvl >= maxLevel)
+        {
+            return;
+        }
         gamemanager.instance.playerScript.updateStats(playerController.PlayerStats.JumpMax, jumpCount);
+        jumpLvl++;
     }
 
 
@@ -55,9 +76,18 @@ public class UpgradeManager : MonoBehaviour
         {
             Upgrades upgrades = choices[i];
             upgradeTexts[i].text = upgrades.ToString();
-            upgradeButtons[i].onClick.RemoveAllListeners();
-            upgradeButtons[i].onClick.AddListener(()=>GiveUpgrades(upgrades));
-            upgradeButtons[i].onClick.AddListener(() => gamemanager.instance.stateUnpause());
+            upgradeLvlTexts[i].text = "Lvl: "+GetUpgradeLvl(upgrades).ToString()+" / "+maxLevel;
+            if(GetUpgradeLvl(upgrades)>=maxLevel)
+            {
+                upgradeButtons[i].interactable=false;
+            }
+            else
+            {
+                upgradeButtons[i].interactable = true;
+                upgradeButtons[i].onClick.RemoveAllListeners();
+                upgradeButtons[i].onClick.AddListener(() => GiveUpgrades(upgrades));
+                upgradeButtons[i].onClick.AddListener(() => gamemanager.instance.stateUnpause());
+            }
         }       
     }
 
@@ -87,12 +117,25 @@ public class UpgradeManager : MonoBehaviour
                 UpgradeHealth(10);
                 break;
             case Upgrades.Speed:
-                UpgradeSpeed(5);
+                UpgradeSpeed(3);
                 break;
             case Upgrades.JumpCount:
                 UpgradeJumpCount(1);
                 break;
         }
+    }
+    public int GetUpgradeLvl(Upgrades upgrades)
+    {
+        switch (upgrades)
+        {
+            case Upgrades.Health:
+                return healthLvl;
+            case Upgrades.Speed: 
+                return speedLvl;
+            case Upgrades.JumpCount:
+                return jumpLvl;
+        }
+        return 0;
     }
     
 }

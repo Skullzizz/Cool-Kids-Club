@@ -17,6 +17,7 @@ public class SaveLoad
         public SceneEnemyData EnemyData;
         public SceneSaveData sceneData;
         public SceneCollectibleData CollectibleData;
+        public GameData GameData;
     }
 
 
@@ -42,7 +43,7 @@ public class SaveLoad
 
     private static void HandleSaveData()
     {
-        
+        gamemanager.instance.Save(ref saveData.GameData);
         gamemanager.instance.playerScript.Save(ref saveData.PlayerData);
         //gamemanager.instance.playerInventory.Save(ref saveData.InventoryData);
         EnemySpawnManager eSpawnManager = gamemanager.instance.enemySpawnManager;
@@ -96,9 +97,26 @@ public class SaveLoad
         HandleLoadData();
     }
 
+    public static void LoadParial()
+    {
+#if UNITY_WEBGL
+
+        saveData = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString("Saves"));
+
+#else
+        string saveFile = File.ReadAllText(SaveFileName());
+
+        saveData = JsonUtility.FromJson<SaveData>(saveFile);
+#endif
+        
+        HandleLoadParialData();
+    }
+
     private static void HandleLoadData()
     {
+
         gamemanager.instance.sceneData.Load(saveData.sceneData);
+        gamemanager.instance.Load(saveData.GameData);
         gamemanager.instance.playerScript.Load(saveData.PlayerData);
         //gamemanager.instance.playerInventory.Load(saveData.InventoryData);
 
@@ -133,13 +151,15 @@ public class SaveLoad
 
     private static async Task HandleLoadDataAsync()
     {
+        gamemanager.instance.loadingScreen.SetActive(true);
         await gamemanager.instance.sceneData.LoadAsync(saveData.sceneData);
+        
 
         await gamemanager.instance.sceneData.WaitForSceneToBeFullyLoaded();
-
+        
         gamemanager.instance.playerScript.Load(saveData.PlayerData);
         //gamemanager.instance.playerInventory.Load(saveData.InventoryData);
-
+        gamemanager.instance.Load(saveData.GameData);
         EnemySpawnManager spawnManager = gamemanager.instance.enemySpawnManager;
         if (spawnManager != null)
         {
@@ -149,12 +169,49 @@ public class SaveLoad
         if (tSpawnManager != null)
         {
             tSpawnManager.Load(saveData.ThrowableData);
+            tSpawnManager.LoadInventoryAndHeld(saveData.ThrowableData);
         }
         CollectibleSpawnManager cSpawnManager = gamemanager.instance.collectibleSpawnManager;
         if (cSpawnManager != null)
         {
             cSpawnManager.Load(saveData.CollectibleData);
         }
+        gamemanager.instance.loadingScreen.SetActive(false);
+    }
+
+    public static void HandleLoadParialData()
+    {
+        gamemanager.instance.playerScript.LoadParial(saveData.PlayerData);
+        ThrowableSpawnManager tSpawnManager = gamemanager.instance.throwableSpawnManager;
+        if (tSpawnManager != null)
+        {
+            tSpawnManager.LoadInventoryAndHeld(saveData.ThrowableData);
+        }
+
+    }
+
+    public static void DeleteSaveData()
+    {
+#if UNITY_WEBGL
+        PlayerPrefs.DeleteKey("Saves");
+        PlayerPrefs.Save();
+#else
+        File.Delete(SaveFileName());
+        //UnityEditor.AssetDatabase.Refresh();
+#endif
+    }
+
+    public static bool CheckSaveData()
+    {
+#if UNITY_WEBGL
+        return PlayerPrefs.HasKey("Saves");
+#else
+        if (File.Exists(SaveFileName()))
+        {
+            return true;
+        }
+        return false;
+#endif
     }
 
     public static string GetSaveString()

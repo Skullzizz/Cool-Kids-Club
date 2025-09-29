@@ -1,27 +1,33 @@
+using System.Collections;
 using UnityEngine;
 
 public class throwPhysics : MonoBehaviour
 {
-    [SerializeField] Transform handPosition;
+    [SerializeField] public Transform handPosition;
     [SerializeField] Transform throwPosition;
     [SerializeField] int pickUpDis;
     [SerializeField] int throwForce;
 
+    [SerializeField] Transform pickupPos;
+    [SerializeField] float pickupRadius;
+
     // Fields for Equiping Gun - Deven
-    [SerializeField] Transform equipPosition;
+    [SerializeField] public Transform equipPosition;
 
     public bool isEquiped = false;
     // ---
 
     public GameObject throwable;
-    Rigidbody throwableRb;
-    bool throwableRbDefaultGravity;
-    bool isHolding = false;
+    public Rigidbody throwableRb;
+    public bool throwableRbDefaultGravity;
+    public bool isHolding = false;
 
+    private readonly Collider[] colliders = new Collider[3];
+    [SerializeField] private int numberFound;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         throwable = null;
     }
@@ -43,7 +49,7 @@ public class throwPhysics : MonoBehaviour
                 }
             }
 
-            if (Input.GetMouseButtonDown(1) && isHolding|| Input.GetKeyDown(KeyCode.B) && isHolding)
+            if (Input.GetMouseButtonDown(1) && isHolding || Input.GetKeyDown(KeyCode.B) && isHolding)
             {
                 ThrowObject();
             }
@@ -112,11 +118,43 @@ public class throwPhysics : MonoBehaviour
 
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(pickupPos.position, pickupRadius);
+    }
+
     void TryPickup()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, pickUpDis))
+        numberFound = Physics.OverlapSphereNonAlloc(pickupPos.position, pickupRadius, colliders, LayerMask.GetMask("throwable"));
+        RaycastHit hit = new RaycastHit();
+        float closestToCenter = 1;
+        if (numberFound > 0)
+        //if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, pickUpDis))
         {
+            for (int i = 0; i < numberFound; i++)
+            {
+                if (colliders[i] != null)
+                {
+                    Vector3 throwableDir = colliders[i].transform.position - Camera.main.transform.position;
+                    float cameraCentering = Mathf.Abs(Vector3.Dot(Camera.main.transform.InverseTransformDirection(Vector3.forward), throwableDir.normalized));
+                    //Debug.Log(cameraCentering);
+                    RaycastHit hitCheck;
+                    if (Physics.Raycast(Camera.main.transform.position, throwableDir, out hitCheck, LayerMask.GetMask("throwable")))
+                    {
+                        if (hitCheck.collider.CompareTag("throwable"))
+                        {
+                            if (cameraCentering < closestToCenter)
+                            {
+                                closestToCenter = cameraCentering;
+                                hit = hitCheck;
+                                //Debug.Log(hit.collider.gameObject.name);
+                            }
+                        }
+                    }
+                }
+            }
+
             if (hit.collider.gameObject.GetComponent<IThrowable>() != null)
             {
                 throwable = hit.collider.gameObject;
@@ -125,11 +163,38 @@ public class throwPhysics : MonoBehaviour
 
                 if (throwableRb != null)
                 {
+                    if (throwable.GetComponent<throwableDamage>().type == throwableDamage.damageType.Explosive)
+                    {
+                        throwable.transform.localScale = Vector3.one / 2;
+                    }
                     throwable.transform.SetParent(handPosition);
                     throwableRb.useGravity = false;
                     isHolding = true;
+                    throwable.GetComponent<throwableDamage>().isHeld = true;
                 }
             }
+        }
+        
+        numberFound = 0;
+        PickupDelay();
+    }
+
+    public void TryPickup(GameObject setThrowable)
+    {
+        throwable = setThrowable;
+        throwableRb = throwable.GetComponent<Rigidbody>();
+        throwableRbDefaultGravity = throwableRb.useGravity;
+
+        if (throwableRb != null)
+        {
+            if (throwable.GetComponent<throwableDamage>().type == throwableDamage.damageType.Explosive)
+            {
+                throwable.transform.localScale = Vector3.one / 2;
+            }
+            throwable.transform.SetParent(handPosition);
+            throwableRb.useGravity = false;
+            isHolding = true;
+            throwable.GetComponent<throwableDamage>().isHeld = true;
         }
     }
 
@@ -138,7 +203,11 @@ public class throwPhysics : MonoBehaviour
         if (throwable != null)
         {
             isHolding = false;
-
+            throwable.GetComponent<throwableDamage>().isHeld = false;
+            if (throwable.GetComponent<throwableDamage>().type == throwableDamage.damageType.Explosive)
+            {
+                throwable.transform.localScale = Vector3.one;
+            }
             throwable.transform.SetParent(null);
             throwable.transform.position = throwPosition.position;
             throwable = null;
@@ -148,22 +217,28 @@ public class throwPhysics : MonoBehaviour
 
     void ThrowObject()
     {
-            if (throwableRb != null)
-            {
+        if (throwableRb != null)
+        {
             DropObject();
             throwableRb.AddForce(throwableRb.transform.forward * throwForce, ForceMode.Impulse);
-            }
-            
+        }
+
     }
 
 
-    void TryEquipObject()
+    public void TryEquipObject()
     {
         if (throwable != null && throwable.GetComponent<throwableDamage>().gun != null && !isEquiped)
         {
             throwable.transform.SetParent(equipPosition);
             isHolding = false;
             isEquiped = true;
+            //throwable.GetComponent<throwableDamage>().isEquipped = true;
+            //throwable.GetComponent<throwableDamage>().isHeld = false;
+            Animator animator;
+            throwable.TryGetComponent<Animator>(out animator);
+            if (animator != null)
+                animator.enabled = true;
 
             gamemanager.instance.playerScript.equippedWeapon = throwable.GetComponent<throwableDamage>();
             gamemanager.instance.playerScript.shootDamage = throwable.GetComponent<throwableDamage>().gun.shootDamage;
@@ -180,7 +255,12 @@ public class throwPhysics : MonoBehaviour
             throwable.transform.SetParent(handPosition);
             isHolding = true;
             isEquiped = false;
-
+            Animator animator;
+            throwable.TryGetComponent<Animator>(out animator);
+            if (animator != null)
+                animator.enabled = false;
+            //throwable.GetComponent<throwableDamage>().isEquipped = false;
+            //throwable.GetComponent<throwableDamage>().isHeld = true;
             gamemanager.instance.playerScript.shootDamage = 0;
             gamemanager.instance.playerScript.shootRate = 0;
             gamemanager.instance.playerScript.shootDist = 0;
@@ -190,5 +270,8 @@ public class throwPhysics : MonoBehaviour
         }
     }
 
-
+    IEnumerator PickupDelay()
+    {
+        yield return new WaitForSeconds(0.2f);
+    }
 }

@@ -16,9 +16,9 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
     // animator
     [SerializeField] public Animator gunAnimator;
 
-    [SerializeField] damageType type;
+    public damageType type;
     [SerializeField] Rigidbody rb;
-    enum damageType { Explosive, RAW }
+    public enum damageType { Explosive, RAW }
 
     [Header("Explosive Stats")]
     [SerializeField] public int maxHits;
@@ -52,9 +52,15 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
     [SerializeField] int spawnForce;
     // ---
 
+    // Gun audio - Chris
+    [Header("Audio")]
+    [SerializeField] private AudioClip gunBreak;
+    private AudioSource gunIsBroken;
 
     bool isDamaging;
     public bool isInInventory;
+    public bool isHeld;
+    public bool isEquipped;
 
     float impactSpeed;
     float velFactor;
@@ -64,6 +70,8 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
     {
         hitList = new Collider[maxHits];
 
+        gunIsBroken = gameObject.AddComponent<AudioSource>();
+        gunIsBroken.spatialBlend = 1f;
         if (startFull && maxAmmo > 0 && curAmmo <= 0) 
             curAmmo = maxAmmo;
     }
@@ -129,6 +137,7 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
                 {
                     SpawnStoredItems();
                 }
+                PlayBreakSound();
                 Destroy(gameObject);
             }
 
@@ -212,6 +221,8 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
             spawnDirection.x = UnityEngine.Random.value;
             spawnDirection.z = UnityEngine.Random.value;
             spawnedObject = Instantiate(spawnThis, spawnPosition, Quaternion.Euler(0, 0, 0));
+            gamemanager.instance.throwableSpawnManager.spawnedThrowables.Add(spawnedObject);
+            gamemanager.instance.throwableSpawnManager.throwableToPrefabMap[spawnedObject] = Resources.Load(spawnedObject.GetComponent<throwableDamage>().basePrefabPath, typeof(GameObject)) as GameObject;
             spawnedObject.GetComponent<Rigidbody>().AddForce(spawnDirection * spawnForce, ForceMode.Impulse);
             //Debug.Log("Spawned Item: " + spawnedObject);
         }
@@ -289,6 +300,7 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
                 }
             }
         }
+        PlayBreakSound();
         Destroy(gameObject);
     }
 
@@ -302,6 +314,8 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
             {
                 SpawnStoredItems();
             }
+
+            PlayBreakSound();
 
             if (type == damageType.Explosive)
             {
@@ -341,6 +355,12 @@ public class throwableDamage : MonoBehaviour, IThrowable, IDamage, IAmmoSource
         maxAmmo = Mathf.Max(0, max);
         curAmmo = Mathf.Clamp(current, 0, maxAmmo);
         OnAmmoChanged?.Invoke();
+    }
+
+    private void PlayBreakSound()
+    {
+        if (gun != null && gunBreak != null)
+            AudioSource.PlayClipAtPoint(gunBreak, transform.position);
     }
 
 

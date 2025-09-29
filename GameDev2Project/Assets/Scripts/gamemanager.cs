@@ -13,8 +13,11 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject loseMenuRespawn;
+    [SerializeField] GameObject loseMenuNoSaveRespawn;
     [SerializeField] GameObject menuUpgrade;
     [SerializeField] AudioSource UIAudio;
+    [SerializeField] public GameObject loadingScreen;
 
     [SerializeField] TMP_Text gameGoalCountText;
     [SerializeField] TMP_Text playerLevelText;
@@ -62,6 +65,7 @@ public class gamemanager : MonoBehaviour
 
     float timeScaleOrig;
 
+    public bool doParialLoad = false;
 
     int playerLevelCount = 1;
 
@@ -83,11 +87,15 @@ public class gamemanager : MonoBehaviour
             Time.timeScale = 1f;
 
         timeScaleOrig = Time.timeScale;
-        player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<playerController>();
-        playerSpawnPos = GameObject.FindWithTag("Player Spawn");
-        throwScript = player.GetComponent<throwPhysics>();
-        playerInventory = player.GetComponent<playerInventory>();
+        if (GameObject.FindWithTag("Player") != null)
+            player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            playerScript = player.GetComponent<playerController>();
+            playerSpawnPos = GameObject.FindWithTag("Player Spawn");
+            throwScript = player.GetComponent<throwPhysics>();
+            playerInventory = player.GetComponent<playerInventory>();
+        }
         if (this.GetComponent<EnemySpawnManager>() != null)
             enemySpawnManager = this.GetComponent<EnemySpawnManager>();
         if (this.GetComponent<ThrowableSpawnManager>() != null)
@@ -96,7 +104,8 @@ public class gamemanager : MonoBehaviour
             collectibleSpawnManager = this.GetComponent<CollectibleSpawnManager>();
 
         uiMusicManager = UIAudio.GetComponent<UIMusicManager>();
-        minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
+        if (GameObject.FindWithTag("MinimapCam") != null)
+            minimapCam = GameObject.FindWithTag("MinimapCam").GetComponent<Camera>();
         StartCoroutine(ShowTutorial());
 
         if (menuPause == null) menuPause = GameObject.Find("Pause Menu");
@@ -108,6 +117,19 @@ public class gamemanager : MonoBehaviour
     private void Start()
     {
         finalCountDown = SceneManager.GetActiveScene().name == "Space";
+        if (SaveLoad.CheckSaveData() == false)
+        {
+            SaveAsync();
+        }
+
+        if (player != null && doParialLoad == true)
+        {
+            LoadParial();
+            doParialLoad = false;
+        }
+
+
+        playerLevelText.text = playerLevelCount.ToString("F0");
 
         if (finalCountDown)
         {
@@ -146,7 +168,7 @@ public class gamemanager : MonoBehaviour
             LoadAsync();
             //Debug.Log("Loading Game");
         }
-        if (amtUpgrades > 0&&Input.GetKeyDown(KeyCode.U))
+        if (amtUpgrades > 0 && Input.GetKeyDown(KeyCode.U))
         {
             upgradeMenu();
         }
@@ -165,7 +187,7 @@ public class gamemanager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         pauseDimmer.ShowDim();
         //FindFirstObjectByType<PauseMenuMusic>().PlayMusic();
-        
+
 
         if (Water.instance != null && Water.instance.inWater)
             WaterScreen(false);
@@ -173,7 +195,8 @@ public class gamemanager : MonoBehaviour
 
     public void stateUnpause()
     {
-        ChangeMusic(prePauseMenuMusic);
+        if (prePauseMenuMusic != null)
+            ChangeMusic(prePauseMenuMusic);
         isPaused = false;
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
@@ -186,7 +209,7 @@ public class gamemanager : MonoBehaviour
         }
         //if (FindFirstObjectByType<PauseMenuMusic>() != null)
         //FindFirstObjectByType<PauseMenuMusic>().StopMusic();
-        
+
 
         if (Water.instance != null && Water.instance.inWater)
             WaterScreen(true);
@@ -201,7 +224,7 @@ public class gamemanager : MonoBehaviour
         //    gameGoalCountText.text = gameGoalCount.ToString("F0");
         //}
 
-        if(finalCountDown&&!bossAlive)
+        if (finalCountDown && !bossAlive)
         {
             statePause();
             menuActive = menuWin;
@@ -248,6 +271,16 @@ public class gamemanager : MonoBehaviour
             statePause();
             menuActive = menuLose;
             menuActive.SetActive(true);
+            if (SaveLoad.CheckSaveData() == false)
+            {
+                loseMenuRespawn.SetActive(false);
+                loseMenuNoSaveRespawn.SetActive(true);
+            }
+            else
+            {
+                loseMenuRespawn.SetActive(true);
+                loseMenuNoSaveRespawn.SetActive(false);
+            }
             pauseDimmer.ShowDim();
         }
     }
@@ -325,15 +358,58 @@ public class gamemanager : MonoBehaviour
 
     public void upgradeMenu()
     {
-        if(menuActive == null && !playerScript.isDead&&amtUpgrades>0)
-    {
+        if (menuActive == null && !playerScript.isDead && amtUpgrades > 0)
+        {
             statePause();
             menuActive = menuUpgrade;
             menuActive.SetActive(true);
             UpgradeManager.instance.ShowRandomUpgrades();
             amtUpgrades--;
-            if(amtUpgrades<=0)
+            if (amtUpgrades <= 0)
                 levelUpReady.SetActive(false);
         }
     }
+
+    public void LoadParial()
+    {
+        SaveLoad.LoadParial();
+    }
+
+    public void Save(ref GameData gameData)
+    {
+        gameData.playerLevelCount = playerLevelCount;
+        gameData.soulsNeeded = UpgradeManager.instance.soulsNeeded;
+        gameData.enemiesKilled = enemiesKilled;
+        gameData.amtUpgrades = amtUpgrades;
+        gameData.healthLvl = UpgradeManager.instance.healthLvl;
+        gameData.speedLvl = UpgradeManager.instance.speedLvl;
+        gameData.jumpLvl = UpgradeManager.instance.jumpLvl;
+    }
+
+    public void Load(GameData gameData)
+    {
+        playerLevelCount = gameData.playerLevelCount;
+        enemiesKilled = gameData.enemiesKilled;
+        amtUpgrades = gameData.amtUpgrades;
+        if (amtUpgrades > 0)
+        {
+            levelUpReady.SetActive(true);
+        }
+        UpgradeManager.instance.healthLvl = gameData.healthLvl;
+        UpgradeManager.instance.speedLvl = gameData.speedLvl;
+        UpgradeManager.instance.jumpLvl = gameData.jumpLvl;
+        UpgradeManager.instance.soulsNeeded = gameData.soulsNeeded;
+    }
+}
+
+[System.Serializable]
+public struct GameData
+{
+    public int playerLevelCount;
+    public float soulsNeeded;
+    public int enemiesKilled;
+    public int amtUpgrades;
+    public int healthLvl;
+    public int speedLvl;
+    public int jumpLvl;
 }

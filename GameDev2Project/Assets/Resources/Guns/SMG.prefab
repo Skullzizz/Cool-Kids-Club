@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 9192473855115368836}
   - component: {fileID: 4717897323853657114}
   - component: {fileID: 8484356353338126764}
+  - component: {fileID: 1307976577551905469}
   m_Layer: 10
   m_Name: SMG
   m_TagString: throwable
@@ -261,6 +262,7 @@ MonoBehaviour:
   explKnockMult: 0
   basePrefabPath: Guns/SMG
   basePrefab: {fileID: 0}
+  gunAnimator: {fileID: 1307976577551905469}
   type: 1
   rb: {fileID: 4717897323853657114}
   maxHits: 0
@@ -283,6 +285,10 @@ MonoBehaviour:
   storedObjectList: []
   storedAmount: 0
   spawnForce: 0
+  gunBreak: {fileID: 8300000, guid: 13e3a2155588a244e82dbeb35c8ffe2c, type: 3}
+  isInInventory: 0
+  isHeld: 0
+  isEquipped: 0
 --- !u!54 &4717897323853657114
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -331,6 +337,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.08, y: 0.2, z: 0.7}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &1307976577551905469
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5783463480639523633}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0e1800e9012e6f34eb09fa3d18565f00, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8140799004346855043
 GameObject:
   m_ObjectHideFlags: 0
