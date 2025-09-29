@@ -32,6 +32,7 @@ public class GrapplingGun : MonoBehaviour
 
     void Start()
     {
+        canGrapple=true;
         lr = GetComponent<LineRenderer>();
         lr.enabled = false;
 
