@@ -193,7 +193,6 @@ MonoBehaviour:
   equippedWeaponText: {fileID: 0}
   weaponIcon: {fileID: 0}
   noWeaponIcon: {fileID: 21300000, guid: d5ad855c08e83c3409a8053c8f886d54, type: 3}
-  defaultEmptyColor: {r: 1, g: 0, b: 0, a: 0.4627451}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   equippedWeapon: {fileID: 0}
   equippedWeaponIndex: -1
@@ -293,6 +292,8 @@ MonoBehaviour:
   holdPoint: {fileID: 6996980749641330269}
   launchSource: {fileID: 1926372955814628451}
   latchSource: {fileID: 0}
+  grappleCooldown: 1
+  canGrapple: 1
 --- !u!143 &7738361454935595237
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1398,6 +1399,8 @@ MonoBehaviour:
   holdPoint: {fileID: 0}
   launchSource: {fileID: 0}
   latchSource: {fileID: 0}
+  grappleCooldown: 0
+  canGrapple: 0
 --- !u!1 &2507155325390430858
 GameObject:
   m_ObjectHideFlags: 0
