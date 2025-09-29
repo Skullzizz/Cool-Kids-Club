@@ -44,8 +44,18 @@ public class UIMusicManager : MonoBehaviour
 
     IEnumerator ChangeFadeIn(AudioSource source, float fadeTime, AudioClip nextSong)
     {
-        StartCoroutine(FadeOut(source, fadeTime));
-        yield return new WaitForSecondsRealtime(fadeTime);
+        yield return StartCoroutine(FadeOut(source, fadeTime));
+        source.clip = nextSong;
+        source.Play();
+        source.volume = 0f;
+        while (source.volume < 1f)
+        {
+            source.volume += Time.unscaledDeltaTime / fadeTime;
+            yield return null;
+        }
+    }
+    IEnumerator ChangeFadeMenu(AudioSource source, float fadeTime, AudioClip nextSong)
+    {
         source.clip = nextSong;
         source.Play();
         source.volume = 0f;
@@ -59,6 +69,11 @@ public class UIMusicManager : MonoBehaviour
     public void FadeChange(ref AudioSource source, AudioClip nextSource)
     {
         StartCoroutine(ChangeFadeIn(source, 2f, nextSource));
+    }
+
+    public void MenuFadeChange(ref AudioSource source, AudioClip nextSource)
+    {
+        StartCoroutine(ChangeFadeMenu(source, 2f, nextSource));
     }
 
 

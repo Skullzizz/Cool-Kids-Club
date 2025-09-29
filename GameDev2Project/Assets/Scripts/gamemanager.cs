@@ -180,7 +180,7 @@ public class gamemanager : MonoBehaviour
         quitToDesktop.SetActive(false);
 #endif
         prePauseMenuMusic = UIAudio.clip;
-        ChangeMusic(pauseMenuMusic);
+        ChangeMenuMusic(pauseMenuMusic);
         isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
@@ -196,7 +196,7 @@ public class gamemanager : MonoBehaviour
     public void stateUnpause()
     {
         if (prePauseMenuMusic != null)
-            ChangeMusic(prePauseMenuMusic);
+            ChangeMenuMusic(prePauseMenuMusic);
         isPaused = false;
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
@@ -324,6 +324,11 @@ public class gamemanager : MonoBehaviour
     public void ChangeMusic(AudioClip nextMusic)
     {
         uiMusicManager.FadeChange(ref UIAudio, nextMusic);
+    }
+
+    public void ChangeMenuMusic(AudioClip nextMusic)
+    {
+        uiMusicManager.MenuFadeChange(ref UIAudio, nextMusic);
     }
 
     public async void SaveAsync()
