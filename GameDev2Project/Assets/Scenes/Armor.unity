@@ -5893,29 +5893,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3691662857549445227, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-      propertyPath: doParialLoad
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6048738974235900180, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
       propertyPath: m_Name
       value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 6959122281893896065, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6959122281893896065, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6959122281893896065, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6959122281893896065, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
-      propertyPath: m_Color.r
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8132743023756339552, guid: 69ba927f0d0c9d443921643d2d376dd9, type: 3}
       propertyPath: m_Pivot.x
@@ -15299,33 +15279,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 998776163}
     - target: {fileID: 7393489916680130126, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
-      propertyPath: defaultEmptyColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7393489916680130126, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
-      propertyPath: defaultEmptyColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7393489916680130126, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
-      propertyPath: defaultEmptyColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7393489916680130126, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
-      propertyPath: defaultEmptyColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7393489916680130126, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
       propertyPath: inventorySlotPrefab
       value: 
       objectReference: {fileID: 1529365464}
-    - target: {fileID: 8824879424079709396, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
-      propertyPath: canGrapple
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8824879424079709396, guid: e62a00fbd7949c749bf5d69d5f17b7bd, type: 3}
-      propertyPath: grappleCooldown
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
